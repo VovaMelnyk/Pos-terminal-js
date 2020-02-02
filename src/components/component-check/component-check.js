@@ -9,13 +9,19 @@ class Check {
         id: Date.now(),
         title: 'Кaльмар',
         quantity: 1,
-        price: 40,
+        price: 26.96,
       },
       {
         id: Date.now(),
         title: 'Cок',
-        quantity: 1,
+        quantity: 4,
         price: 20,
+      },
+      {
+        id: Date.now(),
+        title: 'Салат',
+        quantity: 3,
+        price: 50.15,
       },
     ];
   }
@@ -31,6 +37,7 @@ class Check {
       <div class="check">
         ${this.renderList()}
         ${this.renderComments()}
+        ${this.renderSummary()}
         ${this.renderCheckButtons()}
       </div>`;
   }
@@ -71,7 +78,31 @@ class Check {
       </div>`;
   }
 
-  
+  renderSummary() {
+    return `
+      <div class="summary">
+        <div class="btn-wrapper">
+          <button class="btn summary-btn">Email, SMS</button>
+        </div>
+        <div class="total-wrapper">
+          <div class="calculate">
+            <div class="result">
+              <p class="result__title">Итого</p>
+              <p class="result__value">${this.totalAmount()} &#8372</p>
+            </div>
+            <div class="bonus">
+              <p class="bonus__title">Бонусы</p>
+              <p class="bonus__value">&ndash;</p>
+            </div>
+          </div>
+          <div class="total">
+            <p class="total__title">К оплате</p>
+            <p class="total__value">${this.totalAmount()} &#8372</p>
+          </div>
+        </div>
+      </div>
+    `;
+  }
 
   renderCheckButtons() {
     return `
@@ -98,7 +129,7 @@ class Check {
       const elems = document.querySelectorAll('.dropdown-trigger');
       const options = {
         closeOnClick: false,
-        constrainWidth: false
+        constrainWidth: false,
       };
 
       M.Dropdown.init(elems, options);
@@ -110,10 +141,21 @@ class Check {
   }
 
   countingAmount(quantity, price) {
-    const total = Math.floor(quantity * price).toFixed(2);
+    const total = (quantity * price).toFixed(2);
 
     return total;
   }
+
+  totalAmount() {
+    return this.list
+      .reduce(
+        (acc, el) => Number(this.countingAmount(el.quantity, el.price)) + acc,
+        0,
+      )
+      .toFixed(2);
+  }
+
+
 }
 
 export default Check;

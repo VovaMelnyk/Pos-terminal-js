@@ -10,15 +10,19 @@
   .comment {
     border-top: 1px solid rgba(0, 0, 0, 0.12);
     padding: 10px 25px;
+    font-size: 18px;
+
+    p {
+      margin: 0;
+      padding: 3px;
+    }
   }
 }
 
 .food-list {
-  height: 50%;
+  height: 60%;
+  padding-bottom: 50px;
   overflow-y: auto;
-}
-
-.food-list__item {
 }
 
 .title {
@@ -82,4 +86,61 @@
 
 .bold {
   font-weight: 700;
+}
+
+.summary {
+  padding: 20px 25px 10px 25px;
+  font-size: 18px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+
+  .btn-wrapper {
+    padding-bottom: 30px;
+
+    .summary-btn {
+      width: 100%;
+    }
+  }
+
+  .total-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .calculate {
+    width: 60%;
+  }
+
+  .result,
+  .bonus {
+    display: flex;
+    justify-content: space-between;
+
+    &__title {
+      margin: 0;
+      padding: 10px 0;
+    }
+
+    &__value {
+      margin: 0;
+      padding: 10px 0;
+      font-weight: 700;
+    }
+  }
+
+  .total {
+    width: 40%;
+    text-align: left;
+    padding-left: 85px;
+    font-weight: 700;
+
+    &__title {
+      margin: 0;
+      padding: 10px 0;
+    }
+
+    &__value {
+      margin: 0;
+      padding: 10px 0;
+    }
+  }
 }
