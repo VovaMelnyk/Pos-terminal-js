@@ -1,3 +1,13 @@
+td,
+th {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+tr:last-child {
+  border-bottom: none;
+}
+
 .check {
   display: flex;
   flex-direction: column;
@@ -5,7 +15,12 @@
   width: 40%;
   height: 100vh;
   padding: 10px 10px 20px 0;
-  // background-color: rgb(112, 216, 216);
+
+  .food-list {
+    height: 60%;
+    padding-bottom: 50px;
+    overflow-y: auto;
+  }
 
   .comment {
     border-top: 1px solid rgba(0, 0, 0, 0.12);
@@ -17,12 +32,6 @@
       padding: 3px;
     }
   }
-}
-
-.food-list {
-  height: 60%;
-  padding-bottom: 50px;
-  overflow-y: auto;
 }
 
 .title {
@@ -173,7 +182,7 @@
   }
 }
 
-.food-list__item:hover .increment, 
+.food-list__item:hover .increment,
 .food-list__item:hover .decrement {
   visibility: visible;
 }

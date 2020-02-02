@@ -4,7 +4,7 @@ import './component-check-style.scss';
 
 class Check {
   constructor() {
-    this.value = 1;
+    this.value = null;
     this.list = [
       {
         id: Date.now(),
@@ -37,6 +37,9 @@ class Check {
     this.addListenerOnDropdown();
 
     this.addListenerCommentDone();
+
+    //--------------------FOR TEST-------------------------------------------
+    this.addListenerOnAddedItem();
   }
 
   renderCheck() {
@@ -97,7 +100,7 @@ class Check {
     return `
       <div class="summary">
         <div class="btn-wrapper">
-          <button class="btn summary-btn">Email, SMS</button>
+          <button class="btn summary-btn" data-action="add">Email, SMS</button>
         </div>
         <div class="total-wrapper">
           <div class="calculate">
@@ -215,22 +218,22 @@ class Check {
     if (e.target.tagName !== 'BUTTON') {
       return;
     }
-    console.log(e.target.parentNode.children[1].textContent);
-    if (e.target.dataset.action === 'increment') {
-      let value1 = Number(e.target.parentNode.children[1].textContent);
-      e.target.addEventListener('click', () => {
-        let test = value1;
-        test++;
 
-        e.target.parentNode.children[1].textContent = test;
+    this.value = 1;
+    if (e.target.dataset.action === 'increment') {
+      
+      e.target.addEventListener('click', () => {
+        this.value++;
+
+        e.target.parentNode.children[1].textContent = this.value;
+        
       });
     } else if (e.target.dataset.action === 'decrement') {
-      let value2 = Number(e.target.parentNode.children[1].textContent);
+      
       e.target.addEventListener('click', () => {
-        let test = value2;
-        test--;
+        this.value--;
 
-        e.target.parentNode.children[1].textContent = test;
+        e.target.parentNode.children[1].textContent = this.value;
       });
     }
   }
@@ -268,6 +271,9 @@ class Check {
     const total__value = document.querySelector('.total__value');
 
     listItems.innerHTML = '';
+
+    this.list.splice(0, this.list.length);
+
     result__value.textContent = `0.00 ₴`;
     total__value.textContent = `0.00 ₴`;
     comment.classList.add('none');
@@ -291,6 +297,34 @@ class Check {
     if (e.target.text === 'Очистить заказ') {
       this.clearOrder();
     }
+  }
+
+  //--------------------FOR TEST-------------------------------------------
+  addProductItemHandleClick() {
+    const priductObj = {
+      id: Date.now(),
+      title: 'Орешки',
+      quantity: 1,
+      price: 30,
+    };
+
+    this.list.push(priductObj);
+
+    const foodList = document.querySelector('tbody');
+    const result__value = document.querySelector('.result__value');
+    const total__value = document.querySelector('.total__value');
+
+    result__value.textContent = `${this.totalAmount()} ₴`;
+    total__value.textContent = `${this.totalAmount()} ₴`;
+
+    this.addToScreen(foodList, 'beforeend', this.renderListItem(priductObj));
+  }
+
+  //--------------------FOR TEST-------------------------------------------
+  addListenerOnAddedItem() {
+    const addBtn = document.querySelector('button[data-action="add"]');
+
+    addBtn.addEventListener('click', this.addProductItemHandleClick.bind(this));
   }
 }
 
