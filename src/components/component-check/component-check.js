@@ -22,7 +22,7 @@ class Check {
         id: Date.now(),
         title: 'Орешки',
         quantity: 1,
-        price: 20.5,
+        price: 120.5,
       },
     ];
   }
@@ -61,8 +61,8 @@ class Check {
             <tr>
               <th class="list-title">Наименование</th>
               <th class="list-quantity">Кол-во</th>
-              <th>Цена</th>
-              <th>Итого</th>
+              <th class="list-price">Цена</th>
+              <th class="list-total">Итого</th>
             </tr>
           </thead>
           <tbody>
@@ -104,6 +104,9 @@ class Check {
       <div class="summary">
         <div class="btn-wrapper">
           <button class="btn summary-btn" data-action="add">Email, SMS</button>
+        </div>
+        <div class="guests-amount">
+          <p class="guests-amount__value">Количество гостей:  <span class="bold" data-action="guests">4</span></p>
         </div>
         <div class="total-wrapper">
           <div class="calculate">
@@ -351,6 +354,8 @@ class Check {
   }
 
   dropdownHandlerClick(e) {
+    e.preventDefault();
+
     if (e.target.tagName !== 'A') {
       return;
     }
@@ -360,7 +365,7 @@ class Check {
     }
   }
 
-  //--------------------FOR TEST-------------------------------------------
+  //--------------------ADD FOOD-ITEM FOR TEST-------------------------------------------
   addProductItemHandleClick() {
     const priductObj = {
       id: Date.now(),
@@ -381,7 +386,7 @@ class Check {
     this.addToScreen(foodList, 'beforeend', this.renderListItem(priductObj));
   }
 
-  //--------------------FOR TEST-------------------------------------------
+  //--------------------ADD FOOD-ITEM FOR TEST-------------------------------------------
   addListenerOnAddedItem() {
     const addBtn = document.querySelector('button[data-action="add"]');
 

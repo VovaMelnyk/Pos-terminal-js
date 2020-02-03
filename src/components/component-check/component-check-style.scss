@@ -1,14 +1,14 @@
-td,
-th {
-  padding-top: 7px;
-  padding-bottom: 7px;
-}
-
-tr:last-child {
-  border-bottom: none;
-}
-
 .check {
+  td,
+  th {
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+
+  tr:last-child {
+    border-bottom: none;
+  }
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -36,18 +36,36 @@ tr:last-child {
 
 .list-title,
 .item-title {
-  width: 60%;
+  width: 55%;
   padding-left: 25px;
 }
 
 .list-quantity,
 .item-quantity {
+  width: 20%;
   text-align: center;
 }
 
+.list-price,
+.item-price {
+  width: 10%;
+  min-width: 80px;
+  padding-right: 30px;
+  text-align: center;
+}
+
+.list-total {
+  width: 15%;
+  padding-right: 15px;
+  padding-left: 0px;
+  text-align: right;
+}
+
 .item-total {
+  width: 10%;
   text-align: right;
   padding-right: 15px;
+  padding-left: 0px;
 }
 
 .check-buttons {
@@ -78,7 +96,6 @@ tr:last-child {
   min-width: 250px;
   top: 44px;
   overflow-y: inherit;
-  z-index: 10000;
 
   li:not(:last-child) {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
@@ -105,11 +122,14 @@ tr:last-child {
   border-top: 1px solid rgba(0, 0, 0, 0.12);
 
   .btn-wrapper {
-    padding-bottom: 30px;
-
     .summary-btn {
       width: 100%;
     }
+  }
+
+  .guests-amount__value {
+    margin: 0;
+    padding: 15px 0 10px 0;
   }
 
   .total-wrapper {
@@ -168,7 +188,8 @@ tr:last-child {
     vertical-align: middle;
     width: 34px;
     height: 34px;
-    font-size: 15px;
+    padding-bottom: 12px;
+    font-size: 24px;
     font-weight: 700;
     border-radius: 50%;
     background-color: rgb(245, 245, 245);
@@ -179,8 +200,8 @@ tr:last-child {
   }
 
   span {
-    margin: 0 auto;
-    // padding: 0 15px;
+    min-width: 22px;
+    // padding: 0 8px;
   }
 }
 
