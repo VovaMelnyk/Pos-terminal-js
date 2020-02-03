@@ -34,16 +34,18 @@ tr:last-child {
   }
 }
 
-.title {
+.list-title,
+.item-title {
   width: 60%;
   padding-left: 25px;
 }
 
-.quantity {
+.list-quantity,
+.item-quantity {
   text-align: center;
 }
 
-.total {
+.item-total {
   text-align: right;
   padding-right: 15px;
 }

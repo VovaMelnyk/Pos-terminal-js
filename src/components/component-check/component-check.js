@@ -4,7 +4,7 @@ import './component-check-style.scss';
 
 class Check {
   constructor() {
-    this.value = null;
+    this.value = 1;
     this.list = [
       {
         id: Date.now(),
@@ -59,8 +59,8 @@ class Check {
         <table>
           <thead>
             <tr>
-              <th class="title">Наименование</th>
-              <th class="quantity">Кол-во</th>
+              <th class="list-title">Наименование</th>
+              <th class="list-quantity">Кол-во</th>
               <th>Цена</th>
               <th>Итого</th>
             </tr>
@@ -74,16 +74,19 @@ class Check {
 
   renderListItem({ title, quantity, price }) {
     return `<tr class="food-list__item">
-              <td class="title">${title}</td>
-              <td class="quantity">
+              <td class="item-title">${title}</td>
+              <td class="item-quantity">
                 <div class="counter">
                   <button class="decrement" data-action="decrement">&ndash;</button>
                     <span data-action="quantity">${quantity}</span>
                   <button class="increment" data-action="increment">+</button>
                 </div>
               </td>
-              <td>${price.toFixed(2)}</td>
-              <td class="total">${this.countingAmount(quantity, price)}</td>
+              <td class="item-price">${price.toFixed(2)}</td>
+              <td class="item-total">${this.countingAmount(
+                quantity,
+                price,
+              )}</td>
             </tr>
           `;
   }
@@ -196,6 +199,17 @@ class Check {
     return total;
   }
 
+  totalSummaryAmount() {
+    const allTotal = document.querySelectorAll('.item-total');
+    let total = 0;
+
+    allTotal.forEach(el => {
+      total += Number(el.textContent);
+    });
+
+    return total.toFixed(2);
+  }
+
   totalAmount() {
     return this.list
       .reduce(
@@ -219,22 +233,65 @@ class Check {
       return;
     }
 
-    this.value = 1;
-    if (e.target.dataset.action === 'increment') {
-      
-      e.target.addEventListener('click', () => {
-        this.value++;
+    const btnDataset = e.target.dataset.action;
+    const parentElem = e.target.parentNode;
 
-        e.target.parentNode.children[1].textContent = this.value;
-        
-      });
-    } else if (e.target.dataset.action === 'decrement') {
-      
-      e.target.addEventListener('click', () => {
-        this.value--;
+    const productItem = parentElem.closest('tr');
+    const quantityValue = parentElem.children[1];
 
-        e.target.parentNode.children[1].textContent = this.value;
-      });
+    const total = productItem.querySelector('.item-total');
+    const price = productItem.querySelector('.item-price');
+
+    const result__value = document.querySelector('.result__value');
+    const total__value = document.querySelector('.total__value');
+
+    this.increment(
+      btnDataset,
+      quantityValue,
+      total,
+      price,
+      total__value,
+      result__value,
+    );
+
+    this.decrement(
+      btnDataset,
+      quantityValue,
+      total,
+      price,
+      total__value,
+      result__value,
+    );
+
+    if (quantityValue.textContent < 1) {
+      this.removeItem(productItem);
+    }
+  }
+
+  increment(btnDataset, quantity, total, price, amount, result) {
+    if (btnDataset === 'increment') {
+      quantity.textContent++;
+
+      total.textContent = this.countingAmount(
+        quantity.textContent,
+        price.textContent,
+      );
+      result.textContent = `${this.totalSummaryAmount()} ₴`;
+      amount.textContent = `${this.totalSummaryAmount()} ₴`;
+    }
+  }
+
+  decrement(btnDataset, quantity, total, price, amount, result) {
+    if (btnDataset === 'decrement') {
+      quantity.textContent--;
+
+      total.textContent = this.countingAmount(
+        quantity.textContent,
+        price.textContent,
+      );
+
+      result.textContent = `${this.totalSummaryAmount()} ₴`;
+      amount.textContent = `${this.totalSummaryAmount()} ₴`;
     }
   }
 
@@ -280,6 +337,10 @@ class Check {
     textInput.value = '';
   }
 
+  removeItem(item) {
+    item.innerHTML = '';
+  }
+
   addListenerOnDropdown() {
     const dropdownList = document.querySelector('#dropdown1');
 
@@ -304,7 +365,7 @@ class Check {
     const priductObj = {
       id: Date.now(),
       title: 'Орешки',
-      quantity: 1,
+      quantity: 3,
       price: 30,
     };
 
