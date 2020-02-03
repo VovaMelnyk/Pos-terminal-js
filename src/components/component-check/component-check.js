@@ -38,6 +38,7 @@ class Check {
 
     this.addListenerCommentDone();
 
+    this.addListenerOnPayment();
     //--------------------FOR TEST-------------------------------------------
     this.addListenerOnAddedItem();
   }
@@ -135,7 +136,7 @@ class Check {
           <i class="material-icons">more_horiz</i>
         </button>
         ${this.renderDropdownMenu()}
-        <button class="btn pay">Оплатить</button>
+        <button class="btn pay" data-action="payment">Оплатить</button>
       </div>`;
   }
 
@@ -363,6 +364,33 @@ class Check {
     if (e.target.text === 'Очистить заказ') {
       this.clearOrder();
     }
+  }
+
+  addListenerOnPayment() {
+    const paymentBtn = document.querySelector('button[data-action="payment"]');
+
+    paymentBtn.addEventListener(
+      'click',
+      this.removeCheckHandleClick.bind(this),
+    );
+  }
+
+  removeCheckHandleClick() {
+    const check = document.querySelector('.check');
+    const root = document.querySelector('#root');
+
+    check.remove();
+
+    //--------------------RENDER COMPONENT PAYMENT FOR TEST------------------------------------
+    this.addToScreen(root, 'beforeend', this.renderPayment());
+  }
+
+  //--------------------ADD COMPONENT PAYMENT FOR TEST------------------------------------
+  renderPayment() {
+    return `
+     <div class="payment">
+      <h2 class="payment__title">Компонент оплаты</h2>
+    </div>`;
   }
 
   //--------------------ADD FOOD-ITEM FOR TEST-------------------------------------------
