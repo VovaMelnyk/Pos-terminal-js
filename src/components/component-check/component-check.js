@@ -392,23 +392,27 @@ class Check {
 
   //--------------------ADD FOOD-ITEM FOR TEST-------------------------------------------
   addProductItemHandleClick() {
-    const priductObj = {
+    const productObj = {
       id: Date.now(),
       title: 'Орешки',
       quantity: 3,
       price: 30,
     };
-
-    this.list.push(priductObj);
-
+   
     const foodList = document.querySelector('tbody');
     const result__value = document.querySelector('.result__value');
     const total__value = document.querySelector('.total__value');
 
-    result__value.textContent = `${this.totalAmount()} ₴`;
-    total__value.textContent = `${this.totalAmount()} ₴`;
+    const resultSum = Number(this.totalSummaryAmount()) + Number(this.countingAmount(productObj.quantity, productObj.price));
+    const totalSum = Number(this.totalSummaryAmount()) + Number(this.countingAmount(productObj.quantity, productObj.price));
+    
+    this.list.push(productObj);
 
-    this.addToScreen(foodList, 'beforeend', this.renderListItem(priductObj));
+    result__value.textContent = `${resultSum.toFixed(2)} ₴`;
+    total__value.textContent = `${totalSum.toFixed(2)} ₴`;
+
+    
+    this.addToScreen(foodList, 'beforeend', this.renderListItem(productObj));
   }
 
   //--------------------ADD FOOD-ITEM FOR TEST-------------------------------------------
