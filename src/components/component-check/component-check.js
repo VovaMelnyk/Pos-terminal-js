@@ -205,13 +205,10 @@ class Check {
 
   totalSummaryAmount() {
     const allTotal = document.querySelectorAll('.item-total');
-    let total = 0;
 
-    allTotal.forEach(el => {
-      total += Number(el.textContent);
-    });
-
-    return total.toFixed(2);
+    return [...allTotal]
+      .reduce((acc, el) => Number(el.textContent) + acc, 0)
+      .toFixed(2);
   }
 
   totalAmount() {
