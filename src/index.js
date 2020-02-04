@@ -1,10 +1,17 @@
 // import { example, example2, materializeExample } from '@/js/example';
 
 // materializeExample();
-import Check from './components/component-check/component-check';
 
-const check = new Check();
+/**
+ * Code for review Check component.
+ */
+      // import Check from './components/component-check/component-check';
 
-const root = document.querySelector('#root');
+      // const check = new Check();
 
-check.init(root);
+      // const root = document.querySelector('#root');
+
+      // check.init(root);
+/**
+ * Code for review Check component.
+ */
