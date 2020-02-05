@@ -4,7 +4,6 @@ import './component-check-style.scss';
 
 class Check {
   constructor() {
-    this.value = 1;
     this.list = [
       {
         id: Date.now(),
@@ -25,6 +24,20 @@ class Check {
         price: 120.5,
       },
     ];
+
+    this.result__value = null;
+    this.total__value = null;
+
+    this.addCommentToScreenHandleClick = this.addCommentToScreenHandleClick.bind(
+      this,
+    );
+    this.dropdownHandlerClick = this.dropdownHandlerClick.bind(this);
+    this.removeCheckHandleClick = this.removeCheckHandleClick.bind(this);
+    this.incrementAndDecrementHandleClick = this.incrementAndDecrementHandleClick.bind(
+      this,
+    );
+
+    this.addProductItemHandleClick = this.addProductItemHandleClick.bind(this);
   }
 
   init(container) {
@@ -39,6 +52,9 @@ class Check {
     this.addListenerCommentDone();
 
     this.addListenerOnPayment();
+
+    this.result__value = document.querySelector('.result__value');
+    this.total__value = document.querySelector('.total__value');
     //--------------------FOR TEST-------------------------------------------
     this.addListenerOnAddedItem();
   }
@@ -73,8 +89,8 @@ class Check {
       </div>`;
   }
 
-  renderListItem({ title, quantity, price }) {
-    return `<tr class="food-list__item">
+  renderListItem({ id, title, quantity, price }) {
+    return `<tr class="food-list__item" data-id="${id}">
               <td class="item-title">${title}</td>
               <td class="item-quantity">
                 <div class="counter">
@@ -223,10 +239,7 @@ class Check {
   addListenerOnListItems() {
     const list = document.querySelector('.food-list');
 
-    list.addEventListener(
-      'click',
-      this.incrementAndDecrementHandleClick.bind(this),
-    );
+    list.addEventListener('click', this.incrementAndDecrementHandleClick);
   }
 
   incrementAndDecrementHandleClick(e) {
@@ -243,16 +256,16 @@ class Check {
     const total = productItem.querySelector('.item-total');
     const price = productItem.querySelector('.item-price');
 
-    const result__value = document.querySelector('.result__value');
-    const total__value = document.querySelector('.total__value');
+    const itemId = productItem.dataset.id;
+    console.log(itemId);
 
     this.increment(
       btnDataset,
       quantityValue,
       total,
       price,
-      total__value,
-      result__value,
+      this.total__value,
+      this.result__value,
     );
 
     this.decrement(
@@ -260,13 +273,17 @@ class Check {
       quantityValue,
       total,
       price,
-      total__value,
-      result__value,
+      this.total__value,
+      this.result__value,
     );
 
     if (quantityValue.textContent < 1) {
       this.removeItem(productItem);
     }
+  }
+
+  filteredOnId(id) {
+    return this.list.filter(item => item.id != Number(id));
   }
 
   increment(btnDataset, quantity, total, price, amount, result) {
@@ -299,10 +316,7 @@ class Check {
   addListenerCommentDone() {
     const btnDone = document.querySelector('button[data-action="done"]');
 
-    btnDone.addEventListener(
-      'click',
-      this.addCommentToScreenHandleClick.bind(this),
-    );
+    btnDone.addEventListener('click', this.addCommentToScreenHandleClick);
   }
 
   addCommentToScreenHandleClick() {
@@ -325,15 +339,13 @@ class Check {
     const textInput = document.querySelector('textarea');
     const comment = document.querySelector('.comment');
 
-    const result__value = document.querySelector('.result__value');
-    const total__value = document.querySelector('.total__value');
-
     listItems.innerHTML = '';
 
     this.list.splice(0, this.list.length);
 
-    result__value.textContent = `0.00 ₴`;
-    total__value.textContent = `0.00 ₴`;
+    this.result__value.textContent = `0.00 ₴`;
+    this.total__value.textContent = `0.00 ₴`;
+    
     comment.classList.add('none');
     textInput.value = '';
   }
@@ -345,10 +357,7 @@ class Check {
   addListenerOnDropdown() {
     const dropdownList = document.querySelector('#dropdown1');
 
-    dropdownList.addEventListener(
-      'click',
-      this.dropdownHandlerClick.bind(this),
-    );
+    dropdownList.addEventListener('click', this.dropdownHandlerClick);
   }
 
   dropdownHandlerClick(e) {
@@ -366,10 +375,7 @@ class Check {
   addListenerOnPayment() {
     const paymentBtn = document.querySelector('button[data-action="payment"]');
 
-    paymentBtn.addEventListener(
-      'click',
-      this.removeCheckHandleClick.bind(this),
-    );
+    paymentBtn.addEventListener('click', this.removeCheckHandleClick);
   }
 
   removeCheckHandleClick() {
@@ -398,20 +404,21 @@ class Check {
       quantity: 3,
       price: 30,
     };
-   
-    const foodList = document.querySelector('tbody');
-    const result__value = document.querySelector('.result__value');
-    const total__value = document.querySelector('.total__value');
 
-    const resultSum = Number(this.totalSummaryAmount()) + Number(this.countingAmount(productObj.quantity, productObj.price));
-    const totalSum = Number(this.totalSummaryAmount()) + Number(this.countingAmount(productObj.quantity, productObj.price));
-    
+    const foodList = document.querySelector('tbody');
+
+    const resultSum =
+      Number(this.totalSummaryAmount()) +
+      Number(this.countingAmount(productObj.quantity, productObj.price));
+    const totalSum =
+      Number(this.totalSummaryAmount()) +
+      Number(this.countingAmount(productObj.quantity, productObj.price));
+
     this.list.push(productObj);
 
-    result__value.textContent = `${resultSum.toFixed(2)} ₴`;
-    total__value.textContent = `${totalSum.toFixed(2)} ₴`;
+    this.result__value.textContent = `${resultSum.toFixed(2)} ₴`;
+    this.total__value.textContent = `${totalSum.toFixed(2)} ₴`;
 
-    
     this.addToScreen(foodList, 'beforeend', this.renderListItem(productObj));
   }
 
