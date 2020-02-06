@@ -6,19 +6,19 @@ class Check {
   constructor() {
     this.list = [
       {
-        id: Date.now(),
+        id: Date.now() + 1,
         title: 'Кaльмар',
         quantity: 1,
         price: 38.0,
       },
       {
-        id: Date.now(),
+        id: Date.now() + 2,
         title: 'Пиво',
         quantity: 1,
         price: 58.0,
       },
       {
-        id: Date.now(),
+        id: Date.now() + 3,
         title: 'Орешки',
         quantity: 1,
         price: 120.5,
@@ -257,7 +257,6 @@ class Check {
     const price = productItem.querySelector('.item-price');
 
     const itemId = productItem.dataset.id;
-    console.log(itemId);
 
     this.increment(
       btnDataset,
@@ -266,6 +265,7 @@ class Check {
       price,
       this.total__value,
       this.result__value,
+      itemId,
     );
 
     this.decrement(
@@ -275,41 +275,58 @@ class Check {
       price,
       this.total__value,
       this.result__value,
+      itemId,
     );
 
     if (quantityValue.textContent < 1) {
       this.removeItem(productItem);
+      this.removeItemOnId(itemId);
     }
   }
 
-  filteredOnId(id) {
-    return this.list.filter(item => item.id != Number(id));
+  removeItemOnId(id) {
+    this.list = this.list.filter(item => item.id !== Number(id));
+
+    return this.list;
   }
 
-  increment(btnDataset, quantity, total, price, amount, result) {
+  findItemOnId(id) {
+    const item = this.list.find(item => item.id === Number(id));
+
+    return item;
+  }
+
+  increment(btnDataset, quantity, total, price, amount, result, id) {
     if (btnDataset === 'increment') {
       quantity.textContent++;
 
+      const itemQuantity = this.findItemOnId(id);
+
+      itemQuantity.quantity = Number(quantity.textContent);
+
       total.textContent = this.countingAmount(
         quantity.textContent,
         price.textContent,
       );
-      result.textContent = `${this.totalSummaryAmount()} ₴`;
-      amount.textContent = `${this.totalSummaryAmount()} ₴`;
+      result.textContent = `${this.totalAmount()} ₴`;
+      amount.textContent = `${this.totalAmount()} ₴`;
     }
   }
 
-  decrement(btnDataset, quantity, total, price, amount, result) {
+  decrement(btnDataset, quantity, total, price, amount, result, id) {
     if (btnDataset === 'decrement') {
       quantity.textContent--;
+
+      const itemQuantity = this.findItemOnId(id);
+      itemQuantity.quantity = Number(quantity.textContent);
 
       total.textContent = this.countingAmount(
         quantity.textContent,
         price.textContent,
       );
 
-      result.textContent = `${this.totalSummaryAmount()} ₴`;
-      amount.textContent = `${this.totalSummaryAmount()} ₴`;
+      result.textContent = `${this.totalAmount()} ₴`;
+      amount.textContent = `${this.totalAmount()} ₴`;
     }
   }
 
@@ -345,13 +362,13 @@ class Check {
 
     this.result__value.textContent = `0.00 ₴`;
     this.total__value.textContent = `0.00 ₴`;
-    
+
     comment.classList.add('none');
     textInput.value = '';
   }
 
   removeItem(item) {
-    item.innerHTML = '';
+    item.remove();
   }
 
   addListenerOnDropdown() {
