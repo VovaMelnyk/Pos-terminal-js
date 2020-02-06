@@ -28,9 +28,13 @@ class Check {
     this.result__value = null;
     this.total__value = null;
 
+    this.textInput = null;
+    this.textComment = null;
+
     this.addCommentToScreenHandleClick = this.addCommentToScreenHandleClick.bind(
       this,
     );
+    this.clearFieldHandleClick = this.clearFieldHandleClick.bind(this);
     this.dropdownHandlerClick = this.dropdownHandlerClick.bind(this);
     this.removeCheckHandleClick = this.removeCheckHandleClick.bind(this);
     this.incrementAndDecrementHandleClick = this.incrementAndDecrementHandleClick.bind(
@@ -50,13 +54,21 @@ class Check {
     this.addListenerOnDropdown();
 
     this.addListenerCommentDone();
+    this.addListenerCommentClose();
 
     this.addListenerOnPayment();
 
+    this.setDomElements();
+
+    this.addListenerOnAddedItem();
+  }
+
+  setDomElements() {
     this.result__value = document.querySelector('.result__value');
     this.total__value = document.querySelector('.total__value');
-    //--------------------FOR TEST-------------------------------------------
-    this.addListenerOnAddedItem();
+
+    this.textInput = document.querySelector('textarea[data-action="comment"]');
+    this.textComment = document.querySelector('.comment__text');
   }
 
   renderCheck() {
@@ -173,7 +185,7 @@ class Check {
             <form class="col s12">
               <div class="row">
                 <div class="input-field col s12">
-                  <textarea id="textarea1" class="materialize-textarea"></textarea>
+                  <textarea id="textarea1" class="materialize-textarea" data-action="comment"></textarea>
                   <label for="textarea1">Комментарий к чеку...</label>
                 </div>
               </div>
@@ -182,7 +194,7 @@ class Check {
         </div>
         <div class="modal-footer">
           <button class="modal-close waves-effect waves-green btn" data-action="done">Готово</button>
-          <button class="modal-close waves-effect waves-green btn-flat">Отменить</button>
+          <button class="modal-close waves-effect waves-green btn-flat" data-action="close">Отменить</button>
         </div>
       </div>
     `;
@@ -217,14 +229,6 @@ class Check {
     const total = (quantity * price).toFixed(2);
 
     return total;
-  }
-
-  totalSummaryAmount() {
-    const allTotal = document.querySelectorAll('.item-total');
-
-    return [...allTotal]
-      .reduce((acc, el) => Number(el.textContent) + acc, 0)
-      .toFixed(2);
   }
 
   totalAmount() {
@@ -336,19 +340,31 @@ class Check {
     btnDone.addEventListener('click', this.addCommentToScreenHandleClick);
   }
 
-  addCommentToScreenHandleClick() {
-    const textInput = document.querySelector('textarea');
-    const comment = document.querySelector('.comment');
-    const textComment = document.querySelector('.comment__text');
+  addListenerCommentClose() {
+    const btnClose = document.querySelector('button[data-action="close"]');
 
-    if (textInput.value.trim() === '') {
-      textComment.textContent = '';
+    btnClose.addEventListener('click', this.clearFieldHandleClick);
+  }
+
+  addCommentToScreenHandleClick() {
+    const comment = document.querySelector('.comment');
+
+    if (this.textInput.value.trim() === '') {
+      this.textComment.textContent = '';
       comment.classList.add('none');
       return;
     }
 
-    textComment.textContent = textInput.value;
+    this.textComment.textContent = this.textInput.value;
     comment.classList.remove('none');
+  }
+  
+  clearFieldHandleClick() {
+    if(this.textComment.textContent) {
+      return;
+    }
+
+    this.textInput.value = '';
   }
 
   clearOrder() {
@@ -421,7 +437,6 @@ class Check {
       price: 30,
     };
 
-    
     this.list.push(productObj);
 
     const foodList = document.querySelector('tbody');
