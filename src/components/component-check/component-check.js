@@ -413,7 +413,6 @@ class Check {
     </div>`;
   }
 
-  //--------------------ADD FOOD-ITEM FOR TEST-------------------------------------------
   addProductItemHandleClick() {
     const productObj = {
       id: Date.now(),
@@ -422,28 +421,21 @@ class Check {
       price: 30,
     };
 
-    const foodList = document.querySelector('tbody');
-
-    const resultSum =
-      Number(this.totalSummaryAmount()) +
-      Number(this.countingAmount(productObj.quantity, productObj.price));
-    const totalSum =
-      Number(this.totalSummaryAmount()) +
-      Number(this.countingAmount(productObj.quantity, productObj.price));
-
+    
     this.list.push(productObj);
 
-    this.result__value.textContent = `${resultSum.toFixed(2)} ₴`;
-    this.total__value.textContent = `${totalSum.toFixed(2)} ₴`;
+    const foodList = document.querySelector('tbody');
+
+    this.result__value.textContent = `${this.totalAmount()} ₴`;
+    this.total__value.textContent = `${this.totalAmount()} ₴`;
 
     this.addToScreen(foodList, 'beforeend', this.renderListItem(productObj));
   }
 
-  //--------------------ADD FOOD-ITEM FOR TEST-------------------------------------------
   addListenerOnAddedItem() {
     const addBtn = document.querySelector('button[data-action="add"]');
 
-    addBtn.addEventListener('click', this.addProductItemHandleClick.bind(this));
+    addBtn.addEventListener('click', this.addProductItemHandleClick);
   }
 }
 
