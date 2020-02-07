@@ -6,13 +6,16 @@
 
   width: 60%;
   height: 100vh;
-  padding: 10px;
+  padding: 20px;
   background-color: rgb(207, 231, 161);
 
-  .categories-list {
+  .categories-list,
+  .product-list {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
+    height: calc(100vh - 25px);
+    overflow-y: auto;
 
     &__item {
       width: 25%;
@@ -22,15 +25,22 @@
         margin: 0;
 
         &-content {
+          display: flex;
+          justify-content: space-between;
           padding: 2px 5px 5px 5px;
         
-          .card-title {
+          .card-title,
+          .card-price {
             margin: 0;
             font-size: 16px;
             line-height: 1.2;
             font-weight: 500;
           }
         }
+      }
+
+      &:hover {
+        cursor: pointer;
       }
     }
   }

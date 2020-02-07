@@ -50,13 +50,17 @@ class Menu {
             img: 'https://i.ytimg.com/vi/cEALpGVB-cA/maxresdefault.jpg',
           },
         ],
-        image: 'https://galaktica.ru/images/newMenu-plitka/italia-kolbasa.jpg',
+        image: 'https://smachno.ua/wp-content/uploads/2018/12/20/402.jpg',
       },
     ];
+
+    this.categoryItemHandleClick = this.categoryItemHandleClick.bind(this);
   }
 
   init(container) {
     this.addToScreen(container, 'beforeend', this.renderMenu());
+
+    this.addListenerOnCategoriesListItems();
   }
 
   addToScreen(container, position, element) {
@@ -92,6 +96,64 @@ class Menu {
           </div>
         </div>
       </li>`;
+  }
+
+  renderProductList(products) {
+    return `
+      <ul class="product-list">
+        ${products.reduce((acc, el) => this.renderProductItems(el) + acc, '')}
+      </ul>`;
+  }
+
+  renderProductItems({ title, id, img, price }) {
+    return `
+      <li class="product-list__item" data-product-id="${id}">
+        <div class="card">
+          <div class="card-image">
+            <img src=${img} width="300" height="100">
+          </div>
+          <div class="card-content">
+            <span class="card-title">${title}</span>
+            <span class="card-price">${price}</span>
+          </div>
+        </div>
+      </li>`;
+  }
+
+  addListenerOnCategoriesListItems() {
+    const categoryList = document.querySelector('.categories-list');
+
+    categoryList.addEventListener('click', this.categoryItemHandleClick);
+  }
+
+  categoryItemHandleClick(e) {
+    if (
+      e.target.tagName !== 'LI' &&
+      e.target.tagName !== 'P' &&
+      e.target.tagName !== 'IMG'
+    ) {
+      return;
+    }
+
+    const menu = document.querySelector('.menu');
+
+    const categoryItem = e.target.closest('.categories-list__item');
+    const categoryItemId = categoryItem.dataset.categoriesId;
+
+    const productList = this.findCategoryObjectById(categoryItemId).productList;
+
+    this.removeElement(categoryItem.parentNode);
+    this.addToScreen(menu, 'beforeend', this.renderProductList(productList))
+  }
+
+
+
+  findCategoryObjectById(id) {
+    return this.categoriesList.find(item => item.id === Number(id));
+  }
+
+  removeElement(element) {
+    element.remove();
   }
 }
 
