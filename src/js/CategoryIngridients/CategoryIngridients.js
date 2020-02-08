@@ -6,16 +6,20 @@ import './CategoryIngridients.css';
 const allItem = data => {
   return data.reduce((acc, Item) => {
     acc += `
-        <tr id='${Item.id}'>
-            <td>${Item.name}</td>
-            <td>${Item.amount}</td>
-            <td>
-                <a href="#" class="nav-title">edit</a>
-            </td>
-            <td>
-                <a href="#" class="nav-title">...</a>
-            </td>
-        </tr>`;
+        <li class="row yesh__list" id='${Item.id}'>
+            <div class="col s4 m5" id="js-category">
+              <div>${Item.name}</div>
+            </div>
+            <div class="col s4 m5">
+              <div>${Item.amount}</div>
+            </div>
+            <div class="col s2 m1 yesh-jcfe">
+              <a href="#" class="yesh-link">edit</a>
+            </div>
+            <div class="col s2 m1 yesh-jcfe">
+              <a href="#" class="yesh-link">...</a>
+            </div>
+        </li>`;
     return acc;
   }, '');
 };
@@ -79,7 +83,8 @@ class CategoryIngridients {
     }
   }
   summeryFilterData(e) {
-    if (e.target.id === 'js-category') {
+    const { id } = e.target.parentNode;
+    if (id === 'js-category') {
       this.sort.name = !this.sort.name;
       this.sort.amount = null;
       this.filterData({
@@ -88,7 +93,7 @@ class CategoryIngridients {
         direction: this.sort.name,
       });
     }
-    if (e.target.id === 'js-amount') {
+    if (id === 'js-amount') {
       this.sort.amount = !this.sort.amount;
       this.sort.name = null;
       this.filterData({
@@ -135,20 +140,35 @@ class CategoryIngridients {
   }
   //создание разметки таблицы + елемент Вадима
   elementList(data) {
+    const icon = key => {
+      return this.sort[key] !== null
+        ? `<i class="material-icons yesh-fz">
+              ${this.sort[key] ? 'arrow_drop_up' : 'arrow_drop_down'}
+            </i>`
+        : '';
+    };
     return `
-    <table class="col s12 yesh-p0">
-      <thead>
-        <tr id="js__listener-table">
-          <th class="col s4 m5 yesh-p0" id="js-category" >Категория</th>
-          <th class="col s4 m5 yesh-p0-10" id="js-amount">Кол-во ингридиентов</th>
-          <th class="col s2 m1 yesh-p0"></th>
-          <th class="col s2 m1 yesh-p0"></th>
-        </trid="jslistener">
-      </thead>
-      <tbody class="row">
-        ${allItem(data)}
-      </tbody>
-    </table>
+    <section class="row yesh yesh-m0-10">
+        <ul class="col s12 yesh-p0" >
+            <li class="row yesh__list yesh__list-head yesh-aic" id="js__listener-table">
+                <div class="col s4 m5 yesh-aic yesh-min-h30" id="js-category">
+                  <div>Категория</div>
+                  <div>${icon('name')}</div>
+                </div>
+                <div class="col s4 m5 yesh-aic yesh-min-h30" id="js-amount">
+                  <div>Кол-во ингридиентов</div>
+                  <div>${icon('amount')}</div>
+                </div>
+                <div class="col s2 m1">
+                
+                </div>
+                <div class="col s2 m1">
+                
+                </div>
+            </li>
+            ${allItem(data)}
+        </ul>
+    </section>
     `;
   }
   removeListener() {

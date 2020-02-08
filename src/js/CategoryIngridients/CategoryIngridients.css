@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: rgb(63, 62, 62);
 }
 .mainLoginInput {
   height: 40px;
@@ -52,6 +53,26 @@
   padding-left: 5px;
   padding-top: 2px;
 }
+.yesh__list {
+  margin-bottom: 0;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(63, 62, 62, 0.5);
+}
+.yesh__list-head {
+  margin-bottom: 10px;
+  padding: 4px 0;
+  border-bottom: 1px solid rgb(63, 62, 62);
+}
+.yesh-min-h30 {
+  min-height: 30px !important;
+}
+.yesh-link {
+  color: rgb(63, 62, 62);
+  cursor: pointer;
+}
+.yesh-df {
+  display: flex;
+}
 .yesh-jcc {
   display: flex;
   justify-content: center;
@@ -64,11 +85,17 @@
   display: flex;
   align-items: center;
 }
+.yesh-fz14 {
+  font-size: 14px;
+}
 .yesh-m0 {
   margin: 0 !important;
 }
 .yesh-m10 {
   margin: 0.75rem !important;
+}
+.yesh-m0-10 {
+  margin: 0 0.75rem !important;
 }
 .yesh-p0 {
   padding: 0 !important;
