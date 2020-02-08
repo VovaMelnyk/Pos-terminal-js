@@ -429,16 +429,16 @@ class Check {
     </div>`;
   }
 
-  addProductItemHandleClick() {
-    const productObj = {
-      id: Date.now(),
-      title: 'Орешки',
-      quantity: 3,
-      price: 30,
-    };
-
+  addProductItemHandleClick(productObj) {
+    // const productObj = {
+    //   id: Date.now(),
+    //   title: 'Орешки',
+    //   quantity: 3,
+    //   price: 30,
+    // };
+    
     this.list.push(productObj);
-
+    console.log(this.list);
     const foodList = document.querySelector('tbody');
 
     this.result__value.textContent = `${this.totalAmount()} ₴`;

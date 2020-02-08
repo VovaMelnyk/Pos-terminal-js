@@ -1,5 +1,4 @@
-import Check from '../component-check/component-check';
-const check = new Check();
+import { addHandler } from '../../index.js'
 import '@/styles/materialize/materialize';
 import './component-menu-style.scss';
 
@@ -181,6 +180,8 @@ class Menu {
 
     const productObject = this.findObjectById(productList, productItemId);
 
+   addHandler(productObject);
+   console.log(productObject);
   }
 
   findObjectById(list, id) {
