@@ -1,0 +1,88 @@
+@import '//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css';
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.mainLoginInput {
+  height: 40px;
+  padding: 0px;
+  font-size: 30px;
+  margin: 5px 0;
+}
+
+.mainLoginInput::-webkit-input-placeholder {
+  font-family: FontAwesome;
+  font-weight: normal;
+  overflow: visible;
+  vertical-align: top;
+  display: inline-block !important;
+  padding-left: 5px;
+  padding-top: 2px;
+}
+
+.mainLoginInput::-moz-placeholder {
+  font-family: FontAwesome;
+  font-weight: normal;
+  overflow: visible;
+  vertical-align: top;
+  display: inline-block !important;
+  padding-left: 5px;
+  padding-top: 2px;
+}
+.yesh-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgb(255, 255, 255);
+  background-color: #10b02d;
+  border-radius: 10px;
+  padding: 6px 20px;
+  transition: background-color 0.5s;
+}
+.yesh-btn:hover {
+  background-color: #066b19;
+}
+.mainLoginInput:-ms-input-placeholder {
+  font-family: FontAwesome;
+  font-weight: normal;
+  overflow: visible;
+  vertical-align: top;
+  /* display: inline-block !important; */
+  padding-left: 5px;
+  padding-top: 2px;
+}
+.yesh-jcc {
+  display: flex;
+  justify-content: center;
+}
+.yesh-jcfe {
+  display: flex;
+  justify-content: flex-end;
+}
+.yesh-aic {
+  display: flex;
+  align-items: center;
+}
+.yesh-m0 {
+  margin: 0 !important;
+}
+.yesh-m10 {
+  margin: 0.75rem !important;
+}
+.yesh-p0 {
+  padding: 0 !important;
+}
+.yesh-p10 {
+  padding: 0.75rem !important;
+}
+.yesh-p10-0 {
+  padding: 0.75rem 0 !important;
+}
+.yesh-p0-10 {
+  padding: 0 0.75rem !important;
+}
+.yesh-fww {
+  display: flex;
+  flex-wrap: wrap;
+}
