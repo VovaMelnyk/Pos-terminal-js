@@ -1,5 +1,5 @@
 import Check from '../component-check/component-check';
-
+const check = new Check();
 import '@/styles/materialize/materialize';
 import './component-menu-style.scss';
 
@@ -54,7 +54,10 @@ class Menu {
       },
     ];
 
+    this.categoryItemId = null;
+
     this.categoryItemHandleClick = this.categoryItemHandleClick.bind(this);
+    this.productItemHandleClick = this.productItemHandleClick.bind(this);
   }
 
   init(container) {
@@ -138,18 +141,50 @@ class Menu {
     const menu = document.querySelector('.menu');
 
     const categoryItem = e.target.closest('.categories-list__item');
-    const categoryItemId = categoryItem.dataset.categoriesId;
+    this.categoryItemId = categoryItem.dataset.categoriesId;
 
-    const productList = this.findCategoryObjectById(categoryItemId).productList;
+    const productList = this.findObjectById(
+      this.categoriesList,
+      this.categoryItemId,
+    ).productList;
 
     this.removeElement(categoryItem.parentNode);
-    this.addToScreen(menu, 'beforeend', this.renderProductList(productList))
+    this.addToScreen(menu, 'beforeend', this.renderProductList(productList));
+
+    this.addListenerOnProductsListItems();
   }
 
+  addListenerOnProductsListItems() {
+    const productList = document.querySelector('.product-list');
 
+    productList.addEventListener('click', this.productItemHandleClick);
+  }
 
-  findCategoryObjectById(id) {
-    return this.categoriesList.find(item => item.id === Number(id));
+  productItemHandleClick(e) {
+    if (
+      e.target.tagName !== 'LI' &&
+      e.target.tagName !== 'P' &&
+      e.target.tagName !== 'IMG'
+    ) {
+      return;
+    }
+
+    const productItem = e.target.closest('.product-list__item');
+    const productItemId = productItem.dataset.productId;
+
+    const categoryItem = this.findObjectById(
+      this.categoriesList,
+      this.categoryItemId,
+    );
+
+    const productList = categoryItem.productList;
+
+    const productObject = this.findObjectById(productList, productItemId);
+
+  }
+
+  findObjectById(list, id) {
+    return list.find(item => item.id === Number(id));
   }
 
   removeElement(element) {
