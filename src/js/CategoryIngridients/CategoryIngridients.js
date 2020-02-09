@@ -2,7 +2,7 @@
 import '@/styles/materialize/materialize';
 import './CategoryIngridients.css';
 
-// елемент Bадима принимает data возвращает tr
+// елемент Bадима принимает data возвращает li //это заглушка
 const allItem = data => {
   return data.reduce((acc, Item) => {
     acc += `
@@ -127,7 +127,7 @@ class CategoryIngridients {
   //создание разметки поиска
   elementFinder() {
     return `
-    <div class="row">
+    <div class="row yesh-m0">
       <div class="col s12 m6 yesh-p0">
         <form class="input action="" id="js__listener-finder">
           <div>
