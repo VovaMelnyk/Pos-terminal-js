@@ -1,4 +1,4 @@
-import { addHandler } from '../../index.js'
+import { addHandler } from '../../index.js';
 import '@/styles/materialize/materialize';
 import './component-menu-style.scss';
 
@@ -180,8 +180,12 @@ class Menu {
 
     const productObject = this.findObjectById(productList, productItemId);
 
-   addHandler(productObject);
-   console.log(productObject);
+    const obj = {
+      ...productObject,
+      id: Date.now(),
+    };
+
+    addHandler(obj);
   }
 
   findObjectById(list, id) {

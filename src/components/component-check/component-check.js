@@ -4,27 +4,7 @@ import './component-check-style.scss';
 
 class Check {
   constructor() {
-    this.list = [
-      {
-        id: Date.now() + 1,
-        title: 'Кaльмар',
-        quantity: 1,
-        price: 38.0,
-      },
-      {
-        id: Date.now() + 2,
-        title: 'Пиво',
-        quantity: 1,
-        price: 58.0,
-      },
-      {
-        id: Date.now() + 3,
-        title: 'Орешки',
-        quantity: 1,
-        price: 120.5,
-      },
-    ];
-
+    this.list = [];
     this.result__value = null;
     this.total__value = null;
 
@@ -60,7 +40,7 @@ class Check {
 
     this.setDomElements();
 
-    this.addListenerOnAddedItem();
+    // this.addListenerOnAddedItem();
   }
 
   setDomElements() {
@@ -358,9 +338,9 @@ class Check {
     this.textComment.textContent = this.textInput.value;
     comment.classList.remove('none');
   }
-  
+
   clearFieldHandleClick() {
-    if(this.textComment.textContent) {
+    if (this.textComment.textContent) {
       return;
     }
 
@@ -430,28 +410,35 @@ class Check {
   }
 
   addProductItemHandleClick(productObj) {
-    // const productObj = {
-    //   id: Date.now(),
-    //   title: 'Орешки',
-    //   quantity: 3,
-    //   price: 30,
-    // };
-    
-    this.list.push(productObj);
-    console.log(this.list);
     const foodList = document.querySelector('tbody');
+
+    const title = productObj.title;
+    const item = this.list.find(item => item.title === title);
+
+    if (item) {
+      item.quantity++;
+      this.list.push(item);
+      this.addToScreen(foodList, 'beforeend', this.renderListItem(item));
+    } else {
+     
+      this.list.push(productObj);
+      this.addToScreen(foodList, 'beforeend', this.renderListItem(productObj));
+    }
+
+    console.log(this.list);
+    // this.list.push(productObj);
 
     this.result__value.textContent = `${this.totalAmount()} ₴`;
     this.total__value.textContent = `${this.totalAmount()} ₴`;
 
-    this.addToScreen(foodList, 'beforeend', this.renderListItem(productObj));
+    // this.addToScreen(foodList, 'beforeend', this.renderListItem(productObj));
   }
 
-  addListenerOnAddedItem() {
-    const addBtn = document.querySelector('button[data-action="add"]');
+  // addListenerOnAddedItem() {
+  //   const addBtn = document.querySelector('button[data-action="add"]');
 
-    addBtn.addEventListener('click', this.addProductItemHandleClick);
-  }
+  //   addBtn.addEventListener('click', this.addProductItemHandleClick);
+  // }
 }
 
 export default Check;
