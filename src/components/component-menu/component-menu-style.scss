@@ -9,6 +9,16 @@
   padding: 20px;
   background-color: rgb(207, 231, 161);
 
+  .btn-wrapper {
+    padding: 0 0 5px 4px;
+  }
+
+  .menu-btn {
+    padding: 8px 40px;
+    line-height: 1.2;
+    background-color: rgb(255, 174, 68);
+  }
+
   .categories-list,
   .product-list {
     display: flex;
@@ -27,7 +37,7 @@
           display: flex;
           justify-content: space-between;
           padding: 2px 5px 5px 5px;
-        
+
           .card-title,
           .card-price {
             margin: 0;

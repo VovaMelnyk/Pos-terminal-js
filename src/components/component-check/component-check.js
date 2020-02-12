@@ -415,7 +415,7 @@ class Check {
     if (this.list.includes(productObj)) {
       productObj.quantity++;
 
-      this.changeCheckItem(productObj);
+      this.changeCheckListItem(productObj);
     } else {
       productObj.quantity = 1;
       this.list.push(productObj);

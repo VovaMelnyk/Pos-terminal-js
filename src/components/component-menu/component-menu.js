@@ -53,7 +53,8 @@ class Menu {
             title: 'Бутерброд с икрой',
             quantity: 1,
             price: 200,
-            img: 'https://vkusno-gotovit.ru/wp-content/uploads/2018/05/buterbrod-s-ikroj.jpg',
+            img:
+              'https://vkusno-gotovit.ru/wp-content/uploads/2018/05/buterbrod-s-ikroj.jpg',
           },
         ],
         image: 'https://smachno.ua/wp-content/uploads/2018/12/20/402.jpg',
@@ -61,7 +62,11 @@ class Menu {
     ];
 
     this.categoryItemId = null;
+    this.productItemId = null;
 
+    this.backToCategoryItemHandleClick = this.backToCategoryItemHandleClick.bind(
+      this,
+    );
     this.categoryItemHandleClick = this.categoryItemHandleClick.bind(this);
     this.productItemHandleClick = this.productItemHandleClick.bind(this);
   }
@@ -70,6 +75,7 @@ class Menu {
     this.addToScreen(container, 'beforeend', this.renderMenu());
 
     this.addListenerOnCategoriesListItems();
+    this.addListenerBackToCategoryItem();
   }
 
   addToScreen(container, position, element) {
@@ -79,8 +85,16 @@ class Menu {
   renderMenu() {
     return `
       <div class="menu">
+        ${this.renderPrevToCategoryButton()}
         ${this.renderCategoriesList()}
       </div>`;
+  }
+
+  renderPrevToCategoryButton() {
+    return `
+        <div class="btn-wrapper">
+          <button class="menu-btn btn" data-action="back"><i class="material-icons center">arrow_back</i></button>
+        </div>`;
   }
 
   renderCategoriesList() {
@@ -168,16 +182,14 @@ class Menu {
     }
 
     const productItem = e.target.closest('.product-list__item');
-    const productItemId = productItem.dataset.productId;
+    this.productItemId = productItem.dataset.productId;
 
-    const categoryItem = this.findObjectById(
+    const productList = this.findObjectById(
       this.categoriesList,
       this.categoryItemId,
-    );
+    ).productList;
 
-    const productList = categoryItem.productList;
-
-    const productObject = this.findObjectById(productList, productItemId);
+    const productObject = this.findObjectById(productList, this.productItemId);
 
     addProductItem(productObject);
   }
@@ -188,6 +200,26 @@ class Menu {
 
   removeElement(element) {
     element.remove();
+  }
+
+  addListenerBackToCategoryItem() {
+    const backBtn = document.querySelector('button[data-action="back"]');
+
+    backBtn.addEventListener('click', this.backToCategoryItemHandleClick);
+  }
+
+  backToCategoryItemHandleClick(e) {
+    const menu = document.querySelector('.menu');
+    const productList = document.querySelector('.product-list');
+    const categoryList = document.querySelector('.category-list');
+
+    if (productList) {
+      productList.remove();
+    }
+
+    if (!categoryList) {
+      this.addToScreen(menu, 'beforeend', this.renderCategoriesList());
+    }
   }
 }
 
