@@ -74,9 +74,10 @@ class Check {
               <th class="list-total">Итого</th>
             </tr>
           </thead>
-          <tbody>
-            ${this.list.reduce((acc, el) => this.renderListItem(el) + acc, '')}
-          </tbody>
+          <tbody>${this.list.reduce(
+            (acc, el) => this.renderListItem(el) + acc,
+            '',
+          )}</tbody>
         </table>
       </div>`;
   }
@@ -96,8 +97,7 @@ class Check {
                 quantity,
                 price,
               )}</td>
-            </tr>
-          `;
+            </tr>`;
   }
 
   renderComments() {
@@ -412,26 +412,28 @@ class Check {
   addProductItemHandleClick(productObj) {
     const foodList = document.querySelector('tbody');
 
-    const title = productObj.title;
-    const item = this.list.find(item => item.title === title);
+    if (this.list.includes(productObj)) {
+      productObj.quantity++;
 
-    if (item) {
-      item.quantity++;
-      this.list.push(item);
-      this.addToScreen(foodList, 'beforeend', this.renderListItem(item));
+      this.changeCheckItem(productObj);
     } else {
-     
+      productObj.quantity = 1;
       this.list.push(productObj);
+
       this.addToScreen(foodList, 'beforeend', this.renderListItem(productObj));
     }
 
-    console.log(this.list);
-    // this.list.push(productObj);
-
     this.result__value.textContent = `${this.totalAmount()} ₴`;
     this.total__value.textContent = `${this.totalAmount()} ₴`;
+  }
 
-    // this.addToScreen(foodList, 'beforeend', this.renderListItem(productObj));
+  changeCheckListItem(data) {
+    const item = document.querySelector(`tr[data-id="${data.id}"]`);
+    const itemQuantity = item.children[1].querySelector('span');
+    const itemAmount = item.children[item.children.length - 1];
+    
+    itemQuantity.textContent = data.quantity;
+    itemAmount.textContent = this.countingAmount(data.quantity, data.price);
   }
 
   // addListenerOnAddedItem() {

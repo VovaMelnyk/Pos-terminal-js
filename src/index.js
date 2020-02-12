@@ -13,7 +13,7 @@ import Check from './components/component-check/component-check';
 const check = new Check();
 
 check.init(tb);
-export const addHandler = check.addProductItemHandleClick;
+export const addProductItem = check.addProductItemHandleClick;
 /**
  * Code for review Check component.
  */

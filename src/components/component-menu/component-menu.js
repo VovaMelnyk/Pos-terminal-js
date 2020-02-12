@@ -1,4 +1,4 @@
-import { addHandler } from '../../index.js';
+import { addProductItem } from '../../index.js';
 import '@/styles/materialize/materialize';
 import './component-menu-style.scss';
 
@@ -47,6 +47,13 @@ class Menu {
             quantity: 1,
             price: 120,
             img: 'https://i.ytimg.com/vi/cEALpGVB-cA/maxresdefault.jpg',
+          },
+          {
+            id: Date.now() + 12,
+            title: 'Бутерброд с икрой',
+            quantity: 1,
+            price: 200,
+            img: 'https://vkusno-gotovit.ru/wp-content/uploads/2018/05/buterbrod-s-ikroj.jpg',
           },
         ],
         image: 'https://smachno.ua/wp-content/uploads/2018/12/20/402.jpg',
@@ -129,11 +136,7 @@ class Menu {
   }
 
   categoryItemHandleClick(e) {
-    if (
-      e.target.tagName !== 'LI' &&
-      e.target.tagName !== 'P' &&
-      e.target.tagName !== 'IMG'
-    ) {
+    if (e.target.parentNode.tagName !== 'DIV') {
       return;
     }
 
@@ -160,11 +163,7 @@ class Menu {
   }
 
   productItemHandleClick(e) {
-    if (
-      e.target.tagName !== 'LI' &&
-      e.target.tagName !== 'P' &&
-      e.target.tagName !== 'IMG'
-    ) {
+    if (e.target.parentNode.tagName !== 'DIV') {
       return;
     }
 
@@ -180,12 +179,7 @@ class Menu {
 
     const productObject = this.findObjectById(productList, productItemId);
 
-    const obj = {
-      ...productObject,
-      id: Date.now(),
-    };
-
-    addHandler(obj);
+    addProductItem(productObject);
   }
 
   findObjectById(list, id) {
