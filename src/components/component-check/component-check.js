@@ -435,12 +435,22 @@ class Check {
     itemQuantity.textContent = data.quantity;
     itemAmount.textContent = this.countingAmount(data.quantity, data.price);
   }
-
-  // addListenerOnAddedItem() {
-  //   const addBtn = document.querySelector('button[data-action="add"]');
-
-  //   addBtn.addEventListener('click', this.addProductItemHandleClick);
-  // }
 }
 
 export default Check;
+
+// /**
+//  * Code for review Check component in index.js.
+//  */
+// import Check from './components/component-check/component-check';
+
+// const check = new Check();
+
+// check.init();
+// /**
+//  * Method addProductItem() export for menu-component
+//  */
+// export const addProductItem = check.addProductItemHandleClick;
+// /**
+//  * Code for review Check component.
+//  */

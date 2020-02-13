@@ -64,6 +64,8 @@ class Menu {
     this.categoryItemId = null;
     this.productItemId = null;
 
+    this.menu = null;
+
     this.backToCategoryItemHandleClick = this.backToCategoryItemHandleClick.bind(
       this,
     );
@@ -76,6 +78,12 @@ class Menu {
 
     this.addListenerOnCategoriesListItems();
     this.addListenerBackToCategoryItem();
+
+    this.setDomElements();
+  }
+
+  setDomElements() {
+    this.menu = document.querySelector('.menu');
   }
 
   addToScreen(container, position, element) {
@@ -154,8 +162,6 @@ class Menu {
       return;
     }
 
-    const menu = document.querySelector('.menu');
-
     const categoryItem = e.target.closest('.categories-list__item');
     this.categoryItemId = categoryItem.dataset.categoriesId;
 
@@ -165,7 +171,11 @@ class Menu {
     ).productList;
 
     this.removeElement(categoryItem.parentNode);
-    this.addToScreen(menu, 'beforeend', this.renderProductList(productList));
+    this.addToScreen(
+      this.menu,
+      'beforeend',
+      this.renderProductList(productList),
+    );
 
     this.addListenerOnProductsListItems();
   }
@@ -191,6 +201,9 @@ class Menu {
 
     const productObject = this.findObjectById(productList, this.productItemId);
 
+    /**
+     * Method addProductItem() import from check-component 
+     */
     addProductItem(productObject);
   }
 
@@ -209,7 +222,6 @@ class Menu {
   }
 
   backToCategoryItemHandleClick() {
-    const menu = document.querySelector('.menu');
     const productList = document.querySelector('.product-list');
     const categoryList = document.querySelector('.categories-list');
 
@@ -218,10 +230,37 @@ class Menu {
     }
 
     if (!categoryList) {
-      this.addToScreen(menu, 'beforeend', this.renderCategoriesList());
+      this.addToScreen(this.menu, 'beforeend', this.renderCategoriesList());
       this.addListenerOnCategoriesListItems();
     }
   }
 }
 
 export default Menu;
+
+// /**
+//  * Code for review Menu component in index.js.
+//  */
+// import Menu from './components/component-menu/component-menu';
+
+// const menu = new Menu();
+
+// menu.init();
+// /**
+//  * Code for review Menu component.
+//  */
+
+/**
+ * Test-box for testing component-check and component-menu together in index.js.
+ * 
+ * const root = document.querySelector('#root');
+   createTestBox();
+   const tb = document.querySelector('.testbox');
+
+
+   function createTestBox() {
+     const testBox = document.createElement('div');
+     testBox.classList.add('testbox');
+     root.append(testBox);
+   }
+ */
