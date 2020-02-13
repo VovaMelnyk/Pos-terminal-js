@@ -208,10 +208,10 @@ class Menu {
     backBtn.addEventListener('click', this.backToCategoryItemHandleClick);
   }
 
-  backToCategoryItemHandleClick(e) {
+  backToCategoryItemHandleClick() {
     const menu = document.querySelector('.menu');
     const productList = document.querySelector('.product-list');
-    const categoryList = document.querySelector('.category-list');
+    const categoryList = document.querySelector('.categories-list');
 
     if (productList) {
       productList.remove();
@@ -219,6 +219,7 @@ class Menu {
 
     if (!categoryList) {
       this.addToScreen(menu, 'beforeend', this.renderCategoriesList());
+      this.addListenerOnCategoriesListItems();
     }
   }
 }
