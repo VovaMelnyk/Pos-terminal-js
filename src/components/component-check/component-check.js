@@ -392,10 +392,10 @@ class Check {
   }
 
   removeCheckHandleClick() {
-    const check = document.querySelector('.check');
+    const order = document.querySelector('.order');
     const root = document.querySelector('#root');
 
-    check.remove();
+    order.remove();
 
     //--------------------RENDER COMPONENT PAYMENT FOR TEST------------------------------------
     this.addToScreen(root, 'beforeend', this.renderPayment());

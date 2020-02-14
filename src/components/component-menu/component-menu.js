@@ -1,4 +1,4 @@
-import { addProductItem } from '../../index.js';
+import { addProductItem } from '../component-order/component-order';
 import '@/styles/materialize/materialize';
 import './component-menu-style.scss';
 
