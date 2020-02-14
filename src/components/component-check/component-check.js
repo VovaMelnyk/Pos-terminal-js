@@ -4,27 +4,7 @@ import './component-check-style.scss';
 
 class Check {
   constructor() {
-    this.list = [
-      {
-        id: Date.now() + 1,
-        title: 'Кaльмар',
-        quantity: 1,
-        price: 38.0,
-      },
-      {
-        id: Date.now() + 2,
-        title: 'Пиво',
-        quantity: 1,
-        price: 58.0,
-      },
-      {
-        id: Date.now() + 3,
-        title: 'Орешки',
-        quantity: 1,
-        price: 120.5,
-      },
-    ];
-
+    this.list = [];
     this.result__value = null;
     this.total__value = null;
 
@@ -60,7 +40,7 @@ class Check {
 
     this.setDomElements();
 
-    this.addListenerOnAddedItem();
+    // this.addListenerOnAddedItem();
   }
 
   setDomElements() {
@@ -94,9 +74,10 @@ class Check {
               <th class="list-total">Итого</th>
             </tr>
           </thead>
-          <tbody>
-            ${this.list.reduce((acc, el) => this.renderListItem(el) + acc, '')}
-          </tbody>
+          <tbody>${this.list.reduce(
+            (acc, el) => this.renderListItem(el) + acc,
+            '',
+          )}</tbody>
         </table>
       </div>`;
   }
@@ -116,8 +97,7 @@ class Check {
                 quantity,
                 price,
               )}</td>
-            </tr>
-          `;
+            </tr>`;
   }
 
   renderComments() {
@@ -358,9 +338,9 @@ class Check {
     this.textComment.textContent = this.textInput.value;
     comment.classList.remove('none');
   }
-  
+
   clearFieldHandleClick() {
-    if(this.textComment.textContent) {
+    if (this.textComment.textContent) {
       return;
     }
 
@@ -429,29 +409,48 @@ class Check {
     </div>`;
   }
 
-  addProductItemHandleClick() {
-    const productObj = {
-      id: Date.now(),
-      title: 'Орешки',
-      quantity: 3,
-      price: 30,
-    };
-
-    this.list.push(productObj);
-
+  addProductItemHandleClick(productObj) {
     const foodList = document.querySelector('tbody');
+
+    if (this.list.includes(productObj)) {
+      productObj.quantity++;
+
+      this.changeCheckListItem(productObj);
+    } else {
+      productObj.quantity = 1;
+      this.list.push(productObj);
+
+      this.addToScreen(foodList, 'beforeend', this.renderListItem(productObj));
+    }
 
     this.result__value.textContent = `${this.totalAmount()} ₴`;
     this.total__value.textContent = `${this.totalAmount()} ₴`;
-
-    this.addToScreen(foodList, 'beforeend', this.renderListItem(productObj));
   }
 
-  addListenerOnAddedItem() {
-    const addBtn = document.querySelector('button[data-action="add"]');
-
-    addBtn.addEventListener('click', this.addProductItemHandleClick);
+  changeCheckListItem(data) {
+    const item = document.querySelector(`tr[data-id="${data.id}"]`);
+    const itemQuantity = item.children[1].querySelector('span');
+    const itemAmount = item.children[item.children.length - 1];
+    
+    itemQuantity.textContent = data.quantity;
+    itemAmount.textContent = this.countingAmount(data.quantity, data.price);
   }
 }
 
 export default Check;
+
+// /**
+//  * Code for review Check component in index.js.
+//  */
+// import Check from './components/component-check/component-check';
+
+// const check = new Check();
+
+// check.init();
+// /**
+//  * Method addProductItem() export for menu-component
+//  */
+// export const addProductItem = check.addProductItemHandleClick;
+// /**
+//  * Code for review Check component.
+//  */
