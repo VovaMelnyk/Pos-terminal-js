@@ -1,4 +1,4 @@
-import { addProductItem } from '../component-order/component-order';
+import { addProductItem } from '../../js/controller.js';
 import '@/styles/materialize/materialize';
 import './component-menu-style.scss';
 
@@ -66,6 +66,7 @@ class Menu {
 
     this.menu = null;
 
+    this.init = this.init.bind(this);
     this.backToCategoryItemHandleClick = this.backToCategoryItemHandleClick.bind(
       this,
     );
@@ -202,7 +203,7 @@ class Menu {
     const productObject = this.findObjectById(productList, this.productItemId);
 
     /**
-     * Method addProductItem() import from check-component 
+     * Method addProductItem() import from check-component
      */
     addProductItem(productObject);
   }

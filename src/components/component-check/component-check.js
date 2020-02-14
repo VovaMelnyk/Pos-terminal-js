@@ -11,6 +11,7 @@ class Check {
     this.textInput = null;
     this.textComment = null;
 
+    this.init = this.init.bind(this);
     this.addCommentToScreenHandleClick = this.addCommentToScreenHandleClick.bind(
       this,
     );
@@ -431,7 +432,7 @@ class Check {
     const item = document.querySelector(`tr[data-id="${data.id}"]`);
     const itemQuantity = item.children[1].querySelector('span');
     const itemAmount = item.children[item.children.length - 1];
-    
+
     itemQuantity.textContent = data.quantity;
     itemAmount.textContent = this.countingAmount(data.quantity, data.price);
   }
