@@ -67,6 +67,8 @@
   min-height: 30px !important;
 }
 .yesh-link {
+  text-align: center;
+  align-items: center;
   color: rgb(63, 62, 62);
   cursor: pointer;
 }

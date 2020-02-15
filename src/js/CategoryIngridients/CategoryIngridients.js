@@ -17,7 +17,9 @@ const allItem = data => {
               <a href="#" class="yesh-link">edit</a>
             </div>
             <div class="col s2 m1 yesh-jcfe">
-              <a href="#" class="yesh-link">...</a>
+              <span class="yesh-link">
+                <i class="material-icons" id='${Item.id}'>clear</i>
+              </span>
             </div>
         </li>`;
     return acc;
@@ -103,6 +105,15 @@ class CategoryIngridients {
       });
     }
   }
+  // удаление елемента
+  filterDataById(data, id) {
+    return data.filter(category => category.id !== id);
+  }
+  deleteCategory(e) {
+    const { id } = e.target;
+    this.data = this.filterDataById(this.data, id);
+    this.render(this.DOM_ELEMENT, this.data);
+  }
   //создание разметки шапки
   elementHeader() {
     return `
@@ -149,7 +160,7 @@ class CategoryIngridients {
     };
     return `
     <section class="row yesh yesh-m0-10">
-        <ul class="col s12 yesh-p0" >
+        <ul class="col s12 yesh-p0" id="js__listener-deleteCategory">
             <li class="row yesh__list yesh__list-head yesh-aic" id="js__listener-table">
                 <div class="col s4 m5 yesh-aic yesh-min-h30" id="js-category">
                   <div>Категория</div>
@@ -174,6 +185,9 @@ class CategoryIngridients {
   removeListener() {
     const listenerFinder = document.querySelector('#js__listener-finder');
     const listenerTable = document.querySelector('#js__listener-table');
+    const listenerDeleteCategory = document.querySelector(
+      '#js__listener-deleteCategory',
+    );
     if (!listenerFinder) return;
     listenerFinder.removeEventListener('submit', e => {
       e.preventDefault();
@@ -181,6 +195,8 @@ class CategoryIngridients {
     });
     if (!listenerTable) return;
     listenerTable.removeEventListener('click', e => this.summeryFilterData(e));
+    if (!listenerDeleteCategory) return;
+    listenerTable.removeEventListener('click', e => this.deleteCategory(e));
   }
   addListener() {
     // Слушатель поиска
@@ -194,6 +210,14 @@ class CategoryIngridients {
     const listenerTable = document.querySelector('#js__listener-table');
     // console.log('add listenerTable');
     listenerTable.addEventListener('click', e => this.summeryFilterData(e));
+
+    // Слушатель удаления
+    const listenerDeleteCategory = document.querySelector(
+      '#js__listener-deleteCategory',
+    );
+    listenerDeleteCategory.addEventListener('click', e =>
+      this.deleteCategory(e),
+    );
   }
 
   //Render render(domElement, data = this.data)
