@@ -6,6 +6,7 @@
     border-radius: 45%;
     justify-content: center;
     align-content: center;
+    justify-items: center;
     background-color: rgb(85, 85, 85);
     font-size: 30px;
     cursor: pointer;
@@ -22,7 +23,6 @@
     background-image: url(./body-bg.jpg);
     height: 100vh;
     width: 100%;
-    /* height: 100%; */
     margin: 0;
     padding: 0;
     display: grid;
@@ -33,6 +33,12 @@
     align-content: center;
 }
 
+.table_item{
+    font-size: 15px;
+    width: 130px;
+    text-align: center;
+}
+
 .list{
     display: flex;
     background-color: #faf7f5;
@@ -41,17 +47,11 @@
     margin: 0;
     top: 80px;
     right: -50%;
-    /* left: 20px; */
-    
     flex-direction: column;
-    /* opacity: 1; */
-    /* height: 200px; */
     max-height: 300px;
     min-width: 250px;
     font-size: 20px;
-    /* line-height: 40px; */
     box-shadow: 0 0 100px 20px rgba(0,0,0,0.2);
-    /* background: #00000024; */
     transition: opacity 50ms linear;
     border: 2px solid transparent;
     border-radius: 10px;
@@ -68,7 +68,6 @@
 }
 
 .list_item{
-    /* position: absolute; */
     border-bottom: 1px solid rgba(0,0,0,0.1);
     box-sizing: border-box;
     cursor: pointer;
@@ -76,10 +75,13 @@
     list-style: none;
     padding: 10px;
     padding-left: 30px;
-    /* color: #fff; */
     }
 
 .list_item__close{
     display: none;
     position: absolute;
+}
+
+.table_bgr{
+    background-color: royalblue;
 }
