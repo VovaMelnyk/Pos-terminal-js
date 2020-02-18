@@ -48,6 +48,26 @@
     top: 80px;
     right: -50%;
     flex-direction: column;
+    max-height: 290px;
+    min-width: 250px;
+    font-size: 20px;
+    box-shadow: 0 0 100px 20px rgba(0,0,0,0.2);
+    transition: opacity 50ms linear;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    overflow-y: auto;
+    z-index: 1111;
+    color: #000;
+}
+.list_last{
+    display: flex;
+    background-color: #faf7f5;
+    position: absolute;
+    padding: 0px;
+    margin: 0;
+    top: -260px;
+    right: -50%;
+    flex-direction: column;
     max-height: 300px;
     min-width: 250px;
     font-size: 20px;
@@ -59,10 +79,18 @@
     z-index: 1111;
     color: #000;
 }
+
+
 .list ul{
     padding: 0;
     margin: 0;
 }
+
+.list_last ul{
+    padding: 0;
+    margin: 0;
+}
+
 .list_item:hover{
     background-color: #c5c6c7;
 }

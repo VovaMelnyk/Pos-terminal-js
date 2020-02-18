@@ -63,6 +63,23 @@ return `<div class="list">
         </ul></div>`
     }
 
+    renderListLastTable(){
+return `<div class="list_last">
+<ul>
+            <li class="list_item">Кількість гостей</li>
+            <li class="list_item">1</li>
+            <li class="list_item">2</li>
+            <li class="list_item">3</li>
+            <li class="list_item">4</li>
+            <li class="list_item">5</li>
+            <li class="list_item">6</li>
+            <li class="list_item">7</li>
+            <li class="list_item">8</li>
+            <li class="list_item">9</li>
+            <li class="list_item">10</li>
+        </ul></div>`
+    }
+
     addToScreen (container, position, element){
         container.insertAdjacentHTML(position,element)
     }
@@ -70,8 +87,15 @@ return `<div class="list">
     renderListToClick(e){
         e.preventDefault()
         if(e.target.tagName !== 'DIV') return;
-        e.target.insertAdjacentHTML('beforeend', this.renderList())
-        // console.log(e.target);
+
+        if(+e.target.firstChild.textContent <= 12){
+            e.target.insertAdjacentHTML('beforeend', this.renderList())
+        }else{e.target.insertAdjacentHTML('beforeend', this.renderListLastTable())
+        }
+        
+console.log(e.target.firstChild.textContent);
+        // e.target.insertAdjacentHTML('beforeend', this.renderList())
+        console.dir(e.target);
         
         }
 
@@ -103,7 +127,7 @@ return `<div class="list">
 addClassBgr(e){
     e.preventDefault()
     if(e.target.tagName !== 'DIV') return;
-    console.dir(e.target);
+    // console.dir(e.target);
 for(let key in this.guest){
     
     if(this.guest[key].length > 0){
@@ -132,11 +156,14 @@ addObjKey(){
 
     isnElement(e){
         const list = document.querySelector('.list')
-        if(list){
-        list.remove();
+        const listLast = document.querySelector('.list_last')
+
+        if(list || listLast){
+        list.remove() && listLast.remove();
         }else {
         this.renderListToClick(e)
         }
+        
     }    
 
     addLisners(){
