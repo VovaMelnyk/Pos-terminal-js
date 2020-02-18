@@ -3,60 +3,44 @@
 export default class Hall {
     constructor() {
         this.inputValue = 'Кількість гостей';
-        this.guest = []
+        this.guest = {}
         
     }
 
     renderHall() {
         return `
         <div class="container ">
-            <div class="table">1
-            <span class="table_item"></span>
+            <div class="table">1<span class="table_item"></span>
             </div>
-            <div class="table">2
-            <span class="table_item"></span>
+            <div class="table">2<span class="table_item"></span>
             </div>
-            <div class="table">3
-            <span class="table_item"></span>
+            <div class="table">3<span class="table_item"></span>
             </div>
-            <div class="table">4
-            <span class="table_item"></span>
+            <div class="table">4<span class="table_item"></span>
             </div>
-            <div class="table">5
-            <span class="table_item"></span>
+            <div class="table">5<span class="table_item"></span>
             </div>
-            <div class="table">6
-            <span class="table_item"></span>
+            <div class="table">6<span class="table_item"></span>
             </div>
-            <div class="table">7
-            <span class="table_item"></span>
+            <div class="table">7<span class="table_item"></span>
             </div>
-            <div class="table">8
-            <span class="table_item"></span>
+            <div class="table">8<span class="table_item"></span>
             </div>
-            <div class="table">9
-            <span class="table_item"></span>
+            <div class="table">9<span class="table_item"></span>
             </div>
-            <div class="table">10
-            <span class="table_item"></span>
+            <div class="table">10<span class="table_item"></span>
             </div>
-            <div class="table">11
-            <span class="table_item"></span>
+            <div class="table">11<span class="table_item"></span>
             </div>
-            <div class="table">12
-            <span class="table_item"></span>
+            <div class="table">12<span class="table_item"></span>
             </div>
-            <div class="table">13
-            <span class="table_item"></span>
+            <div class="table">13<span class="table_item"></span>
             </div>
-            <div class="table">14
-            <span class="table_item"></span>
+            <div class="table">14<span class="table_item"></span>
             </div>
-            <div class="table">15
-            <span class="table_item"></span>
+            <div class="table">15<span class="table_item"></span>
             </div>
-            <div class="table">16
-            <span class="table_item"></span>
+            <div class="table">16<span class="table_item"></span>
             </div>  
         </div>`;
     }
@@ -87,6 +71,7 @@ return `<div class="list">
         e.preventDefault()
         if(e.target.tagName !== 'DIV') return;
         e.target.insertAdjacentHTML('beforeend', this.renderList())
+        // console.log(e.target);
         
         }
 
@@ -94,37 +79,55 @@ return `<div class="list">
         e.preventDefault()
         if(e.target.tagName !== 'LI') return;
         let allGuest = (e.target.textContent)
-
-        if(this.guest.length<0){
-            this.guest.push(+allGuest);
-    console.log(this.guest);
-
+        for(let key in this.guest){
+            
+            if (key){
+                // let a = this.guest[key]
+                if(this.guest[key].length == 0){
+                this.guest[key].push(+allGuest);
+                }else{this.guest[key] == this.guest[key].push(+allGuest)}
+                }
         }
-        this.guest.splice(0,1,+allGuest)
-        // console.log(this.guest);
-
     }
+
+    objKey(e){
+    e.preventDefault()
+    if(e.target.tagName !== 'DIV') return;
+    const value = []
+    let key = `table${e.target.firstChild.textContent}`;
+    if(key){
+    this.guest[key] = value
+    }}
+
 
 addClassBgr(e){
     e.preventDefault()
     if(e.target.tagName !== 'DIV') return;
-    console.log(e.target);
-    if(this.guest.length > 0){
+    console.dir(e.target);
+for(let key in this.guest){
+    
+    if(this.guest[key].length > 0){
     e.target.classList.add('table_bgr')
-    } 
+    } }
 
 }
 
-adds(){
+addStyle(){
     const container = document.querySelector('.container');
     container.addEventListener('click', this.addClassBgr.bind(this));
 
 }
 
+addObjKey(){
+    const container = document.querySelector('.container');
+    container.addEventListener('click', this.objKey.bind(this))
+}
 
     addLisnersGuest(){
         const container = document.querySelector('.container');
+
         container.addEventListener('click', this.listTextContent.bind(this))
+
     }
 
     isnElement(e){
@@ -138,14 +141,16 @@ adds(){
 
     addLisners(){
         const container = document.querySelector('.container');
-        container.addEventListener('click', this.isnElement.bind(this),this.addClassBgr.bind(this));
+        container.addEventListener('click', this.isnElement.bind(this));
     }
         
     start(container){
         this.addToScreen(container, 'beforeend', this.renderHall());
         this.addLisners();
         this.addLisnersGuest()
-        this.adds()
+        this.addStyle()
+        this.addObjKey()
+        
         
     }
 }
