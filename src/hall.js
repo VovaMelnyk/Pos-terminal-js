@@ -2,47 +2,41 @@
 
 export default class Hall {
     constructor() {
+        this.table = [
+            {id:'1', guest:0},
+            {id:'2', guest:0},
+            {id:'3', guest:0},
+            {id:'4', guest:0},
+            {id:'5', guest:0},
+            {id:'6', guest:0},
+            {id:'7', guest:0},
+            {id:'8', guest:0},
+            {id:'9', guest:0},
+            {id:'10', guest:0},
+            {id:'11', guest:0},
+            {id:'12', guest:0},
+            {id:'13', guest:0},
+            {id:'14', guest:0},
+            {id:'15', guest:0},
+            {id:'16', guest:0},
+            ];
         this.inputValue = 'Кількість гостей';
-        this.guest = {}
+        this.guest = {};
+        this.g = 0
+        
+
         
     }
 
-    renderHall() {
-        return `
-        <div class="container ">
-            <div class="table">1<span class="table_item"></span>
-            </div>
-            <div class="table">2<span class="table_item"></span>
-            </div>
-            <div class="table">3<span class="table_item"></span>
-            </div>
-            <div class="table">4<span class="table_item"></span>
-            </div>
-            <div class="table">5<span class="table_item"></span>
-            </div>
-            <div class="table">6<span class="table_item"></span>
-            </div>
-            <div class="table">7<span class="table_item"></span>
-            </div>
-            <div class="table">8<span class="table_item"></span>
-            </div>
-            <div class="table">9<span class="table_item"></span>
-            </div>
-            <div class="table">10<span class="table_item"></span>
-            </div>
-            <div class="table">11<span class="table_item"></span>
-            </div>
-            <div class="table">12<span class="table_item"></span>
-            </div>
-            <div class="table">13<span class="table_item"></span>
-            </div>
-            <div class="table">14<span class="table_item"></span>
-            </div>
-            <div class="table">15<span class="table_item"></span>
-            </div>
-            <div class="table">16<span class="table_item"></span>
-            </div>  
-        </div>`;
+    renderHall(){
+        return this.table.length ?
+        `<div class="container">${this.table.reduceRight((acc,el)=>this.renderTable(el)+acc,'')}       
+        </div>`: null
+    }
+
+    renderTable({id}){
+        return `<div class="table" id="${id}">${id}<span class="table_item"></span>
+            </div>`
     }
 
 
@@ -64,7 +58,7 @@ return `<div class="list">
     }
 
     renderListLastTable(){
-return `<div class="list_last">
+return `<div class="list list_last">
 <ul>
             <li class="list_item">Кількість гостей</li>
             <li class="list_item">1</li>
@@ -92,92 +86,68 @@ return `<div class="list_last">
             e.target.insertAdjacentHTML('beforeend', this.renderList())
         }else{e.target.insertAdjacentHTML('beforeend', this.renderListLastTable())
         }
-        
-console.log(e.target.firstChild.textContent);
-        // e.target.insertAdjacentHTML('beforeend', this.renderList())
-        console.dir(e.target);
-        
-        }
+    }
 
     listTextContent(e){
         e.preventDefault()
         if(e.target.tagName !== 'LI') return;
         let allGuest = (e.target.textContent)
-        for(let key in this.guest){
-            
-            if (key){
-                // let a = this.guest[key]
-                if(this.guest[key].length == 0){
-                this.guest[key].push(+allGuest);
-                }else{this.guest[key] == this.guest[key].push(+allGuest)}
-                }
-        }
+        this.g.guest = +allGuest
+        console.log(allGuest);
     }
 
     objKey(e){
-    e.preventDefault()
-    if(e.target.tagName !== 'DIV') return;
-    const value = []
-    let key = `table${e.target.firstChild.textContent}`;
-    if(key){
-    this.guest[key] = value
-    }}
-
-
-addClassBgr(e){
-    e.preventDefault()
-    if(e.target.tagName !== 'DIV') return;
-    // console.dir(e.target);
-for(let key in this.guest){
-    
-    if(this.guest[key].length > 0){
-    e.target.classList.add('table_bgr')
-    } }
-
-}
-
-addStyle(){
-    const container = document.querySelector('.container');
-    container.addEventListener('click', this.addClassBgr.bind(this));
-
-}
-
-addObjKey(){
-    const container = document.querySelector('.container');
-    container.addEventListener('click', this.objKey.bind(this))
-}
-
-    addLisnersGuest(){
-        const container = document.querySelector('.container');
-
-        container.addEventListener('click', this.listTextContent.bind(this))
-
+        e.preventDefault()
+        if(e.target.tagName !== 'DIV') return;
+        this.g = this.table.find(table =>table.id === e.target.firstChild.textContent)
+        if(this.g.guest !== 0){
+        e.target.classList.add('table_bgr')}
     }
+
+// addClassBgr(e){
+//     e.preventDefault()
+//     if(e.target.tagName !== 'DIV') return;
+
+    // if(this.g.guest > 0){
+    //     e.target.classList.add('table_bgr')
+    // }
+    // console.log(this.g);
+    // console.dir(e.target);
+// for(let key in this.guest){
+    
+//     if(this.guest[key].length > 0){
+//     e.target.classList.add('table_bgr')
+//     } }
+
+// }
+
+// addStyle(){
+//     const container = document.querySelector('.container');
+//     container.addEventListener('click', this.addClassBgr.bind(this));
+
+// }
+
 
     isnElement(e){
         const list = document.querySelector('.list')
-        const listLast = document.querySelector('.list_last')
-
-        if(list || listLast){
-        list.remove() && listLast.remove();
+        if(list){
+        list.remove()
         }else {
         this.renderListToClick(e)
-        }
-        
+        }        
     }    
 
     addLisners(){
         const container = document.querySelector('.container');
         container.addEventListener('click', this.isnElement.bind(this));
+        container.addEventListener('click', this.listTextContent.bind(this))
+        container.addEventListener('click', this.objKey.bind(this))
+
     }
         
     start(container){
         this.addToScreen(container, 'beforeend', this.renderHall());
         this.addLisners();
-        this.addLisnersGuest()
-        this.addStyle()
-        this.addObjKey()
-        
         
     }
 }
