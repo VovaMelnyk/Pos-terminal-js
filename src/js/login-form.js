@@ -5,30 +5,19 @@ import '@/styles/login-form';
 
 class LoginForm {
   constructor() {
+    this.root = document.querySelector('#root');
     this.addMarkup();
+    this.form = document.querySelector('.login-form');
+    this.error = document.querySelector('.error-box');
+    this.btn = document.querySelector('.login-form__button');
+    this.loginInput = document.querySelector('input[type="email"]');
+    this.passInput = document.querySelector('input[type="password"]');
+    this.register = document.querySelector('.register');
+    this.modal = document.querySelector('#modal1');
+
     this.openModal();
-    this.register();
+    this.registerNow();
     this.submit();
-  }
-  accessToItems() {
-    const root = document.querySelector('#root');
-    const form = document.querySelector('.login-form');
-    let error = document.querySelector('.error-box');
-    const btn = document.querySelector('.login-form__button');
-    const loginInput = document.querySelector('input[type="email"]');
-    const passInput = document.querySelector('input[type="password"]');
-    const register = document.querySelector('.register');
-    const modal = document.querySelector('#modal1');
-    return {
-      root,
-      form,
-      error,
-      btn,
-      loginInput,
-      passInput,
-      register,
-      modal,
-    };
   }
   renderMarkup() {
     return ` <div id="modal1" class="modal">
@@ -64,42 +53,33 @@ class LoginForm {
   </div>`;
   }
   addMarkup() {
-    this.accessToItems().root.insertAdjacentHTML(
-      'afterbegin',
-      this.renderMarkup(),
-    );
+    this.root.insertAdjacentHTML('afterbegin', this.renderMarkup());
   }
   openModal() {
-    M.Modal.init(this.accessToItems().modal).open();
+    M.Modal.init(this.modal).open();
   }
   cloceModal() {
-    M.Modal.init(this.accessToItems().modal).close();
+    M.Modal.init(this.modal).close();
   }
   transferToRegister() {
     this.cloceModal();
   }
-  register() {
-    this.accessToItems().register.addEventListener(
-      'click',
-      this.transferToRegister.bind(this),
-    );
+  registerNow() {
+    this.register.addEventListener('click', this.transferToRegister.bind(this));
   }
   preventDef(event) {
     event.preventDefault();
   }
   submit() {
-    this.accessToItems().btn.addEventListener(
-      'click',
-      this.isFillingForm.bind(this),
-    );
+    this.btn.addEventListener('click', this.isFillingForm.bind(this));
   }
   isIncludes(arr) {
     for (let obj of arr) {
       if (
-        obj.ligin !== this.accessToItems().loginInput.value.trim() &&
-        obj.password !== this.accessToItems().passInput.value.trim()
+        obj.ligin !== this.loginInput.value.trim() &&
+        obj.password !== this.passInput.value.trim()
       ) {
-        this.accessToItems().error.textContent = 'невірний логін або пароль';
+        this.error.textContent = 'невірний логін або пароль';
         return false;
       }
       return true;
@@ -107,29 +87,29 @@ class LoginForm {
   }
   isFillingForm() {
     if (
-      this.accessToItems().loginInput.value.trim() === '' ||
-      this.accessToItems().passInput.value.trim() === ''
+      this.loginInput.value.trim() === '' ||
+      this.passInput.value.trim() === ''
     ) {
-      this.accessToItems().form.addEventListener(
+      this.form.addEventListener(
         'submit',
         this.preventDef.bind(this),
-        (this.accessToItems().error.textContent = 'Fields are required!'),
+        (this.error.textContent = 'Fields are required!'),
       );
-      return false;
+      return;
     }
     this.isValid();
-    return true;
+    return;
   }
   isValid() {
     if (
       !this.isIncludes([{ ligin: 'nazarkynash16@gmail.com', password: 123456 }])
     ) {
       this.preventDef.bind(this);
-      this.accessToItems().error.textContent = 'невірний логін або пароль';
-      return false;
+      this.error.textContent = 'невірний логін або пароль';
+      return;
     }
     this.cloceModal();
-    return true;
+    return;
   }
 }
 
