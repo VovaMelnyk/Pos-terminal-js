@@ -1,13 +1,52 @@
 
 
-
-.box{
+.register-menu {
     display: block;
-    width: 1000px;
     margin: 0 auto;
+    width: 450px;
+    border: 1px solid black;
+    text-align: center;
+
+    &__head {
+        padding-top: 50px;
+        font: 500 30px Arial, san-serif;
+        margin: 0;
+
+    };
+
+    &__text {
+        font: 200 18px Arial, san-serif;
+    };
+
+    &__btn {
+        display: block;
+        width: 400px;
+        margin: 0 auto;
+        margin-bottom: 20px;
+    }
 }
 
-.link-box{
+.input-field {
     display: flex;
-    justify-content: flex-end;
+    width: 380px;
+    margin: 0 auto;
+    margin-bottom: 15px;
+}
+
+
+
+.link-box {
+    display: block;
+    text-align: end;
+    padding-right: 25px;
+    margin-bottom: 25px;
+}
+
+
+.unlock{
+ pointer-events: none;
+    background-color: #DFDFDF;
+    box-shadow: none;
+    color: #9F9F9F;
+    cursor: default;
 }
