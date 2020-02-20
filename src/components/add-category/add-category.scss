@@ -1,0 +1,86 @@
+
+.add-dish{
+    &__close{
+        display: flex;
+        padding-left: 10px;
+        align-items: center;
+        font-family: 'Arial',sans-serif;
+    }
+    &__return{
+        display: block;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-image: url(../../assets/img/back.svg);
+        background-size: 20px 20px;
+        background-repeat: no-repeat;
+        background-position: center;  
+        cursor: pointer;  
+        transition-duration: 0.3s;
+        &:hover{
+          background-color: #ececec;
+        }
+    }
+    &__title{
+        font-size: 24px;
+        font-weight: bold;
+    }
+    &__label{
+        height: 37px;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+    &__form{
+        display: flex;
+        font-family: 'Arial',sans-serif;
+
+        flex-direction: column;
+    }
+    
+}
+
+.input-container{
+    border-top:  1px solid #D2D2D2;
+    border-bottom:  1px solid #D2D2D2;
+    padding: 15px 15px 0 15px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+.add-input{
+    width: 380px;
+    padding: 8px 11px;
+    color: #333333;
+    line-height: 20px;
+    border: 1px solid #D2D2D2;
+    border-radius: 5px;
+}
+.input-name{
+    margin-left: 68px;
+}
+.input-photo{
+    margin-left: 50px;
+}
+.add-dish__btn{
+    font-size: 16px;
+    line-height: 1;
+    width: 130px;
+    margin-left: 150px;
+    padding: 12px 21px 15px 21px;
+    height: 46px;
+    border: none;
+    background: #10B02D;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    transition: background 0.15s ease-in;
+    &:hover{
+        background-color: #0ba842;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+        font-weight: bold;
+    }
+}
+
+.invalid{
+    border: 1px solid red;
+}

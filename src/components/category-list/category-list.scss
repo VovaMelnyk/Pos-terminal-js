@@ -1,0 +1,196 @@
+a{
+    display: block;
+    text-decoration: none;
+    color: #2688cd;;
+}
+a:hover{
+text-decoration: underline;
+}
+.content-header{
+    display: flex;
+    height: 50px;
+    justify-content: space-between;
+    border-bottom: 1px solid #EEEEEE;
+    padding: 0 15px;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    align-items: center;
+    &__title{
+        font-size: 24px;
+        font-weight: bold;
+        font-family: 'Arial',sans-serif;
+    }
+    &__quantity{
+        color: #999999;
+        font-weight: normal;
+        font-size: 0.8em;
+    }
+    &__button{
+        border: 1px solid #15ad4b;
+        background: #10B02D;
+        height: 34px;
+        padding: 6px 17px;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background 0.15s ease-in;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+        color: white;
+        &:hover{
+        background-color: #0b983d;
+        border-color: #0b983d;
+        }
+    }
+}
+.search{
+    padding: 0 15px;
+    margin-left: 5px;
+    margin-bottom: 15px;
+    &-form{
+        height: 32px;
+        width: 214px;
+        position: relative;
+        &__btn{
+            position: absolute;
+            display: block;
+            margin: 0;
+            padding: 0 0 0 21px;
+            border: none;
+            border-radius: 5px;
+            width: 16px;
+            height: 16px;
+            left: 10px;
+            top: 8px;
+            background-image: url(../../assets/img/search.svg);
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-color: transparent;  
+            cursor: pointer;
+        }
+        &__input{
+            width: 186px;
+            height: 28px;
+            padding-left: 30px;
+            font-size: 14px;
+            border: 1px solid #DDDDDD;
+            border-radius: 5px;
+            box-shadow: none;
+            transition: border 0.2s ease-out;
+        }
+    }
+}
+.categories{
+    &__list{
+        padding-left: 0;
+        margin: 0;
+    }
+    &__titles{
+        margin-left: 5px;
+        height: 32px;
+        border-bottom: 1px solid #EEEEEE;
+    }
+    &__title{
+        padding: 10px 15px;
+        font-size: 14px;
+        font-weight: normal;
+        color: #999999;
+        font-family: 'Arial',sans-serif;
+
+    }
+    &__item{
+        cursor: pointer;
+        font-family:'Arial',sans-serif;
+        height: 52px;
+        font-size:14px;
+        padding-right: 20px;
+        padding-left: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #EEEEEE;
+        &:hover{
+            background-color: rgb(245, 245, 245);
+            transition-duration: 0.6s;
+        }
+    }
+    &__meal{
+        display: flex;
+        opacity: 1;
+        align-items: center;
+    }
+    &__img{
+        margin-right: 10px;
+        width: 48px;
+        height: 35px;
+    }
+}
+
+.btn-open{
+    display: flex;
+    align-items: center;
+    &__btn{
+        position: relative;
+        padding: 0 5px;
+        width: 40px;
+        height: 52px;
+        font-size: 30px;
+        padding-bottom: 12px;
+        border: none;
+        background-color: transparent;
+        margin-left: 5px;
+        color: blue;
+        cursor: pointer;
+    }
+    &__list{
+        position: absolute;
+        display: none;
+        z-index: 1000;
+        left: -95%;
+        width: 96px;
+        padding: 5px 0;
+        margin: 2px 0 0;
+        font-size: 14px;
+        background-color: #ffffff;
+        border: 1px solid #cccccc;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 4px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+        background-clip: padding-box;
+        &--on{
+        display: block;
+        }
+    }
+    &__item{
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-weight: normal;
+        line-height: 1.428571429;
+        color: #333333;
+        white-space: nowrap;
+        &:hover{
+            background-color: rgb(245, 245, 245);
+            transition-duration: 0.3s;
+        }
+    }
+}
+.low-opacity{
+    opacity: 0.3;
+}
+.dn{
+    display: none;
+}
+// .my-block-funny-cow{
+//     margin: 0 auto;
+//     min-width: 760px;
+//     padding: 15px 0;
+// }
+
+ 
+
+
+
+
+
