@@ -85,7 +85,6 @@ class CategoryIngridients {
   }
 // clear filter on click X
   onClickFilter(e) {
-    console.dir(e.target)
     const {id}=e.target;
     const {clear}=ID_DOM_EL.finder;
     if( id === clear ){
