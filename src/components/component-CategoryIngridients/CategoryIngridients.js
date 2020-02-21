@@ -5,12 +5,12 @@ import './CategoryIngridients.scss';
 const ID_DOM_EL = {
   name: 'js-category',
   amount: 'js-amount',
-  finder:{
-    clear: 'js__finder-clear', 
+  finder: {
+    clear: 'js__finder-clear',
     submit: 'js__finder-submit',
   },
 };
-// елемент Bадима принимает data возвращает li 
+// елемент Bадима принимает data возвращает li
 const allItem = data => {
   return data.reduce((acc, Item) => {
     acc += `
@@ -62,11 +62,11 @@ class CategoryIngridients {
 
   //-----// Other function //-----//
 
-
-
-// поиск в списке по значению не мутирует this.data
+  // поиск в списке по значению не мутирует this.data
   filterByFinder(data) {
-    return data.filter(ingridient => ingridient.name.toLowerCase().includes(this.filter.toLowerCase()));
+    return data.filter(ingridient =>
+      ingridient.name.toLowerCase().includes(this.filter.toLowerCase()),
+    );
   }
 
   renderForSubmit() {
@@ -77,26 +77,26 @@ class CategoryIngridients {
       this.render(this.DOM_ELEMENT, result);
     }
   }
-//onChangeFilter and finderData on timeout
+  //onChangeFilter and finderData on timeout
   onChangeFilter(e) {
     this.filter = e.target.value;
     window.clearTimeout(this.timeoutID);
-    this.timeoutID = window.setTimeout(()=>this.renderForSubmit(), 600);
+    this.timeoutID = window.setTimeout(() => this.renderForSubmit(), 600);
   }
-// clear filter on click X
+  // clear filter on click X
   onClickFilter(e) {
-    const {id}=e.target;
-    const {clear}=ID_DOM_EL.finder;
-    if( id === clear ){
+    const { id } = e.target;
+    const { clear } = ID_DOM_EL.finder;
+    if (id === clear) {
       this.filter = '';
       this.render(this.DOM_ELEMENT);
-      return
+      return;
     }
     // else if( id === submit ){
     //   this.renderForSubmit()
     // }
   }
-// сортировка елементов в масиве по ключу и направлениям 
+  // сортировка елементов в масиве по ключу и направлениям
   sortData({ data, key, direction }) {
     if (direction !== null) {
       const sortData = JSON.parse(JSON.stringify(data));
@@ -119,31 +119,30 @@ class CategoryIngridients {
       return result;
     }
   }
-// сортировка елементов по колонке  
+  // сортировка елементов по колонке
   summerySortData(id) {
     if (id === ID_DOM_EL.name) {
       this.sort.name = !this.sort.name;
       this.sort.amount = null;
-      const clg = this.sortData({
+      const result = this.sortData({
         data: this.data,
         key: 'name',
         direction: this.sort.name,
       });
-      this.render(this.DOM_ELEMENT, clg);
+      this.render(this.DOM_ELEMENT, result);
     }
     if (id === ID_DOM_EL.amount) {
       this.sort.amount = !this.sort.amount;
       this.sort.name = null;
-      const clg = this.sortData({
+      const result = this.sortData({
         data: this.data,
         key: 'amount',
         direction: this.sort.amount,
       });
-      this.render(this.DOM_ELEMENT, clg);
+      this.render(this.DOM_ELEMENT, result);
     }
   }
-
-// удаление елемента
+  // удаление елемента
   filterDataById(data, id) {
     return data.filter(category => category.id !== id);
   }
@@ -202,7 +201,8 @@ class CategoryIngridients {
   //создание разметки поиска
   elementFinder() {
     const value = this.filter === null ? '' : this.filter;
-    const inputClass = value.length > 0 ? 'yesh-inputClear isActive' : 'yesh-inputClear'
+    const inputClass =
+      value.length > 0 ? 'yesh-inputClear isActive' : 'yesh-inputClear';
     return `
     <div class="row yesh-m0">
       <div class="col s12 m6 l4 yesh-p0" >
