@@ -1,37 +1,14 @@
-@import '//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css';
-* {
+.container {
+  margin: 0 auto;
+}
+.container *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: rgb(63, 62, 62);
-}
-.mainLoginInput {
-  height: 40px;
-  padding: 0px;
-  font-size: 30px;
-  margin: 5px 0;
 }
 
-.mainLoginInput::-webkit-input-placeholder {
-  font-family: FontAwesome;
-  font-weight: normal;
-  overflow: visible;
-  vertical-align: top;
-  display: inline-block !important;
-  padding-left: 5px;
-  padding-top: 2px;
-}
-
-.mainLoginInput::-moz-placeholder {
-  font-family: FontAwesome;
-  font-weight: normal;
-  overflow: visible;
-  vertical-align: top;
-  display: inline-block !important;
-  padding-left: 5px;
-  padding-top: 2px;
-}
 .yesh-btn {
+  font-family: 'Roboto';
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,15 +21,37 @@
 .yesh-btn:hover {
   background-color: #066b19;
 }
-.mainLoginInput:-ms-input-placeholder {
-  font-family: FontAwesome;
-  font-weight: normal;
-  overflow: visible;
-  vertical-align: top;
-  /* display: inline-block !important; */
-  padding-left: 5px;
-  padding-top: 2px;
+.yesh-sectionInput{
+  position: relative;
+  width: 100%;
+  margin: 0.75rem 0 0 0 !important;
+  display: flex;
+  align-items: center;
 }
+.yesh-inputSubmit{
+  cursor: default;
+  pointer-events: none;
+}
+.yesh-inputClear{
+  opacity: 0;
+  cursor: default;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: opacity 1s;
+}
+.isActive{
+  opacity: 1;
+  cursor: pointer;
+  pointer-events: auto;
+}
+.yesh-input{
+  height: 2.5rem !important;
+  margin: 0 !important;
+}
+
 .yesh__list {
   margin-bottom: 0;
   padding: 4px 0;

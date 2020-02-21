@@ -1,8 +1,16 @@
 'use strict';
 import '@/styles/materialize/materialize';
-import './CategoryIngridients.css';
-
-// елемент Bадима принимает data возвращает li //это заглушка
+import '@/styles/fonts/material-design-icons/material-icons.css';
+import './CategoryIngridients.scss';
+const ID_DOM_EL = {
+  name: 'js-category',
+  amount: 'js-amount',
+  finder:{
+    clear: 'js__finder-clear', 
+    submit: 'js__finder-submit',
+  },
+};
+// елемент Bадима принимает data возвращает li 
 const allItem = data => {
   return data.reduce((acc, Item) => {
     acc += `
@@ -40,6 +48,7 @@ class CategoryIngridients {
   constructor() {
     this.data = [];
     this.filter = null;
+    this.timeoutID = null;
     this.sort = { name: null, amount: null };
   }
 
@@ -51,18 +60,45 @@ class CategoryIngridients {
     this.data = newData;
   }
 
-  //Other function
-  finderData(e) {
-    if (e.target.elements[0].value === '') {
+  //-----// Other function //-----//
+
+
+
+// поиск в списке по значению не мутирует this.data
+  filterByFinder(data) {
+    return data.filter(ingridient => ingridient.name.toLowerCase().includes(this.filter.toLowerCase()));
+  }
+
+  renderForSubmit() {
+    if (this.filter === '') {
       this.render(this.DOM_ELEMENT);
     } else {
-      const filter = this.data.filter(
-        ingridient => ingridient.name === e.target.elements[0].value,
-      );
-      this.render(this.DOM_ELEMENT, filter);
+      const result = this.filterByFinder(this.data);
+      this.render(this.DOM_ELEMENT, result);
     }
   }
-  filterData({ data, key, direction }) {
+//onChangeFilter and finderData on timeout
+  onChangeFilter(e) {
+    this.filter = e.target.value;
+    window.clearTimeout(this.timeoutID);
+    this.timeoutID = window.setTimeout(()=>this.renderForSubmit(), 600);
+  }
+// clear filter on click X
+  onClickFilter(e) {
+    console.dir(e.target)
+    const {id}=e.target;
+    const {clear}=ID_DOM_EL.finder;
+    if( id === clear ){
+      this.filter = '';
+      this.render(this.DOM_ELEMENT);
+      return
+    }
+    // else if( id === submit ){
+    //   this.renderForSubmit()
+    // }
+  }
+// сортировка елементов в масиве по ключу и направлениям 
+  sortData({ data, key, direction }) {
     if (direction !== null) {
       const sortData = JSON.parse(JSON.stringify(data));
 
@@ -81,38 +117,67 @@ class CategoryIngridients {
         }
         return sortDirection(direction, a, b);
       });
-      this.render(this.DOM_ELEMENT, result);
+      return result;
     }
   }
-  summeryFilterData(e) {
-    const { id } = e.target.parentNode;
-    if (id === 'js-category') {
+// сортировка елементов по колонке  
+  summerySortData(id) {
+    if (id === ID_DOM_EL.name) {
       this.sort.name = !this.sort.name;
       this.sort.amount = null;
-      this.filterData({
+      const clg = this.sortData({
         data: this.data,
         key: 'name',
         direction: this.sort.name,
       });
+      this.render(this.DOM_ELEMENT, clg);
     }
-    if (id === 'js-amount') {
+    if (id === ID_DOM_EL.amount) {
       this.sort.amount = !this.sort.amount;
       this.sort.name = null;
-      this.filterData({
+      const clg = this.sortData({
         data: this.data,
         key: 'amount',
         direction: this.sort.amount,
       });
+      this.render(this.DOM_ELEMENT, clg);
     }
   }
-  // удаление елемента
+
+// удаление елемента
   filterDataById(data, id) {
     return data.filter(category => category.id !== id);
   }
   deleteCategory(e) {
     const { id } = e.target;
+
+    const args = newData => {
+      if (this.sort.name !== null) {
+        return {
+          data: newData,
+          key: 'name',
+          direction: this.sort.name,
+        };
+      } else if (this.sort.amount !== null) {
+        return {
+          data: newData,
+          key: 'amount',
+          direction: this.sort.amount,
+        };
+      }
+    };
+
+    const filterData = this.filterByFinder(this.data, this.filter);
     this.data = this.filterDataById(this.data, id);
-    this.render(this.DOM_ELEMENT, this.data);
+    if (filterData.length > 0) {
+      const filterDataId = this.filterDataById(filterData, id);
+      const result = this.sortData(args(filterDataId));
+      this.render(this.DOM_ELEMENT, result);
+      return;
+    } else if (id.length > 0) {
+      const result = this.sortData(args(this.data));
+      this.render(this.DOM_ELEMENT, result);
+    }
   }
   //создание разметки шапки
   elementHeader() {
@@ -137,14 +202,16 @@ class CategoryIngridients {
 
   //создание разметки поиска
   elementFinder() {
+    const value = this.filter === null ? '' : this.filter;
+    const inputClass = value.length > 0 ? 'yesh-inputClear isActive' : 'yesh-inputClear'
     return `
     <div class="row yesh-m0">
-      <div class="col s12 m6 yesh-p0">
-        <form class="input action="" id="js__listener-finder">
-          <div>
-            <input class="grey-text text-lighten-1 mainLoginInput yesh-p0" type="text" placeholder="&#61442; Быстрый поиск"/>
-          </div>
-        </form>
+      <div class="col s12 m6 l4 yesh-p0" >
+        <div class="row yesh-sectionInput yesh-p0" id="js__listener-finder">
+          <i class="material-icons yesh-fz yesh-inputSubmit" id="js__finder-submit">search</i>
+          <input value="${value}" autofocus class="yesh-input" type="search" placeholder="Быстрый поиск" id="js__finder-Input"/>
+          <i class="material-icons ${inputClass}" id="js__finder-clear">clear</i>
+        </div>
       </div>
     </div>
       `;
@@ -189,27 +256,36 @@ class CategoryIngridients {
       '#js__listener-deleteCategory',
     );
     if (!listenerFinder) return;
-    listenerFinder.removeEventListener('submit', e => {
-      e.preventDefault();
-      this.finderData(e);
+    listenerFinder.removeEventListener('input', e => {
+      this.onChangeFilter(e);
+    });
+    if (!listenerFinder) return;
+    listenerFinder.removeEventListener('click', e => {
+      this.onClickFilter(e);
     });
     if (!listenerTable) return;
-    listenerTable.removeEventListener('click', e => this.summeryFilterData(e));
+    listenerTable.removeEventListener('click', e =>
+      this.summerySortData(e.target.parentNode.id),
+    );
     if (!listenerDeleteCategory) return;
     listenerTable.removeEventListener('click', e => this.deleteCategory(e));
   }
   addListener() {
-    // Слушатель поиска
+    // Слушатели поиска
     const listenerFinder = document.querySelector('#js__listener-finder');
-    listenerFinder.addEventListener('submit', e => {
-      e.preventDefault();
-      this.finderData(e);
+    listenerFinder.addEventListener('input', e => {
+      this.onChangeFilter(e);
+    });
+    listenerFinder.addEventListener('click', e => {
+      this.onClickFilter(e);
     });
 
     // Слушатель сортировки
     const listenerTable = document.querySelector('#js__listener-table');
     // console.log('add listenerTable');
-    listenerTable.addEventListener('click', e => this.summeryFilterData(e));
+    listenerTable.addEventListener('click', e =>
+      this.summerySortData(e.target.parentNode.id),
+    );
 
     // Слушатель удаления
     const listenerDeleteCategory = document.querySelector(
