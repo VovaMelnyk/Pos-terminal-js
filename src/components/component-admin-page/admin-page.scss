@@ -1,0 +1,25 @@
+body {
+  margin: 0;
+}
+.wrapper-admin-page {
+  display: grid;
+  position: relative;
+  height: 100vh;
+  grid-template-columns: 10% 1fr;
+  grid-template-rows: 5% 1fr;
+
+  &__aside {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 10%;
+  }
+
+  &__header,
+  &__main {
+    height: 100%;
+    grid-column-start: 2;
+    grid-column-end: 3;
+  }
+}
