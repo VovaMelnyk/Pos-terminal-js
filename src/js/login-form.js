@@ -93,18 +93,18 @@ class LoginForm {
     return;
   }
   isValid(e) {
-    if (
-      !this.isIncludes([
-        {
-          ligin: 'nazarkynash16@gmail.com',
-          password: '123456',
-        },
-      ])
-    ) {
-      this.form.addEventListener('submit', e.preventDefault());
-      this.error.textContent = 'невірний логін або пароль';
-      return;
-    }
+    // if (
+    //   !this.isIncludes([
+    //     {
+    //       ligin: 'nazarkynash16@gmail.com',
+    //       password: '123456',
+    //     },
+    //   ])
+    // ) {
+    //   this.form.addEventListener('submit', e.preventDefault());
+    //   this.error.textContent = 'невірний логін або пароль';
+    //   return;
+    // }
     this.error.textContent = '';
     this.root.innerHTML = '';
     new Hall().start(this.root);

@@ -1,5 +1,6 @@
 'use strict';
 import './hall.scss';
+import { initOrder } from '@/js/controller';
 export default class Hall {
   constructor() {
     this.table = [
@@ -96,8 +97,9 @@ export default class Hall {
     e.preventDefault();
     if (e.target.tagName !== 'LI') return;
     let allGuest = e.target.textContent;
-    this.g.guest = +allGuest;
-    console.log(allGuest);
+    const root = document.querySelector('#root');
+    root.innerHTML = '';
+    initOrder(root, allGuest);
   }
 
   objKey(e) {

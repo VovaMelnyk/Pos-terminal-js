@@ -25,8 +25,8 @@ class Check {
     this.addProductItemHandleClick = this.addProductItemHandleClick.bind(this);
   }
 
-  init(container) {
-    this.addToScreen(container, 'beforeend', this.renderCheck());
+  init(container, guestQuantity) {
+    this.addToScreen(container, 'beforeend', this.renderCheck(guestQuantity));
 
     this.initDropdown();
     this.addListenerOnListItems();
@@ -52,12 +52,12 @@ class Check {
     this.textComment = document.querySelector('.comment__text');
   }
 
-  renderCheck() {
+  renderCheck(guestQuantity) {
     return `
       <div class="check">
         ${this.renderList()}
         ${this.renderComments()}
-        ${this.renderSummary()}
+        ${this.renderSummary(guestQuantity)}
         ${this.renderCheckButtons()}
         ${this.renderCommentModal()}
       </div>`;
@@ -109,14 +109,14 @@ class Check {
       </div>`;
   }
 
-  renderSummary() {
+  renderSummary(guestQuantity) {
     return `
       <div class="summary">
         <div class="btn-wrapper">
           <button class="btn summary-btn" data-action="add">Email, SMS</button>
         </div>
         <div class="guests-amount">
-          <p class="guests-amount__value">Количество гостей:  <span class="bold" data-action="guests">4</span></p>
+          <p class="guests-amount__value">Количество гостей:  <span class="bold" data-action="guests">${guestQuantity}</span></p>
         </div>
         <div class="total-wrapper">
           <div class="calculate">
@@ -182,24 +182,19 @@ class Check {
   }
 
   initDropdown() {
-    document.addEventListener('DOMContentLoaded', () => {
-      const elems = document.querySelectorAll('.dropdown-trigger');
-      const options = {
-        constrainWidth: false,
-      };
-
-      M.Dropdown.init(elems, options);
-    });
+    const elems = document.querySelectorAll('.dropdown-trigger');
+    const options = {
+      constrainWidth: false,
+    };
+    M.Dropdown.init(elems, options);
   }
 
   initCommentModal() {
-    document.addEventListener('DOMContentLoaded', function() {
-      const elems = document.querySelectorAll('.modal');
-      const options = {
-        dismissible: false,
-      };
-      M.Modal.init(elems, options);
-    });
+    const elems = document.querySelectorAll('.modal');
+    const options = {
+      dismissible: false,
+    };
+    M.Modal.init(elems, options);
   }
 
   addToScreen(container, position, element) {
@@ -370,7 +365,6 @@ class Check {
 
   addListenerOnDropdown() {
     const dropdownList = document.querySelector('#dropdown1');
-
     dropdownList.addEventListener('click', this.dropdownHandlerClick);
   }
 
