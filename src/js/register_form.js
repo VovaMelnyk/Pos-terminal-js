@@ -4,17 +4,19 @@ import M from 'materialize-css';
 
 class Form {
   constructor(name, email, password) {
-    this.users = [
-{
-      name: name,
-      email: email,
-      password: password,  }
+    this.users = [{
+        name: name,
+        email: email,
+        password: password,
+      }
 
     ];
-  
+    // this.activeButton = this.activeBtn.bind(this)
+    // this.logData = this.saveForm.bind(this)
+    // this.runLoginMenu = this.changeForm.bind(this)
   }
 
-  
+
   renderForm() {
     return `  
 
@@ -67,12 +69,12 @@ class Form {
     `
 
   }
-  renderAnotherForm() {
+  renderLoginForm() {
 
     return `<h1>Login menu</h1>`
   }
-  renderAnotherWindows(){
-return "<h2>Desk of order</h2>"
+  renderHallWindow() {
+    return "<h2>Desk of order</h2>"
   }
 
 
@@ -85,17 +87,20 @@ return "<h2>Desk of order</h2>"
     const registerLink = document.querySelector(".register_link");
     const registerForm = document.querySelector(".register_form");
     this.changeForm(registerLink);
+    // this.runLoginMenu(registerLink)
+    // this.activeButton(registerForm)
+    // this.logData(registerForm)
     this.activeBtn(registerForm);
     this.saveForm(registerForm);
     // this.validForm(registerForm);
-    console.log(this.users)
+
   }
 
   removeForm() {
     const root = document.querySelector("#root")
     const registerForm = document.querySelector(".register-menu");
     registerForm.remove();
-    this.addToScreen(root, "beforeend", this.renderAnotherForm());
+    this.addToScreen(root, "beforeend", this.renderLoginForm());
 
   }
 
@@ -113,19 +118,19 @@ return "<h2>Desk of order</h2>"
     const userPassword = form.elements.password[0].value;
     const passwordConfirm = form.elements.password[1].value;
     const registerBtn = document.querySelector(".register-menu__btn");
-    if (userName.length > 0 && userEmail.length > 0
-       && userPassword.length > 0
-        && passwordConfirm.length > 0) {
+    if (userName.length > 0 && userEmail.length > 0 &&
+      userPassword.length > 0 &&
+      passwordConfirm.length > 0) {
       registerBtn.classList.remove("unlock");
       registerBtn.classList.add("waves-effect", "waves-light");
     }
   }
 
-  activeBtn(el) {    
+  activeBtn(el) {
     el.addEventListener("input", this.changeRegisterBtn.bind(this));
   }
 
-  validateForm (e) {
+  validateForm(e) {
     e.preventDefault()
     const userName = document.querySelector("#first_name");
     const userEmail = document.querySelector("#email");
@@ -133,57 +138,54 @@ return "<h2>Desk of order</h2>"
     const passwordConfirm = document.querySelector(".input-field__confirm-password");
     const registerBtn = document.querySelector(".register-menu__btn");
 
-    if(!userName.classList.contains("invalid") 
-    && !userEmail.classList.contains("invalid")
-    && !userPassword.classList.contains("invalid") 
-    && !passwordConfirm.classList.contains("invalid")){
+    if (!userName.classList.contains("invalid") &&
+      !userEmail.classList.contains("invalid") &&
+      !userPassword.classList.contains("invalid") &&
+      !passwordConfirm.classList.contains("invalid")) {
       registerBtn.classList.remove("waves-effect", "waves-light");
       registerBtn.classList.add("unlock");
 
     }
 
-  } 
-  validForm(el) {    
-    el.addEventListener("change", this.validateForm.bind(this));
+  }
+  validForm(el) {
+    el.addEventListener("change", this.validateForm);
 
   }
 
+  handleSubmit(e) {
+    e.preventDefault()
+    const root = document.querySelector("#root")
+    const registerForm = document.querySelector(".register-menu");
+    const {
+      elements
+    } = e.currentTarget;
+    const nameInput = elements.name;
+    const emailInput = elements.email;
+    const passwordInput = elements.password[0];
+    const data = {
+      [nameInput.name]: nameInput.value,
+      [emailInput.name]: emailInput.value,
+      [passwordInput.name]: passwordInput.value
+    }
 
-messageMistake(e) {
-  e.preventDefault()
-    const form = e.currentTarget;
-    alert("You have mistake")
-}  
 
-handleSubmit(e){
-  e.preventDefault()
-  const root = document.querySelector("#root")
-  const registerForm = document.querySelector(".register-menu");
-  const {elements} = e.currentTarget;
-  const nameInput = elements.name;
-  const emailInput = elements.email;
-  const passwordInput = elements.password[0];
-  const data = {
-    [nameInput.name]:nameInput.value,
-    [emailInput.name]:emailInput.value,
-    [passwordInput.name]:passwordInput.value
+    if (data.name.length >= 1) {
+
+      registerForm.remove();
+      this.addToScreen(root, "beforeend", this.renderHallWindow());   
+      console.log(data);
+
+
+    } else {
+      alert("You have mistake")
+    }
+
   }
-  this.users.push(data)
- 
-  if(this.users.includes(data)){
- 
-    registerForm.remove();
-    this.addToScreen(root, "beforeend", this.renderAnotherWindows());
-    console.log(this.users)
-  } else {
-    alert("You have mistake")
-  }
- 
-}
-saveForm(el) {    
-  el.addEventListener("submit", this.handleSubmit.bind(this));
+  saveForm(el) {
+    el.addEventListener("submit", this.handleSubmit.bind(this));
 
-}
+  }
 
 }
 //===For control
