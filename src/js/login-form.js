@@ -15,25 +15,24 @@ class LoginForm {
     this.register = document.querySelector('.register');
     this.modal = document.querySelector('#modal1');
 
-    this.openModal();
     this.registerNow();
     this.submit();
   }
   renderMarkup() {
-    return ` <div id="modal1" class="modal">
-    <div class="modal-content">
+    return ` 
+    <div class="form-wrapper">
     <form class="login-form">
     <div class="row input-wrapper">
     <i class="small material-icons">mail_outline</i>
-      <div class="input-field login-form__input">
+      <div class="input-field col s12 login-form__input">
         <input id="email" type="email" class="validate" required>
         <label for="email">Email</label>
       </div>
     </div>
     <div class="row input-wrapper">
     <i class="small material-icons">lock_outline</i>
-        <div class="input-field login-form__input">
-          <input id="password" type="password" class="validate" required minlength="6">
+        <div class="input-field col s12 login-form__input">
+          <input id="password" type="password" class="validate" required>
           <label for="password">Password</label>
         </div>
       </div>
@@ -49,66 +48,58 @@ class LoginForm {
   <div class="links-box">
     <a class="register" href="#">Rergister Now!</a>
     <a href="#">Forgot password?</a>
-  </div>
   </div>`;
   }
   addMarkup() {
-    this.root.insertAdjacentHTML('afterbegin', this.renderMarkup());
+    this.root.innerHTML = this.renderMarkup();
   }
-  openModal() {
-    M.Modal.init(this.modal).open();
-  }
-  cloceModal() {
-    M.Modal.init(this.modal).close();
-  }
+
   transferToRegister() {
-    this.cloceModal();
+    this.root.innerHTML = '';
+    console.log('register');
   }
   registerNow() {
     this.register.addEventListener('click', this.transferToRegister.bind(this));
   }
-  preventDef(event) {
-    event.preventDefault();
-  }
+
   submit() {
     this.btn.addEventListener('click', this.isFillingForm.bind(this));
   }
   isIncludes(arr) {
     for (let obj of arr) {
       if (
-        obj.ligin !== this.loginInput.value.trim() &&
-        obj.password !== this.passInput.value.trim()
+        obj.ligin === this.loginInput.value.trim() &&
+        obj.password === this.passInput.value.trim()
       ) {
-        this.error.textContent = 'невірний логін або пароль';
-        return false;
+        return true;
       }
-      return true;
+      return false;
     }
   }
-  isFillingForm() {
+  isFillingForm(e) {
     if (
       this.loginInput.value.trim() === '' ||
       this.passInput.value.trim() === ''
     ) {
-      this.form.addEventListener(
-        'submit',
-        this.preventDef.bind(this),
-        (this.error.textContent = 'Fields are required!'),
-      );
+      this.form.addEventListener('submit', e.preventDefault());
+      this.error.textContent = 'Fields are required!';
       return;
     }
-    this.isValid();
+    this.error.textContent = '';
+    this.isValid(e);
     return;
   }
-  isValid() {
+  isValid(e) {
     if (
-      !this.isIncludes([{ ligin: 'nazarkynash16@gmail.com', password: 123456 }])
+      !this.isIncludes([
+        { ligin: 'nazarkynash16@gmail.com', password: '123456' },
+      ])
     ) {
-      this.preventDef.bind(this);
+      this.form.addEventListener('submit', e.preventDefault());
       this.error.textContent = 'невірний логін або пароль';
       return;
     }
-    this.cloceModal();
+    this.error.textContent = '';
     return;
   }
 }
