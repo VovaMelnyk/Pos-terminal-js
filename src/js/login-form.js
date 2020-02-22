@@ -1,9 +1,9 @@
 'use strict';
-import Form from "@/js/register_form";
+import Form from '@/js/register_form';
+import Hall from '@/components/hall/hall';
 import M from 'materialize-css'; // add materialize js logic
 import '@/styles/materialize/materialize';
 import '@/styles/login-form';
-
 
 class LoginForm {
   constructor() {
@@ -53,7 +53,6 @@ class LoginForm {
   </div>`;
   }
   addMarkup() {
-
     this.root.innerHTML = this.renderMarkup();
   }
 
@@ -95,16 +94,20 @@ class LoginForm {
   }
   isValid(e) {
     if (
-      !this.isIncludes([{
-        ligin: 'nazarkynash16@gmail.com',
-        password: '123456'
-      }, ])
+      !this.isIncludes([
+        {
+          ligin: 'nazarkynash16@gmail.com',
+          password: '123456',
+        },
+      ])
     ) {
       this.form.addEventListener('submit', e.preventDefault());
       this.error.textContent = 'невірний логін або пароль';
       return;
     }
     this.error.textContent = '';
+    this.root.innerHTML = '';
+    new Hall().start(this.root);
     return;
   }
 }
