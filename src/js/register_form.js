@@ -11,9 +11,13 @@ class Form {
       }
 
     ];
-    // this.activeButton = this.activeBtn.bind(this)
-    // this.logData = this.saveForm.bind(this)
-    // this.runLoginMenu = this.changeForm.bind(this)
+    this.activeBtn = this.activeBtn.bind(this)
+    this.saveForm = this.saveForm.bind(this)
+    this.changeForm = this.changeForm.bind(this)
+    this.renderLoginForm = this.renderLoginForm.bind(this)
+    this.removeForm = this.removeForm.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
   }
 
 
@@ -87,12 +91,9 @@ class Form {
     const registerLink = document.querySelector(".register_link");
     const registerForm = document.querySelector(".register_form");
     this.changeForm(registerLink);
-    // this.runLoginMenu(registerLink)
-    // this.activeButton(registerForm)
-    // this.logData(registerForm)
     this.activeBtn(registerForm);
     this.saveForm(registerForm);
-    // this.validForm(registerForm);
+ 
 
   }
 
@@ -105,7 +106,7 @@ class Form {
   }
 
   changeForm(el) {
-    el.addEventListener("click", this.removeForm.bind(this));
+    el.addEventListener("click", this.removeForm);
   }
 
 
@@ -127,7 +128,7 @@ class Form {
   }
 
   activeBtn(el) {
-    el.addEventListener("input", this.changeRegisterBtn.bind(this));
+    el.addEventListener("input", this.changeRegisterBtn);
   }
 
   validateForm(e) {
@@ -174,7 +175,7 @@ class Form {
 
       registerForm.remove();
       this.addToScreen(root, "beforeend", this.renderHallWindow());   
-      console.log(data);
+     
 
 
     } else {
@@ -183,7 +184,7 @@ class Form {
 
   }
   saveForm(el) {
-    el.addEventListener("submit", this.handleSubmit.bind(this));
+    el.addEventListener("submit", this.handleSubmit);
 
   }
 
