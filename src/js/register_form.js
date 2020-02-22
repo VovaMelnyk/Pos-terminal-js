@@ -1,3 +1,4 @@
+import LoginForm from '@/js/login-form';
 import '@/styles/materialize/materialize';
 import "@/styles/style.scss"
 import M from 'materialize-css';
@@ -75,7 +76,7 @@ class Form {
   }
   renderLoginForm() {
 
-    return `<h1>Login menu</h1>`
+    return new LoginForm()
   }
   renderHallWindow() {
     return "<h2>Desk of order</h2>"
@@ -93,15 +94,15 @@ class Form {
     this.changeForm(registerLink);
     this.activeBtn(registerForm);
     this.saveForm(registerForm);
- 
+
+
 
   }
 
   removeForm() {
-    const root = document.querySelector("#root")
     const registerForm = document.querySelector(".register-menu");
     registerForm.remove();
-    this.addToScreen(root, "beforeend", this.renderLoginForm());
+    this.renderLoginForm()
 
   }
 
@@ -174,8 +175,8 @@ class Form {
     if (data.name.length >= 1) {
 
       registerForm.remove();
-      this.addToScreen(root, "beforeend", this.renderHallWindow());   
-     
+      this.addToScreen(root, "beforeend", this.renderHallWindow());
+
 
 
     } else {

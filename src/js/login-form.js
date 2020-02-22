@@ -1,7 +1,9 @@
 'use strict';
+import Form from "@/js/register_form";
 import M from 'materialize-css'; // add materialize js logic
 import '@/styles/materialize/materialize';
 import '@/styles/login-form';
+
 
 class LoginForm {
   constructor() {
@@ -51,12 +53,14 @@ class LoginForm {
   </div>`;
   }
   addMarkup() {
+
     this.root.innerHTML = this.renderMarkup();
   }
 
   transferToRegister() {
     this.root.innerHTML = '';
-    console.log('register');
+    const form = new Form();
+    form.start(this.root);
   }
   registerNow() {
     this.register.addEventListener('click', this.transferToRegister.bind(this));
@@ -91,9 +95,10 @@ class LoginForm {
   }
   isValid(e) {
     if (
-      !this.isIncludes([
-        { ligin: 'nazarkynash16@gmail.com', password: '123456' },
-      ])
+      !this.isIncludes([{
+        ligin: 'nazarkynash16@gmail.com',
+        password: '123456'
+      }, ])
     ) {
       this.form.addEventListener('submit', e.preventDefault());
       this.error.textContent = 'невірний логін або пароль';
