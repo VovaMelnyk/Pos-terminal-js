@@ -52,10 +52,11 @@ class GoodsCollection {
         profitPercent: 500,
       },
     ];
+    this.isFiltered = false;
+    this.filteredList = [];
     this.inputSearchLogic = this.inputSearchLogic.bind(this);
     this.findByCategoryLogic = this.findByCategoryLogic.bind(this);
     this.sortGoodsLogic = this.sortGoodsLogic.bind(this);
-    // this.somef = this.somef.bind(this);
   }
 
   renderLayOut(container) {
@@ -70,7 +71,7 @@ class GoodsCollection {
         <input type="text" id="search-input" placeholder="Быстрый поиск..." />
         <div class="categories">
           <select class="categories-list">
-            <option value="" disabled selected>Категория</option>
+            <option value="" selected>Категория</option>
           </select>
         </div>
       </section>
@@ -137,7 +138,13 @@ class GoodsCollection {
     );
     this.renderGoodsList(filteredGoods);
     this.goodsAmount(filteredGoods);
-    this.sortGoods(filteredGoods);
+    if (event.target.value) {
+      this.isFiltered = true;
+      this.filteredList = filteredGoods;
+    } else {
+      this.isFiltered = false;
+      this.filteredList = [];
+    }
   }
 
   inputSearch() {
@@ -153,7 +160,13 @@ class GoodsCollection {
       );
       this.renderGoodsList(neededCategoryGoods);
       this.goodsAmount(neededCategoryGoods);
-      this.sortGoods(neededCategoryGoods);
+      this.isFiltered = true;
+      this.filteredList = neededCategoryGoods;
+    } else {
+      this.renderGoodsList(this.list);
+      this.goodsAmount(this.list);
+      this.isFiltered = false;
+      this.filteredList = [];
     }
   }
 
@@ -163,8 +176,15 @@ class GoodsCollection {
   }
 
   // //////////////------------------сортування--------------///////////////////
-  sortGoodsLogic(event, list) {
+  sortGoodsLogic(event) {
     const goodClass = event.target.getAttribute('id');
+    let list = [];
+    if (this.isFiltered) {
+      list = this.filteredList;
+    } else {
+      list = this.list;
+    }
+
     if (event.target !== event.currentTarget) {
       list.sort(function(a, b) {
         if (typeof a[goodClass] === 'string') {
@@ -195,17 +215,13 @@ class GoodsCollection {
 
       event.target.classList.toggle('increase');
       this.renderGoodsList(list);
+      console.log('ss');
     }
   }
-  // somef(event, list) {
-  //   this.sortGoodsLogic(list);
-  // }
 
-  sortGoods(list) {
+  sortGoods() {
     const title = document.querySelector('.title');
-    title.addEventListener('click', event => {
-      this.sortGoodsLogic(event, list);
-    });
+    title.addEventListener('click', this.sortGoodsLogic);
   }
 
   ////////////////////////----------------старт---------------------////////////////////
@@ -216,7 +232,7 @@ class GoodsCollection {
     this.renderGoodsList(this.list);
     this.inputSearch();
     this.findByCategory();
-    this.sortGoods(this.list);
+    this.sortGoods();
   }
 }
 
