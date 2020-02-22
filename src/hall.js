@@ -23,9 +23,9 @@ export default class Hall {
         this.inputValue = 'Кількість гостей';
         this.guest = {};
         this.g = 0
-        
-
-        
+        this.isnElement = this.isnElement.bind(this)
+        this.listTextContent = this.listTextContent.bind(this)
+        this.objKey = this.objKey.bind(this)        
     }
 
     renderHall(){
@@ -38,7 +38,6 @@ export default class Hall {
         return `<div class="table" id="${id}">${id}<span class="table_item"></span>
             </div>`
     }
-
 
     renderList(){
 return `<div class="list">
@@ -104,29 +103,6 @@ return `<div class="list list_last">
         e.target.classList.add('table_bgr')}
     }
 
-// addClassBgr(e){
-//     e.preventDefault()
-//     if(e.target.tagName !== 'DIV') return;
-
-    // if(this.g.guest > 0){
-    //     e.target.classList.add('table_bgr')
-    // }
-    // console.log(this.g);
-    // console.dir(e.target);
-// for(let key in this.guest){
-    
-//     if(this.guest[key].length > 0){
-//     e.target.classList.add('table_bgr')
-//     } }
-
-// }
-
-// addStyle(){
-//     const container = document.querySelector('.container');
-//     container.addEventListener('click', this.addClassBgr.bind(this));
-
-// }
-
 
     isnElement(e){
         const list = document.querySelector('.list')
@@ -139,16 +115,14 @@ return `<div class="list list_last">
 
     addLisners(){
         const container = document.querySelector('.container');
-        container.addEventListener('click', this.isnElement.bind(this));
-        container.addEventListener('click', this.listTextContent.bind(this))
-        container.addEventListener('click', this.objKey.bind(this))
-
+        container.addEventListener('click', this.isnElement);
+        container.addEventListener('click', this.listTextContent)
+        container.addEventListener('click', this.objKey)
     }
         
     start(container){
         this.addToScreen(container, 'beforeend', this.renderHall());
-        this.addLisners();
-        
+        this.addLisners();        
     }
 }
 
