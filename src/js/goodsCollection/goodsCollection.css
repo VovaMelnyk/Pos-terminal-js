@@ -14,9 +14,13 @@
   flex-direction: row;
   flex-wrap: nowrap;
 }
-
+.categories {
+  height: auto;
+  width: auto;
+}
 .categories-list {
-  list-style: none;
+  display: inline-block;
+  width: auto;
 }
 
 .search {

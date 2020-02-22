@@ -2,6 +2,7 @@ import M from 'materialize-css';
 import '../../styles/materialize/materialize.scss';
 import '@/styles/materialize/materialize';
 import './goodsCollection.css';
+
 class GoodsCollection {
   constructor() {
     this.list = [
@@ -54,6 +55,7 @@ class GoodsCollection {
     this.inputSearchLogic = this.inputSearchLogic.bind(this);
     this.findByCategoryLogic = this.findByCategoryLogic.bind(this);
     this.sortGoodsLogic = this.sortGoodsLogic.bind(this);
+    // this.somef = this.somef.bind(this);
   }
 
   renderLayOut(container) {
@@ -67,30 +69,28 @@ class GoodsCollection {
       <section class="search">
         <input type="text" id="search-input" placeholder="Быстрый поиск..." />
         <div class="categories">
-          <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>категория </a>
-          <ul id='dropdown1' class='dropdown-content categories-list'>
-            
-          </ul>
+          <select class="categories-list">
+            <option value="" disabled selected>Категория</option>
+          </select>
         </div>
       </section>
       <section class="list">
-      <div class="title">
-      <p id="image">img</p>
-      <p id="name">название</p>
-      <p id="category">категория</p>
-      <p id="value">себестоимость</p>
-      <p id="price">цена</p>
-      <p id="profit">наценка</p>
-      <p id="profitPercent">прибыль</p>
-     </div>
-      <ul class="goods-list"></ul>
+        <div class="title">
+          <p id="image">img</p>
+          <p id="name">название</p>
+          <p id="category">категория</p>
+          <p id="value">себестоимость</p>
+          <p id="price">цена</p>
+          <p id="profit">наценка</p>
+          <p id="profitPercent">прибыль</p>
+        </div>
+        <ul class="goods-list"></ul>
       </section>
     </main>`,
     );
   }
 
   ////////////-----------------це робить клас Сергія-------------//////////////
-  //тут tr
   renderGoodsListItem(good) {
     const goodsListItem = document.createElement('li');
     goodsListItem.classList.add('goodsListItem');
@@ -108,7 +108,10 @@ class GoodsCollection {
     const unique = [...new Set(categoryList)];
     const categories = document.querySelector('.categories-list');
     unique.map(unit => {
-      categories.insertAdjacentHTML('beforeend', `<li><p>${unit}</p></li>`);
+      categories.insertAdjacentHTML(
+        'beforeend',
+        `<option class="categories-list__item">${unit}</option>`,
+      );
     });
   }
 
@@ -117,7 +120,7 @@ class GoodsCollection {
     document.querySelector('.goods-amount').textContent = list.length;
   }
 
-  // ///////////////////////-----------------список товарів---------------------///////////
+  // ////////////////------------список товарів---------------------///////////
   renderGoodsList(list) {
     const markup = list.reduce(
       (str, el) => str + this.renderGoodsListItem(el).outerHTML,
@@ -127,39 +130,43 @@ class GoodsCollection {
     goodsList.innerHTML = markup;
   }
 
-  // ////////////////////---пошук за введеною назвою--------------///////////////
+  /////////////------пошук за введеною назвою--------------///////////////
   inputSearchLogic(event) {
     const filteredGoods = this.list.filter(good =>
       good.name.includes(event.target.value.toLowerCase()),
     );
     this.renderGoodsList(filteredGoods);
     this.goodsAmount(filteredGoods);
+    this.sortGoods(filteredGoods);
   }
 
   inputSearch() {
     const inputField = document.querySelector('#search-input');
     inputField.addEventListener('input', this.inputSearchLogic);
   }
-  // ////////////-------------- пошук по категорії  -----------------------////////////
+  // ////////////--------------пошук по категорії-----------------------////////////
 
   findByCategoryLogic(event) {
-    const neededCategoryGoods = this.list.filter(
-      good => good.category === event.target.textContent,
-    );
-    this.renderGoodsList(neededCategoryGoods);
-    this.goodsAmount(neededCategoryGoods);
+    if (event.target.value !== '') {
+      const neededCategoryGoods = this.list.filter(
+        good => good.category === event.target.value,
+      );
+      this.renderGoodsList(neededCategoryGoods);
+      this.goodsAmount(neededCategoryGoods);
+      this.sortGoods(neededCategoryGoods);
+    }
   }
 
   findByCategory() {
-    const categories = document.querySelector('.categories-list');
+    const categories = document.querySelector('.categories');
     categories.addEventListener('click', this.findByCategoryLogic);
   }
 
   // //////////////------------------сортування--------------///////////////////
-  sortGoodsLogic(event) {
+  sortGoodsLogic(event, list) {
     const goodClass = event.target.getAttribute('id');
     if (event.target !== event.currentTarget) {
-      this.list.sort(function(a, b) {
+      list.sort(function(a, b) {
         if (typeof a[goodClass] === 'string') {
           const x = a[goodClass].toLowerCase();
           const y = b[goodClass].toLowerCase();
@@ -172,7 +179,7 @@ class GoodsCollection {
         return a[goodClass] - b[goodClass];
       });
       if (event.target.classList.contains('increase')) {
-        this.list.sort(function(a, b) {
+        list.sort(function(a, b) {
           if (typeof a[goodClass] === 'string') {
             const x = a[goodClass].toLowerCase();
             const y = b[goodClass].toLowerCase();
@@ -187,12 +194,18 @@ class GoodsCollection {
       }
 
       event.target.classList.toggle('increase');
-      this.renderGoodsList(this.list);
+      this.renderGoodsList(list);
     }
   }
-  sortGoods() {
+  // somef(event, list) {
+  //   this.sortGoodsLogic(list);
+  // }
+
+  sortGoods(list) {
     const title = document.querySelector('.title');
-    title.addEventListener('click', this.sortGoodsLogic);
+    title.addEventListener('click', event => {
+      this.sortGoodsLogic(event, list);
+    });
   }
 
   ////////////////////////----------------старт---------------------////////////////////
@@ -203,11 +216,7 @@ class GoodsCollection {
     this.renderGoodsList(this.list);
     this.inputSearch();
     this.findByCategory();
-    this.sortGoods();
-    document.addEventListener('DOMContentLoaded', function() {
-      var elems = document.querySelectorAll('.dropdown-trigger');
-      var instances = M.Dropdown.init(elems);
-    });
+    this.sortGoods(this.list);
   }
 }
 
