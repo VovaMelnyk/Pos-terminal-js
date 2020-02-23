@@ -321,12 +321,12 @@ class CategoryIngridients {
 
 export default CategoryIngridients;
 
-// Дата для проверки
-import data from './testData';
-const root = document.querySelector('#root');
-// создаем екземпляр
-const module = new CategoryIngridients();
-//записываем данные с сервера или файла в data
-module.setData = data;
-//рендер в нужный DOM елемент
-module.render(root);
+// // Дата для проверки
+// import data from './testData';
+// const root = document.querySelector('#root');
+// // создаем екземпляр
+// const module = new CategoryIngridients();
+// //записываем данные с сервера или файла в data
+// module.setData = data;
+// //рендер в нужный DOM елемент
+// module.render(root);
