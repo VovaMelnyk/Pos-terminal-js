@@ -20,6 +20,9 @@
 5. `git stash`
 6. `git stash apply`
 7. `git branch`
+8. `git branch -a`
+9. `git commit -am ""`
+10. `git status`
 
 ## Алгоритм роботи з репозиторієм
 

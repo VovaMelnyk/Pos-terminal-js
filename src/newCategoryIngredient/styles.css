@@ -1,0 +1,94 @@
+html {
+    box-sizing: border-box;
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.link {
+    display: flex;
+    align-items: center;
+}
+
+.horizontal {
+    display: flex;
+    justify-content: flex-start;
+    height: 100px;
+    
+}
+
+p.ingredient__name {
+    margin-bottom: 0;
+    margin-top: 0;
+    margin-right: 60px;
+}
+
+.card__p {
+   padding: 25px;
+   font-size: 20px;
+}
+
+.header {
+    font-size: 28px;
+    font-weight: 600;
+    padding-bottom: 20px;
+}
+
+.button {
+    padding-top: 30px;
+}
+
+.btn {
+    background-color: #10B02D;
+    height: 60px;
+    width: 150px;
+    border-radius: 7px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background 0.15s ease-in;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+
+.card__content {
+    text-align: left;
+    padding: 0;
+    margin: 0;
+}
+
+.card-stacked {
+    padding-top: 15px;
+}
+
+.input-text{
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #555555;
+    vertical-align: middle;
+    background-color: #ffffff;
+    background-image: none;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    box-shadow: none;
+    outline:none;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+  
+.input-text.valid {
+    border-color: #4caf50;  
+}
+  
+.input-text.invalid {
+    border-color: #f44336; 
+}
