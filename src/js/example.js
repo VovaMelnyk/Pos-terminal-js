@@ -1,3 +1,5 @@
+import { CLIEngine } from "eslint";
+
 // import moment from 'moment'; // add library
 // import M from 'materialize-css'; // add materialize js logic
 // import '@/styles/materialize/materialize'; // import materialize styles
@@ -36,3 +38,4 @@
 //     var instances = M.Modal.init(elems);
 //   });
 // }
+
