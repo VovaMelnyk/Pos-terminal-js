@@ -1,0 +1,36 @@
+* {
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.goods-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.list-item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.categories-list {
+  list-style: none;
+}
+
+.search {
+  display: flex;
+  flex-direction: row;
+}
+
+.goodsListItem,
+.title {
+  display: flex;
+  flex-direction: row;
+}
+.goodsListItem p,
+.title p {
+  margin-right: 10px;
+  width: 15%;
+}
