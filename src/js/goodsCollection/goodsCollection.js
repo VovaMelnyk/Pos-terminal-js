@@ -1,55 +1,60 @@
-import M from 'materialize-css';
-import '../../styles/materialize/materialize.scss';
-import '@/styles/materialize/materialize';
+// import M from 'materialize-css';
+// import '../../styles/materialize/materialize.scss';
+// import '@/styles/materialize/materialize';
 import './goodsCollection.css';
 
 class GoodsCollection {
   constructor() {
     this.list = [
       {
-        image: 'some image',
         name: 'bonaqua',
         category: 'вода',
         value: 100,
         price: 150,
         profit: 50,
-        profitPercent: 500,
+        profitPercent: 40,
+        reduct: 'ред.',
+        del: '...',
       },
       {
-        image: 'some image',
         name: 'кекс',
         category: 'торт',
         value: 90,
         price: 110,
         profit: 80,
-        profitPercent: 500,
+        profitPercent: 100,
+        reduct: 'ред.',
+        del: '...',
       },
       {
-        image: 'some image',
         name: 'evian',
         category: 'вода',
         value: 120,
         price: 100,
         profit: -20,
-        profitPercent: 500,
+        profitPercent: 400,
+        reduct: 'ред.',
+        del: '...',
       },
       {
-        image: 'some image',
         name: 'cola',
         category: 'вода',
         value: 130,
         price: 170,
         profit: 40,
-        profitPercent: 500,
+        profitPercent: 50,
+        reduct: 'ред.',
+        del: '...',
       },
       {
-        image: 'some image',
         name: 'coca-cola',
         category: 'вода',
         value: 180,
         price: 250,
         profit: 70,
         profitPercent: 500,
+        reduct: 'ред.',
+        del: '...',
       },
     ];
     this.isFiltered = false;
@@ -68,22 +73,23 @@ class GoodsCollection {
     </header>
     <main>
       <section class="search">
-        <input type="text" id="search-input" placeholder="Быстрый поиск..." />
+        <input type="text" id="search-input" placeholder=" &#128269; Быстрый поиск..." />
         <div class="categories">
           <select class="categories-list">
-            <option value="" selected>Категория</option>
+            <option value="" selected>Категория </option>
           </select>
         </div>
       </section>
       <section class="list">
         <div class="title">
-          <p id="image">img</p>
           <p id="name">название</p>
           <p id="category">категория</p>
           <p id="value">себестоимость</p>
           <p id="price">цена</p>
-          <p id="profit">наценка</p>
-          <p id="profitPercent">прибыль</p>
+          <p id="profit">прибыль</p>
+          <p id="profitPercent">наценка</p>
+          <p class="custom"></p>
+          <p class="custom"></p>
         </div>
         <ul class="goods-list"></ul>
       </section>
@@ -175,7 +181,7 @@ class GoodsCollection {
     categories.addEventListener('click', this.findByCategoryLogic);
   }
 
-  // //////////////------------------сортування--------------///////////////////
+  /////////////------------------сортування--------------///////////////////
   sortGoodsLogic(event) {
     const goodClass = event.target.getAttribute('id');
     let list = [];
@@ -215,7 +221,6 @@ class GoodsCollection {
 
       event.target.classList.toggle('increase');
       this.renderGoodsList(list);
-      console.log('ss');
     }
   }
 
