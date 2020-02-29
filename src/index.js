@@ -1,6 +1,3 @@
-import startDish from "@/components/component-dishCategories/dishListClass"
+import Header from './components/header/header';
 
-const aaa = new startDish
-const place = document.querySelector('#root')
-
-aaa.start(place)
+const headerPart = new Header();
