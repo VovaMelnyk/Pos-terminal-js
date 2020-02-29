@@ -1,0 +1,228 @@
+.check {
+  td,
+  th {
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+
+  tr:last-child {
+    border-bottom: none;
+  }
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 40%;
+  padding: 10px 10px 20px 0;
+
+  .food-list {
+    height: 60%;
+    padding-bottom: 50px;
+    overflow-y: auto;
+  }
+
+  .comment {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 10px 25px;
+    font-size: 18px;
+
+    p {
+      margin: 0;
+      padding: 3px;
+    }
+  }
+
+  .list-title,
+  .item-title {
+    width: 55%;
+    padding-left: 25px;
+  }
+
+  .list-quantity,
+  .item-quantity {
+    width: 20%;
+    text-align: center;
+  }
+
+  .list-price,
+  .item-price {
+    width: 10%;
+    min-width: 80px;
+    padding-right: 30px;
+    text-align: center;
+  }
+
+  .list-total {
+    width: 15%;
+    padding-right: 15px;
+    padding-left: 0px;
+    text-align: right;
+  }
+
+  .item-total {
+    width: 10%;
+    text-align: right;
+    padding-right: 15px;
+    padding-left: 0px;
+  }
+
+  .check-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 25px;
+  }
+
+  .btn {
+    padding: 20px 30px;
+    line-height: 1px;
+  }
+
+  .more {
+    color: rgb(77, 77, 77);
+    background-color: rgb(242, 242, 242);
+
+    i {
+      font-size: 2rem;
+    }
+  }
+
+  .dropdown-content {
+    min-width: 250px;
+    top: 44px;
+    overflow-y: inherit;
+
+    li:not(:last-child) {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    }
+
+    // &::after {
+    //   content: '';
+    //   position: absolute;
+    //   z-index: -3;
+    //   bottom: -29px;
+    //   left: 30px;
+    //   border: 15px solid transparent;
+    //   border-top: 15px solid rgb(255, 255, 255);
+    // }
+  }
+
+  .bold {
+    font-weight: 700;
+  }
+
+  .summary {
+    padding: 20px 25px 10px 25px;
+    font-size: 18px;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+
+    .btn-wrapper {
+      .summary-btn {
+        width: 100%;
+      }
+    }
+
+    .guests-amount__value {
+      margin: 0;
+      padding: 15px 0 10px 0;
+    }
+
+    .total-wrapper {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .calculate {
+      width: 60%;
+    }
+
+    .result,
+    .bonus {
+      display: flex;
+      justify-content: space-between;
+
+      &__title {
+        margin: 0;
+        padding: 10px 0;
+      }
+
+      &__value {
+        margin: 0;
+        padding: 10px 0;
+        font-weight: 700;
+      }
+    }
+
+    .total {
+      width: 40%;
+      text-align: left;
+      padding-left: 85px;
+      font-weight: 700;
+
+      &__title {
+        margin: 0;
+        padding: 10px 0;
+      }
+
+      &__value {
+        margin: 0;
+        padding: 10px 0;
+      }
+    }
+  }
+
+  .counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    .increment,
+    .decrement {
+      display: inline-block;
+      vertical-align: middle;
+      width: 34px;
+      height: 34px;
+      padding-bottom: 12px;
+      font-size: 24px;
+      font-weight: 700;
+      border-radius: 50%;
+      background-color: rgb(245, 245, 245);
+      border: none;
+      box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      visibility: hidden;
+    }
+
+    span {
+      min-width: 22px;
+      // padding: 0 8px;
+    }
+  }
+
+  .food-list__item:hover .increment,
+  .food-list__item:hover .decrement {
+    visibility: visible;
+  }
+
+  .block {
+    display: block;
+  }
+
+  .none {
+    display: none;
+  }
+}
+
+// Styles for component payment test
+.payment {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(95, 95, 95);
+
+  &__title {
+    color: rgb(255, 255, 255);
+  }
+}
