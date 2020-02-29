@@ -1,3 +1,3 @@
-// import { example, example2, materializeExample } from '@/js/example';
-
-// materializeExample();
+import '@/styles/materialize/materialize'; // import materialize styles
+import '@/styles/base.scss'; // add you own styles
+import PaymentModule from '@/js/payment-module.js'
