@@ -1,61 +1,62 @@
 import '@/styles/materialize/materialize';
 import './createOneIngrClass.scss';
+const imagineFetch = [
+  {
+    id: '1',
+    name: 'Перец молотый',
+    category: 'без категории',
+    weight: 0,
+    price: 0,
+    detailsInfo: false,
+    details: [
+      {
+        name: 'Минестроне',
+        brutto: 0,
+        netto: 0,
+        price: 0,
+        url: '/manage/dish_form/172',
+      },
+      {
+        name: 'Плов',
+        brutto: 0,
+        netto: 0,
+        price: 0,
+        url: '/manage/dish_form/173',
+      },
+    ],
+  },
+  {
+    id: '2',
+    name: 'Aвокадо',
+    category: 'без категории',
+    weight: 0,
+    price: 0,
+    details: [],
+  },
+  {
+    id: '3',
+    name: 'Bода',
+    category: 'без категории',
+    weight: 0,
+    price: 0,
+    details: [
+      {
+        name: 'Американо',
+        brutto: 0,
+        netto: 0,
+        price: 0,
+        url: '/manage/dish_form/172',
+      },
+    ],
+  },
+];
 export default class Ingredient {
   constructor(DOM) {
     this.dom = DOM;
     this.ingredients = [];
   }
   getDataByFetch = () => {
-    this.ingredients = [
-      {
-        id: '1',
-        name: 'Перец молотый',
-        category: 'без категории',
-        weight: 0,
-        price: 0,
-        detailsInfo: false,
-        details: [
-          {
-            name: 'Минестроне',
-            brutto: 0,
-            netto: 0,
-            price: 0,
-            url: '/manage/dish_form/172',
-          },
-          {
-            name: 'Плов',
-            brutto: 0,
-            netto: 0,
-            price: 0,
-            url: '/manage/dish_form/173',
-          },
-        ],
-      },
-      {
-        id: '2',
-        name: 'Aвокадо',
-        category: 'без категории',
-        weight: 0,
-        price: 0,
-        details: [],
-      },
-      {
-        id: '3',
-        name: 'Bода',
-        category: 'без категории',
-        weight: 0,
-        price: 0,
-        details: [
-          {
-            name: 'Американо',
-            brutto: 0,
-            netto: 0,
-            price: 0,
-            url: '/manage/dish_form/172',
-          },
-        ],
-      },
-    ];
+    this.ingredients = imagineFetch;
   };
 
   renderDetails = data => {
@@ -184,6 +185,6 @@ export default class Ingredient {
   };
 }
 
-const root = document.querySelector('#root');
-const test = new Ingredient(root);
-test.init();
+// const root = document.querySelector('#root');
+// const test = new Ingredient(root);
+// test.init();
