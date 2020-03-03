@@ -60,8 +60,9 @@ p.invalid {
 }
 
 p.valid {
-  border: none;
-  border: 1px solid red !important;
+  /*  border: none;
+  border: 1px solid red !important;*/
+  color: red;
 }
 
 p.reductGood:hover {
