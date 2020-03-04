@@ -17,54 +17,42 @@ class OneOfFoodList {
     }
     renderDishList = () => {
         this.list.insertAdjacentHTML('afterbegin', `
-        <tr class="dishItem"; style="border: 1px none #333333;">
-        <td class="products-name" title="${this.name}" style="text-align: left; max-width: 200px;">
-            <div style="display: flex; align-items: center;">
+        <tr class="dishItem">
+        <td class="dishItem__name" title="${this.name}" style="text-align: left; max-width: 200px;">
+            <div class="dishItem__flex-center">
                 <div class="item-img">
                     <img src="${this.img}" width="48" height="35">
                 </div>
                 <div class="item-desc" style="margin-left: 10px;">${this.name}</div>
             </div>
         </td>
-        <td class="" title="${this.category}" style="text-align: left;">
-            <span class="table-cell-value">${this.category}</span>
+        <td class="dishItem__left-cell" title="${this.category}">
+            <span>${this.category}</span>
         </td>
-        <td class="" title="${this.selfPrice}" style="text-align: right; font-weight: bold;">
-            <span style="color: inherit;">${this.selfPrice} ₴</span>
+        <td class="dishItem__price" title="${this.selfPrice}">
+            <span>${this.selfPrice} ₴</span>
         </td>
-        <td class="editable" title="${this.finalPrice}" style="text-align: right; font-weight: bold;">
-            <span style="color: inherit;">${this.finalPrice} ₴</span>
+        <td class="editable dishItem__price" title="${this.finalPrice}">
+            <span>${this.finalPrice} ₴</span>
         </td>
-        <td class="editable" title="${this.extraCharge}" style="text-align: right;">
+        <td class="editable dishItem__right-cell" title="${this.extraCharge}">
             <span>${this.extraCharge} %</span>
         </td>
-        <td class="" title="Состав" style="text-align: right;">
-            <a id="composition"; style="text-decoration: none; cursor: pointer; color: #2688cd;">Состав</a>
+        <td class="editable dishItem__right-cell" title="Состав">
+            <a id="composition"; class="dishItem__link">Состав</a>
         </td>
         <td class="" title="Ред." style="text-align: right;">
-            <a href="#" style="text-decoration: none; color: #2688cd;">Ред.</a>
+            <a href="#"; class="dishItem__link">Ред.</a>
         </td>
-        <td class="actions-cell" title="">
-            <div style="display: flex; align-items: center; justify-content: center;">
-                <button type="button" id="btnAnList" class="btn btn-edit-ellipsis dropdown-toggle" style="width: 30px; height: 20px; background-image: url(https://demo.joinposter.com/i/manage/ellipsis.png); background-repeat: no-repeat; background-position: center; border: none; background-color: inherit; cursor: pointer;"></button>
-                <div class="popdown dropdown-cell-popover top-left" style="padding: 0px;">
-                    <div style="z-index: 1; position: relative;">
-                        <div id="anList" class="closed" 
-                        style="position: absolute;
-                        top: -20px;
-                        left: -150px;
-                        background-color: #fff;
-                        border: 1px solid #000;
-                        border-radius: 10px;
-                        text-align: left;"
-                    > 
-                            <ul class="dropdown-menu pull-right" style="
-                            list-style: none;
-                            margin: 0;
-                            padding: 15px;"
-                        >
-                                <li class="delete-link">
-                                    <a class="pseudo-link" style="color: #2688cd; cursor: pointer">Удалить</a>
+        <td title="">
+            <div class="dishItem__flex-center">
+                <button type="button" id="btnAnList" class="dishItem__button"></button>
+                <div style="padding: 0px;">
+                    <div class="dishItem__another-options">
+                        <div id="anList" class="closed dishItem__another-options__list"> 
+                            <ul class="dishItem__dropdown-menu">
+                                <li class="dishItem__dropdown-link">
+                                    <a class="pseudo-link" class="dishItem__dropdown-link">Удалить</a>
                                 </li>
                             </ul>
                         </div>
@@ -80,10 +68,10 @@ class OneOfFoodList {
         for (let obj of this.ingredientsArray) {
             str += `
             <tr>
-                <td class="left-cell">${obj.ingredient}</td>
-                <td class="right-cell">${obj.ingredientGross} г</td>
-                <td class="right-cell">${obj.ingerdientNett} г</td>
-                <td class="right-cell-end">${obj.ingredientFirstPrice} ₴</td>
+                <td class="dishIngred__left-cell">${obj.ingredient}</td>
+                <td class="dishIngred__right-cell">${obj.ingredientGross} г</td>
+                <td class="dishIngred__right-cell">${obj.ingerdientNett} г</td>
+                <td class="dishIngred__right-cell-end">${obj.ingredientFirstPrice} ₴</td>
             </tr>`;
         }
         return str
@@ -93,15 +81,15 @@ class OneOfFoodList {
         document.querySelector('#del') === null ? 
         this.list.insertAdjacentHTML('beforeend',`
         <tr id="del">
-            <td colspan="10" style="background-color: rgb(244, 244, 244);" class="no-top-border dropdown-content-container">
+            <td colspan="10" class="dishIngred__bcg-color">
             <div>
-            <table class="table transaction-history" style='width: 95%; background-color: #fff; margin: 15px auto;'>
+            <table class="dishIngred__table">
             <thead>
             <tr>
-                <th class="left-cell" style="border-bottom: 1px solid rgb(238, 238, 238)">Ингредиент</th>
-                <th class="right-cell" style="border-bottom: 1px solid rgb(238, 238, 238)">Брутто</th>
-                <th class="right-cell" style="width: 100px; border-bottom: 1px solid rgb(238, 238, 238)">Нетто</th>
-                <th class="right-cell-end" style="width: 100px; border-bottom: 1px solid rgb(238, 238, 238)">Цена</th>
+                <th class="left-cell dishIngred__item-left">Ингредиент</th>
+                <th class="right-cell dishIngred__item-left">Брутто</th>
+                <th class="right-cell dishIngred__item-right">Нетто</th>
+                <th class="right-cell-end dishIngred__item-right">Цена</th>
             </tr>
             </thead>
         <tbody>

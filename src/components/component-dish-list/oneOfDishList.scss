@@ -1,0 +1,107 @@
+.dishItem {
+    border: 1px none #333333;
+};
+
+.dishItem__name {
+    text-align: left;
+    max-width: 200px;
+}
+
+.dishItem__left-cell {
+    text-align: left;
+}
+
+.dishItem__price {
+    text-align: right;
+    font-weight: bold;
+}
+
+.dishItem__right-cell {
+    text-align: right;
+}
+
+.dishItem__flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dishItem__link {
+    text-decoration: none;
+    cursor: pointer;
+    color: #2688cd;
+}
+
+.dishItem__button {
+    width: 30px;
+    height: 20px;
+    background-image: url('https://demo.joinposter.com/i/manage/ellipsis.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
+}
+
+.dishItem__another-options {
+    position: relative;
+    z-index: 1;
+}
+
+.dishItem__another-options__list {
+    position: absolute;
+    top: -20px;
+    left: -150px;
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 10px;
+    text-align: left;
+}
+
+.dishItem__dropdown-menu {
+    list-style: none;
+    margin: 0;
+    padding: 15px;
+}
+
+.dishItem__dropdown-link {
+    color: #2688cd;
+    cursor: pointer;
+}
+
+.closed {
+    display: none;
+}
+
+.dishIngred__left-cell {
+    padding: 20px 8px 8px 30px; 
+    text-align: left;
+}
+
+.dishIngred__right-cell {
+    padding: 20px 8px 8px 8px; 
+    text-align: right;
+}
+
+.dishIngred__right-cell-end {
+    padding: 20px 30px 8px 8px; 
+    text-align: right;
+}
+.dishIngred__bcg-color {
+    background-color: rgb(244, 244, 244);
+}
+
+.dishIngred__table {
+    width: 95%; 
+    background-color: #fff; 
+    margin: 15px auto;
+}
+
+.dishIngred__item-left {
+    border-bottom: 1px solid rgb(238, 238, 238)
+}
+
+.dishIngred__item-right {
+    width: 100px; 
+    border-bottom: 1px solid rgb(238, 238, 238)
+}
