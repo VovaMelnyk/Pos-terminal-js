@@ -54,7 +54,7 @@
   margin: 0;
 }
 .yesh__finder-wrap {
-  padding: 0;
+  padding: 0 !important;
 }
 .yesh__finder-input {
   position: relative;
@@ -80,7 +80,7 @@
   position: absolute;
   right: 0;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translate(-50%, -50%);
   transition: opacity 1s;
 }
 .isActive {
@@ -111,6 +111,10 @@
 .yesh__list-name {
   display: flex;
   align-items: center;
+  cursor: pointer;
+}
+.yesh__noClick {
+  pointer-events: none;
 }
 //----
 .yesh__list {
@@ -121,6 +125,14 @@
   scroll-behavior: smooth;
 }
 .yesh__item {
+  margin: 0;
+  padding: 4px 0;
+  background: rgb(255, 255, 255);
+  border-bottom: 1px solid rgb(200, 200, 200);
+  transition: background 0.3s;
+}
+.yesh__item-empty {
+  text-align: center;
   margin: 0;
   padding: 4px 0;
   background: rgb(255, 255, 255);
@@ -152,8 +164,10 @@
   height: 100%;
   height: 30px;
   position: relative;
+  pointer-events: none;
 }
 .yesh__sort-arrow {
   position: absolute;
   bottom: 0;
+  pointer-events: none;
 }
