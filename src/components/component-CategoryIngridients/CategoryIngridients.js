@@ -14,17 +14,17 @@ const ID_DOM_EL = {
 const allItem = data => {
   return data.reduce((acc, Item) => {
     acc += `
-        <li class="row yesh__list" id='${Item.id}'>
+        <li class="row yesh__item" id='${Item.id}'>
             <div class="col s4 m5" id="js-category">
               <div>${Item.name}</div>
             </div>
             <div class="col s4 m5">
-              <div>${Item.amount}</div>
+              <div class="yesh__item-amount">${Item.amount}</div>
             </div>
-            <div class="col s2 m1 yesh-jcfe">
+            <div class="col s2 m1 yesh__item-btn">
               <a href="#" class="yesh-link">edit</a>
             </div>
-            <div class="col s2 m1 yesh-jcfe">
+            <div class="col s2 m1 yesh__item-btn">
               <span class="yesh-link">
                 <i class="material-icons" id='${Item.id}'>clear</i>
               </span>
@@ -64,8 +64,9 @@ class CategoryIngridients {
 
   // поиск в списке по значению не мутирует this.data
   filterByFinder(data) {
+    const filter = this.filter === null ? '' : this.filter;
     return data.filter(ingridient =>
-      ingridient.name.toLowerCase().includes(this.filter.toLowerCase()),
+      ingridient.name.toLowerCase().includes(filter.toLowerCase()),
     );
   }
 
@@ -81,7 +82,7 @@ class CategoryIngridients {
   onChangeFilter(e) {
     this.filter = e.target.value;
     window.clearTimeout(this.timeoutID);
-    this.timeoutID = window.setTimeout(() => this.renderForSubmit(), 600);
+    this.timeoutID = window.setTimeout(() => this.renderForSubmit(), 800);
   }
   // clear filter on click X
   onClickFilter(e) {
@@ -129,7 +130,7 @@ class CategoryIngridients {
         key: 'name',
         direction: this.sort.name,
       });
-      this.render(this.DOM_ELEMENT, result);
+      this.render(this.DOM_ELEMENT, this.filterByFinder(result));
     }
     if (id === ID_DOM_EL.amount) {
       this.sort.amount = !this.sort.amount;
@@ -139,7 +140,7 @@ class CategoryIngridients {
         key: 'amount',
         direction: this.sort.amount,
       });
-      this.render(this.DOM_ELEMENT, result);
+      this.render(this.DOM_ELEMENT, this.filterByFinder(result));
     }
   }
   // удаление елемента
@@ -162,9 +163,14 @@ class CategoryIngridients {
           key: 'amount',
           direction: this.sort.amount,
         };
+      } else {
+        return {
+          data: newData,
+          key: 'name',
+          direction: this.sort.name,
+        };
       }
     };
-
     const filterData = this.filterByFinder(this.data, this.filter);
     this.data = this.filterDataById(this.data, id);
     if (filterData.length > 0) {
@@ -180,21 +186,21 @@ class CategoryIngridients {
   //создание разметки шапки
   elementHeader() {
     return `
-    <div class="row yesh-m0 yesh-aic yesh-fww yesh-p0">
-        <div class="col s12 m9 yesh-m0 yesh-p0">
-          <div class="row yesh-m0 yesh-p10-0">
-            <h4 class="col yesh-m0 yesh-p0">
+    <section class="row yesh__section-header">
+        <div class="col s9 m10 l11 yesh-m0 yesh-p0">
+          <div class="row yesh__title">
+            <h4 class="col yesh__title-text">
               Категории ингридиентов
-              <span class=" grey-text text-lighten-1 yesh-m0">
+              <span class=" grey-text text-lighten-1 yesh__title-amount">
                 ${this.data.length}
               </span>
             </h4>
           </div>
         </div>
-        <div class="col s12 m3 yesh-aic yesh-jcfe yesh-p0">
-            <a href="#" class="yesh-aic yesh-btn">Добавить</a>
+        <div class="col s3 m2 l1 yesh__header-btn">
+            <a href="#" class="yesh__btn-add">Добавить</a>
         </div>
-    </div>
+    </section>
       `;
   }
 
@@ -202,13 +208,13 @@ class CategoryIngridients {
   elementFinder() {
     const value = this.filter === null ? '' : this.filter;
     const inputClass =
-      value.length > 0 ? 'yesh-inputClear isActive' : 'yesh-inputClear';
+      value.length > 0 ? 'yesh__input-clear isActive' : 'yesh__input-clear';
     return `
-    <div class="row yesh-m0">
-      <div class="col s12 m6 l4 yesh-p0" >
-        <div class="row yesh-sectionInput yesh-p0" id="js__listener-finder">
-          <i class="material-icons yesh-fz yesh-inputSubmit" id="js__finder-submit">search</i>
-          <input value="${value}" autofocus class="yesh-input" type="search" placeholder="Быстрый поиск" id="js__finder-Input"/>
+    <div class="row yesh__section-finder">
+      <div class="col s12 m6 l4 yesh__finder-wrap" >
+        <div class="row yesh__finder-input" id="js__listener-finder">
+          <i class="material-icons yesh__input-submit" id="js__finder-submit">search</i>
+          <input value="${value}" autofocus tabindex="0" autocomplete="off" class="yesh-input" type="search" placeholder="Быстрый поиск" id="js__finder-Input"/>
           <i class="material-icons ${inputClass}" id="js__finder-clear">clear</i>
         </div>
       </div>
@@ -219,22 +225,21 @@ class CategoryIngridients {
   elementList(data) {
     const icon = key => {
       return this.sort[key] !== null
-        ? `<i class="material-icons yesh-fz">
+        ? `<i class="material-icons yesh__sort-arrow">
               ${this.sort[key] ? 'arrow_drop_up' : 'arrow_drop_down'}
             </i>`
         : '';
     };
     return `
-    <section class="row yesh yesh-m0-10">
-        <ul class="col s12 yesh-p0" id="js__listener-deleteCategory">
-            <li class="row yesh__list yesh__list-head yesh-aic" id="js__listener-table">
-                <div class="col s4 m5 yesh-aic yesh-min-h30" id="js-category">
+    <section class="row yesh__section-list">
+            <div class="row yesh__list-head" id="js__listener-table">
+                <div class="col s4 m5 yesh__list-name" id="js-category">
                   <div>Категория</div>
-                  <div>${icon('name')}</div>
+                  <div class="yesh__arrow-wrap">${icon('name')}</div>
                 </div>
-                <div class="col s4 m5 yesh-aic yesh-min-h30" id="js-amount">
+                <div class="col s4 m5 yesh__list-name yesh__item-amount" id="js-amount">
                   <div>Кол-во ингридиентов</div>
-                  <div>${icon('amount')}</div>
+                  <div class="yesh__arrow-wrap">${icon('amount')}</div>
                 </div>
                 <div class="col s2 m1">
                 
@@ -242,7 +247,8 @@ class CategoryIngridients {
                 <div class="col s2 m1">
                 
                 </div>
-            </li>
+            </div>
+        <ul class="col s12 yesh__list" id="js__listener-deleteCategory">
             ${allItem(data)}
         </ul>
     </section>
@@ -298,7 +304,7 @@ class CategoryIngridients {
   //Render render(domElement, data = this.data)
   preRender(data = this.data) {
     return `
-    <section class="container yesh-p0">
+    <section class="yesh-container yesh-p0">
       ${this.elementHeader()}
       ${this.elementFinder()}
       ${this.elementList(data)}

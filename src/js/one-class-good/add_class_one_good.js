@@ -129,10 +129,6 @@ class Add_OneClass_Good {
     this.redColorForProfit();
     this.addOneClass();
     this.deleteOneClass();
-    // document.addEventListener('DOMContentLoaded', function() {
-    //   var elems = document.querySelectorAll('.modal');
-    //   var instances = M.Modal.init(elems);
-    // });
   }
 }
 

@@ -1,96 +1,102 @@
-import M from 'materialize-css';
-import '../../styles/materialize/materialize.scss';
-import '@/styles/materialize/materialize';
-import './goodsCollection.css';
+import Add_OneClass_Good from '../one-class-good/add_class_one_good';
+const oneGood = new Add_OneClass_Good();
+import './goodsCollection.scss';
+
 class GoodsCollection {
   constructor() {
     this.list = [
       {
-        image: 'some image',
         name: 'bonaqua',
         category: 'вода',
         value: 100,
         price: 150,
         profit: 50,
-        profitPercent: 500,
+        profitPercent: 40,
+        reductGood: 'ред.',
+        ddeleteGoodel: '...',
       },
       {
-        image: 'some image',
         name: 'кекс',
         category: 'торт',
         value: 90,
         price: 110,
         profit: 80,
-        profitPercent: 500,
+        profitPercent: 100,
+        reductGood: 'ред.',
+        ddeleteGoodel: '...',
       },
       {
-        image: 'some image',
         name: 'evian',
         category: 'вода',
         value: 120,
         price: 100,
         profit: -20,
-        profitPercent: 500,
+        profitPercent: 400,
+        reductGood: 'ред.',
+        ddeleteGoodel: '...',
       },
       {
-        image: 'some image',
         name: 'cola',
         category: 'вода',
         value: 130,
         price: 170,
         profit: 40,
-        profitPercent: 500,
+        profitPercent: 50,
+        reductGood: 'ред.',
+        ddeleteGoodel: '...',
       },
       {
-        image: 'some image',
         name: 'coca-cola',
         category: 'вода',
         value: 180,
         price: 250,
         profit: 70,
         profitPercent: 500,
+        reductGood: 'ред.',
+        ddeleteGoodel: '...',
       },
     ];
+    this.isFiltered = false;
+    this.filteredList = [];
     this.inputSearchLogic = this.inputSearchLogic.bind(this);
     this.findByCategoryLogic = this.findByCategoryLogic.bind(this);
     this.sortGoodsLogic = this.sortGoodsLogic.bind(this);
   }
 
   renderLayOut(container) {
-    container.insertAdjacentHTML(
-      'beforeend',
-      `<header class="goods-header">
-      <h2 class="goods-title">Товары <span class="goods-amount"></span></h2>
-      <button class="add"><a href="#" class="add__link">Добавить</a></button>      
-    </header>
-    <main>
-      <section class="search">
-        <input type="text" id="search-input" placeholder="Быстрый поиск..." />
-        <div class="categories">
-          <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>категория </a>
-          <ul id='dropdown1' class='dropdown-content categories-list'>
-            
-          </ul>
-        </div>
-      </section>
-      <section class="list">
+    const layout = `<div class="content-header">
+    <h2 class="content-header__title">Товары <span class="content-header__quantity"></span></h2>
+    <a href="#" class="add__link"><button class="content-header__button">Добавить</button> </a>     
+  </div>
+  <main>
+    <section class="search">
+    <form class="search-form">
+      <input type="text" class="search-form__input" placeholder="Быстрый поиск..."/>
+    </form>
+      <div class="categories">
+      <select class="categories-list">
+      <option selected>Категория </option>
+        </select>
+      </div>
+    </section>
+    <section class="list">
       <div class="title">
-      <p id="image">img</p>
-      <p id="name">название</p>
-      <p id="category">категория</p>
-      <p id="value">себестоимость</p>
-      <p id="price">цена</p>
-      <p id="profit">наценка</p>
-      <p id="profitPercent">прибыль</p>
-     </div>
+        <p id="name">название</p>
+        <p id="category">категория</p>
+        <p id="value">себестоимость</p>
+        <p id="price">цена</p>
+        <p id="profit">прибыль</p>
+        <p id="profitPercent">наценка</p>
+        <p class="reductGood"></p>
+        <p class="ddeleteGoodel"></p>
+      </div>
       <ul class="goods-list"></ul>
-      </section>
-    </main>`,
-    );
+    </section>
+  </main>`;
+    container.insertAdjacentHTML('beforeend', layout);
   }
 
   ////////////-----------------це робить клас Сергія-------------//////////////
-  //тут tr
   renderGoodsListItem(good) {
     const goodsListItem = document.createElement('li');
     goodsListItem.classList.add('goodsListItem');
@@ -108,16 +114,20 @@ class GoodsCollection {
     const unique = [...new Set(categoryList)];
     const categories = document.querySelector('.categories-list');
     unique.map(unit => {
-      categories.insertAdjacentHTML('beforeend', `<li><p>${unit}</p></li>`);
+      categories.insertAdjacentHTML(
+        'beforeend',
+        `<option class="categories-list__item">${unit}</option>`,
+      );
     });
   }
 
   ///////////////////---------------кількість товарів------------////////////////
   goodsAmount(list) {
-    document.querySelector('.goods-amount').textContent = list.length;
+    document.querySelector('.content-header__quantity').textContent =
+      list.length;
   }
 
-  // ///////////////////////-----------------список товарів---------------------///////////
+  // ////////////////------------список товарів---------------------///////////
   renderGoodsList(list) {
     const markup = list.reduce(
       (str, el) => str + this.renderGoodsListItem(el).outerHTML,
@@ -127,39 +137,62 @@ class GoodsCollection {
     goodsList.innerHTML = markup;
   }
 
-  // ////////////////////---пошук за введеною назвою--------------///////////////
+  /////////////------пошук за введеною назвою--------------///////////////
   inputSearchLogic(event) {
     const filteredGoods = this.list.filter(good =>
       good.name.includes(event.target.value.toLowerCase()),
     );
     this.renderGoodsList(filteredGoods);
     this.goodsAmount(filteredGoods);
+    if (event.target.value) {
+      this.isFiltered = true;
+      this.filteredList = filteredGoods;
+    } else {
+      this.isFiltered = false;
+      this.filteredList = [];
+    }
   }
 
   inputSearch() {
-    const inputField = document.querySelector('#search-input');
+    const inputField = document.querySelector('.search-form__input');
     inputField.addEventListener('input', this.inputSearchLogic);
   }
-  // ////////////-------------- пошук по категорії  -----------------------////////////
+  // ////////////--------------пошук по категорії-----------------------////////////
 
   findByCategoryLogic(event) {
-    const neededCategoryGoods = this.list.filter(
-      good => good.category === event.target.textContent,
-    );
-    this.renderGoodsList(neededCategoryGoods);
-    this.goodsAmount(neededCategoryGoods);
+    if (event.target.value !== 'Категория') {
+      const neededCategoryGoods = this.list.filter(
+        good => good.category === event.target.value,
+      );
+      this.renderGoodsList(neededCategoryGoods);
+      this.goodsAmount(neededCategoryGoods);
+      this.isFiltered = true;
+      this.filteredList = neededCategoryGoods;
+    } else {
+      this.renderGoodsList(this.list);
+      this.goodsAmount(this.list);
+      this.isFiltered = false;
+      this.filteredList = [];
+    }
   }
 
   findByCategory() {
-    const categories = document.querySelector('.categories-list');
+    const categories = document.querySelector('.categories');
     categories.addEventListener('click', this.findByCategoryLogic);
   }
 
-  // //////////////------------------сортування--------------///////////////////
+  /////////////------------------сортування--------------///////////////////
   sortGoodsLogic(event) {
     const goodClass = event.target.getAttribute('id');
+    let list = [];
+    if (this.isFiltered) {
+      list = this.filteredList;
+    } else {
+      list = this.list;
+    }
+
     if (event.target !== event.currentTarget) {
-      this.list.sort(function(a, b) {
+      list.sort(function(a, b) {
         if (typeof a[goodClass] === 'string') {
           const x = a[goodClass].toLowerCase();
           const y = b[goodClass].toLowerCase();
@@ -172,7 +205,7 @@ class GoodsCollection {
         return a[goodClass] - b[goodClass];
       });
       if (event.target.classList.contains('increase')) {
-        this.list.sort(function(a, b) {
+        list.sort(function(a, b) {
           if (typeof a[goodClass] === 'string') {
             const x = a[goodClass].toLowerCase();
             const y = b[goodClass].toLowerCase();
@@ -187,9 +220,10 @@ class GoodsCollection {
       }
 
       event.target.classList.toggle('increase');
-      this.renderGoodsList(this.list);
+      this.renderGoodsList(list);
     }
   }
+
   sortGoods() {
     const title = document.querySelector('.title');
     title.addEventListener('click', this.sortGoodsLogic);
@@ -204,10 +238,6 @@ class GoodsCollection {
     this.inputSearch();
     this.findByCategory();
     this.sortGoods();
-    document.addEventListener('DOMContentLoaded', function() {
-      var elems = document.querySelectorAll('.dropdown-trigger');
-      var instances = M.Dropdown.init(elems);
-    });
   }
 }
 
