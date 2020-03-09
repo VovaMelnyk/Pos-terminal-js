@@ -1,9 +1,10 @@
 'use strict';
 import Form from '@/js/register_form';
-import Hall from '@/components/hall/hall';
 import M from 'materialize-css'; // add materialize js logic
 import '@/styles/materialize/materialize';
 import '@/styles/login-form';
+
+import { authentication } from '../service/auth';
 
 class LoginForm {
   constructor() {
@@ -16,6 +17,8 @@ class LoginForm {
     this.passInput = document.querySelector('input[type="password"]');
     this.register = document.querySelector('.register');
     this.modal = document.querySelector('#modal1');
+    this.url =
+      'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=';
 
     this.registerNow();
     this.submit();
@@ -66,49 +69,19 @@ class LoginForm {
   }
 
   submit() {
-    this.btn.addEventListener('click', this.isFillingForm.bind(this));
+    this.form.addEventListener('submit', this.loginUser.bind(this));
   }
-  isIncludes(arr) {
-    for (let obj of arr) {
-      if (
-        obj.ligin === this.loginInput.value.trim() &&
-        obj.password === this.passInput.value.trim()
-      ) {
-        return true;
-      }
-      return false;
-    }
-  }
-  isFillingForm(e) {
-    if (
-      this.loginInput.value.trim() === '' ||
-      this.passInput.value.trim() === ''
-    ) {
-      this.form.addEventListener('submit', e.preventDefault());
-      this.error.textContent = 'Fields are required!';
-      return;
-    }
-    this.error.textContent = '';
-    this.isValid(e);
-    return;
-  }
-  isValid(e) {
-    // if (
-    //   !this.isIncludes([
-    //     {
-    //       ligin: 'nazarkynash16@gmail.com',
-    //       password: '123456',
-    //     },
-    //   ])
-    // ) {
-    //   this.form.addEventListener('submit', e.preventDefault());
-    //   this.error.textContent = 'невірний логін або пароль';
-    //   return;
-    // }
-    this.error.textContent = '';
-    this.root.innerHTML = '';
-    new Hall().start(this.root);
-    return;
+
+  loginUser(e) {
+    e.preventDefault();
+
+    const user = {
+      email: this.loginInput.value,
+      password: this.passInput.value,
+      returnSecureToken: true,
+    };
+
+    authentication(this.url, user);
   }
 }
 
