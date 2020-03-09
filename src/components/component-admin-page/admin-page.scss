@@ -1,12 +1,13 @@
 body {
   margin: 0;
 }
+
 .wrapper-admin-page {
   display: grid;
   position: relative;
   height: 100vh;
   grid-template-columns: 10% 1fr;
-  grid-template-rows: 5% 1fr;
+  grid-template-rows: 1fr;
 
   &__aside {
     position: fixed;
