@@ -116,7 +116,6 @@ class Add_OneClass_Good {
         `<p class="${prop}">${good[prop]}</p>`,
       );
     }
-    console.log(goodsListItem);
     return goodsListItem;
   }
 
