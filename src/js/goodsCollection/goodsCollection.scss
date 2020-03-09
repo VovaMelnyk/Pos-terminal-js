@@ -28,18 +28,15 @@
   padding: 20px;
 }
 
-.title {
+.goods-title {
   color: #696969;
   font-size: 15px;
   text-align: center;
-}
-
-.title {
   display: flex;
   flex-direction: row;
 }
 
-.title p {
+.goods-title p {
   width: 80px;
   vertical-align: middle;
 }
@@ -48,8 +45,8 @@
   background-color: #c7c7c7;
 }
 
-.title p#name,
-.title p#category {
+.goods-title p#name,
+.goods-title p#category {
   min-width: 30%;
   text-align: left;
 }

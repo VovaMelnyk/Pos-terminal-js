@@ -80,7 +80,7 @@ class GoodsCollection {
       </div>
     </section>
     <section class="list">
-      <div class="title">
+      <div class="goods-title">
         <p id="name">название</p>
         <p id="category">категория</p>
         <p id="value">себестоимость</p>
