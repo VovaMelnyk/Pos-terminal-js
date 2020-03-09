@@ -1,11 +1,12 @@
 'use strict';
 
 import './header.scss';
+import { startAdminPage } from '../../js/controller';
 // import admin from "../component-admin-page"
 class Header {
-    constructor() {
-        const root = document.querySelector('#root');
-        const head = `<div class="header">
+  constructor() {
+    this.root = document.querySelector('#root');
+    const head = `<div class="header">
         <nav class="burger-menu">
         <div class="menu-header">
         <span class="title">Меню</span>
@@ -18,18 +19,24 @@ class Header {
         <a href="#" class="user login-name">Template</a>
         <input type="button" class="user logout" onClick="location.href='action=logout'" value="Logout">
         </div>
-        </div>`
+        </div>`;
 
-        root.insertAdjacentHTML('beforebegin', head);
-        this.addListeners()
-    }
-    addListeners() {
-        const menuElem = document.querySelector('.menu-header');
-        const titleElem = document.querySelector('.title');
-        const adminBtn = document.querySelector('#admin-btn')
-        titleElem.addEventListener('click', function() {
-            menuElem.classList.toggle('open');
-        })
-    }
+    this.root.insertAdjacentHTML('beforebegin', head);
+    this.addListeners();
+    // this.adminWindowClick = this.adminWindowClick.bind(this);
+  }
+  adminWindowClick = e => {
+    this.root.innerHTML = '';
+    startAdminPage(this.root);
+  };
+  addListeners() {
+    const menuElem = document.querySelector('.menu-header');
+    const titleElem = document.querySelector('.title');
+    const adminBtn = document.querySelector('#admin-btn');
+    titleElem.addEventListener('click', function() {
+      menuElem.classList.toggle('open');
+    });
+    adminBtn.addEventListener('click', this.adminWindowClick);
+  }
 }
-export default Header
+export default Header;
