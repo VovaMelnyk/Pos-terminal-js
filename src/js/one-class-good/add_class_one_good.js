@@ -1,5 +1,5 @@
-import M from 'materialize-css';
-import '@/styles/materialize/materialize.scss';
+// import M from 'materialize-css';
+// import '@/styles/materialize/materialize.scss';
 import '@/styles/base';
 import './styleGood.css';
 
@@ -144,10 +144,10 @@ class Add_OneClass_Good {
     this.addOneClass();
     this.deleteOneClass();
     // console.log(this.redColorForProfit);
-    document.addEventListener('DOMContentLoaded', function() {
-      var elems = document.querySelectorAll('.modal');
-      var instances = M.Modal.init(elems);
-    });
+    // document.addEventListener('DOMContentLoaded', function() {
+    //   var elems = document.querySelectorAll('.modal');
+    //   var instances = M.Modal.init(elems);
+    // });
   }
 }
 
