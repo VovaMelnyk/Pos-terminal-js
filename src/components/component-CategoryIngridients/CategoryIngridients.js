@@ -1,4 +1,5 @@
 'use strict';
+import data from './testData';
 import '@/styles/materialize/materialize';
 import '@/styles/fonts/material-design-icons/material-icons.css';
 import './CategoryIngridients.scss';
@@ -311,7 +312,7 @@ class CategoryIngridients {
     </section>
       `;
   }
-  render(domElement, data) {
+  render(domElement) {
     this.removeListener();
     this.DOM_ELEMENT = domElement;
     this.DOM_ELEMENT.innerHTML = `${this.preRender(data)}`;
@@ -322,7 +323,6 @@ class CategoryIngridients {
 export default CategoryIngridients;
 
 // // Дата для проверки
-// import data from './testData';
 // const root = document.querySelector('#root');
 // // создаем екземпляр
 // const module = new CategoryIngridients();
