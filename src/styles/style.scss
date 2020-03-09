@@ -3,9 +3,12 @@
 .register-menu {
     display: block;
     margin: 0 auto;
+    margin-top: 50px;
     width: 450px;
-    border: 1px solid black;
+    box-shadow: 0px 0px 0 10px #009688;
     text-align: center;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
 
     &__head {
         padding-top: 50px;
@@ -49,4 +52,16 @@
     box-shadow: none;
     color: #9F9F9F;
     cursor: default;
+
+}
+
+
+.error{
+    display: block;
+    width: 200px;
+    background: rgb(194, 122, 122);
+    color: black;
+    text-align: center;
+    margin: 0 auto;
+   
 }
