@@ -4,9 +4,9 @@ import './header.scss';
 import { startAdminPage } from '../../js/controller';
 // import admin from "../component-admin-page"
 class Header {
-    constructor() {
-        this.root = document.querySelector('#root');
-        const head = `<div class="header">
+  constructor() {
+    this.root = document.querySelector('#root');
+    const head = `<div class="header">
         <nav class="burger-menu">
         <div class="menu-header">
         <span class="title">Меню</span>
@@ -21,35 +21,33 @@ class Header {
         </div>
         </div>`;
 
-        this.root.insertAdjacentHTML('beforebegin', head);
-        this.addListeners();
-        // this.adminWindowClick = this.adminWindowClick.bind(this);
-    }
+    this.root.insertAdjacentHTML('beforebegin', head);
+    this.addListeners();
+    // this.adminWindowClick = this.adminWindowClick.bind(this);
+  }
 
-
-    closeMenu() {
-        const menuElem = document.querySelector('.menu-header');
-        const adminBtn = document.querySelector('#admin-btn');
-        adminBtn.addEventListener('click', function() {
-            menuElem.classList.remove('open');
-        });
-    }
-    adminWindowClick = () => {
-        this.closeMenu();
-        this.root.innerHTML = '';
-        startAdminPage(this.root);
-
-    };
-    addListeners() {
-        const menuElem = document.querySelector('.menu-header');
-        const titleElem = document.querySelector('.title');
-        const adminBtn = document.querySelector('#admin-btn');
-        titleElem.addEventListener('click', function() {
-            menuElem.classList.toggle('open');
-        });
-        adminBtn.addEventListener('click', this.adminWindowClick);
-
-
-    }
+  closeMenu() {
+    const menuElem = document.querySelector('.menu-header');
+    const adminBtn = document.querySelector('#admin-btn');
+    adminBtn.addEventListener('click', function() {
+      menuElem.classList.remove('open');
+    });
+  }
+  adminWindowClick = () => {
+    this.closeMenu();
+    this.root.innerHTML = '';
+    startAdminPage(this.root);
+    const menuElem = document.querySelector('.menu-header');
+    menuElem.classList.remove('open');
+  };
+  addListeners() {
+    const menuElem = document.querySelector('.menu-header');
+    const titleElem = document.querySelector('.title');
+    const adminBtn = document.querySelector('#admin-btn');
+    titleElem.addEventListener('click', function() {
+      menuElem.classList.toggle('open');
+    });
+    adminBtn.addEventListener('click', this.adminWindowClick);
+  }
 }
 export default Header;

@@ -31,7 +31,6 @@ class menuAdmin {
     return `<a id="admin-page-btn-back" href="#"><i class="medium material-icons admin-menu-icon">chevron_left</i></a>
     <ul id="slide-out" class="sidenav sidenav-fixed">
     </ul>
-    <div class="test"></div>
     `;
   };
   markUpLi = ({ name, icon, id }) => {
