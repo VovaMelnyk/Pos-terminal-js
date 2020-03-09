@@ -1,5 +1,5 @@
 import './add-category.scss';
-
+import Dishes from '../category-list/category-list';
 class addDish {
   constructor() {}
   createWindow = () => {
@@ -46,6 +46,14 @@ class addDish {
   createPage = () => {
     this.createWindow();
     this.interactive();
+    const btnBack = document.querySelector('.add-dish__return');
+    btnBack.addEventListener(
+      'click',
+      new Dishes([
+        { name: 'ajax', img: 'img' },
+        { name: 'pop', img: 'img' },
+      ]).createPage,
+    );
   };
 }
 export default addDish;

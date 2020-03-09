@@ -3,6 +3,7 @@ import data from './testData';
 import '@/styles/materialize/materialize';
 import '@/styles/fonts/material-design-icons/material-icons.css';
 import './CategoryIngridients.scss';
+import NewCategoryIngredient from '../newCategoryIngredient/newCategoryIngredient';
 const ID_DOM_EL = {
   name: 'js-category',
   amount: 'js-amount',
@@ -300,10 +301,13 @@ class CategoryIngridients {
     listenerDeleteCategory.addEventListener('click', e =>
       this.deleteCategory(e),
     );
+    const btnAdd = document.querySelector('.yesh__btn-add');
+
+    btnAdd.addEventListener('click', new NewCategoryIngredient().start);
   }
 
   //Render render(domElement, data = this.data)
-  preRender(data = this.data) {
+  preRender = (data = this.data) => {
     return `
     <section class="yesh-container yesh-p0">
       ${this.elementHeader()}
@@ -311,13 +315,13 @@ class CategoryIngridients {
       ${this.elementList(data)}
     </section>
       `;
-  }
-  render(domElement) {
-    this.removeListener();
+  };
+  render = domElement => {
+    // this.removeListener();
     this.DOM_ELEMENT = domElement;
     this.DOM_ELEMENT.innerHTML = `${this.preRender(data)}`;
     this.addListener();
-  }
+  };
 }
 
 export default CategoryIngridients;
