@@ -1,5 +1,5 @@
-import M from 'materialize-css';
-import '@/styles/materialize/materialize.scss';
+// import M from 'materialize-css';
+// import '@/styles/materialize/materialize.scss';
 import '@/styles/base';
 import './styleGood.css';
 
@@ -8,7 +8,9 @@ import source from '../../assets/img/water.jpg';
 class Add_OneClass_Good {
   constructor() {
     this.good = {
-      name: `<img src="${source}">` + `<span class="img_span">bonaqua</span>`,
+      name:
+        `<img class="categories__img" src="${source}">` +
+        `<span class="img_span">bonaqua</span>`,
       category: 'вода',
       value: 100,
       price: 50,
@@ -88,10 +90,10 @@ class Add_OneClass_Good {
     return this.good.profit;
   }
   getProfitPercent() {
-    console.log(this.good);
+    // console.log(this.good);
     this.good.profitPercent = (this.good.profit / this.good.value) * 100 + '%';
-    console.log(this.good.profit);
-    console.log(this.good.profitPercent);
+    // console.log(this.good.profit);
+    // console.log(this.good.profitPercent);
     return this.good.profitPercent;
   }
   redColorForProfit() {
@@ -128,10 +130,10 @@ class Add_OneClass_Good {
     this.redColorForProfit();
     this.addOneClass();
     this.deleteOneClass();
-    document.addEventListener('DOMContentLoaded', function() {
-      var elems = document.querySelectorAll('.modal');
-      var instances = M.Modal.init(elems);
-    });
+    // document.addEventListener('DOMContentLoaded', function() {
+    //   var elems = document.querySelectorAll('.modal');
+    //   var instances = M.Modal.init(elems);
+    // });
   }
 }
 
