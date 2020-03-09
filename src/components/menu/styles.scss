@@ -11,7 +11,7 @@
   top: 73px;
 }
 
-.active {
+.admin-page-active {
   background: linear-gradient(180deg,
       rgb(212, 220, 228),
       rgb(198, 212, 228),
@@ -23,11 +23,11 @@
   height: 100vh;
 }
 
-#btn-back:hover {
+#admin-page-btn-back:hover {
   background: inherit;
 }
 
-#btn-back {
+#admin-page-btn-back {
   width: auto;
   height: auto;
   color: #31456a;
@@ -41,20 +41,21 @@
   box-sizing: border-box;
 }
 
-i {
+.admin-menu-icon {
   display: block;
   position: absolute;
   top: 3%;
   left: 4%;
 }
 
-#link {
+#admin-page-link {
   padding-left: 15%;
   padding-right: 0;
   font-size: 20px;
   display: block;
   position: relative;
   color: #31456a;
+  text-decoration: none;
 }
 
 .sidenav li>a>i.material-icons {

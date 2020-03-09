@@ -1,6 +1,8 @@
 import '@/styles/materialize/materialize.scss';
 import './styles.scss';
 import Test from './test';
+import CategoryIngridients from '../component-CategoryIngridients/CategoryIngridients';
+import Dishes from '../category-list/category-list';
 
 class menuAdmin {
   constructor() {
@@ -19,21 +21,21 @@ class menuAdmin {
   }
 
   collectionKey = () => {
-    this.btnBack = document.querySelector('#btn-back');
+    this.btnBack = document.querySelector('#admin-page-btn-back');
     this.root = document.querySelector('#root');
     this.testWrap = document.querySelector('.test');
     this.listMenu = document.querySelector('#slide-out');
   };
 
   markUpUl = () => {
-    return `<a id="btn-back" href="#"><i class="medium material-icons">chevron_left</i></a>
+    return `<a id="admin-page-btn-back" href="#"><i class="medium material-icons admin-menu-icon">chevron_left</i></a>
     <ul id="slide-out" class="sidenav sidenav-fixed">
     </ul>
     <div class="test"></div>
     `;
   };
   markUpLi = ({ name, icon, id }) => {
-    return `<li><a id="link" data-id="${id}" href="#"><i class="Tiny material-icons">${icon}</i>${name}</a></li>`;
+    return `<li><a id="admin-page-link" data-id="${id}" href="#"><i class="Tiny material-icons admin-menu-icon">${icon}</i>${name}</a></li>`;
   };
   renderItem = arr => arr.reduce((acc, el) => acc + this.markUpLi(el), '');
   addToScreen = (container, position, el) => {
@@ -47,11 +49,11 @@ class menuAdmin {
     const allItem = document.querySelectorAll('li');
 
     allItem.forEach(el => {
-      if (el.classList.value === 'active') {
-        el.classList.remove('active');
+      if (el.classList.value === 'admin-page-active') {
+        el.classList.remove('admin-page-active');
       }
     });
-    clickItem.classList.add('active');
+    clickItem.classList.add('admin-page-active');
     const test = new Test();
     const wrapper = document.querySelector('main');
     wrapper.innerHTML = '';
@@ -70,10 +72,13 @@ class menuAdmin {
         test.testMethod(wrapper);
         break;
       case 5:
-        test.testMethod(wrapper);
+        new Dishes([
+          { name: 'ajax', img: 'img' },
+          { name: 'pop', img: 'img' },
+        ]).createPage();
         break;
       case 6:
-        test.testMethod(wrapper);
+        new CategoryIngridients().render(wrapper);
         break;
       default:
         break;
@@ -92,7 +97,6 @@ class menuAdmin {
   };
   addListeners = () => {
     this.listMenu.addEventListener('click', this.handleClickItem);
-
     this.btnBack.addEventListener('click', this.backArrow);
   };
   start = container => {
