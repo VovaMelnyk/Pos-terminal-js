@@ -1,26 +1,25 @@
 .header {
-    background-color: #555555;
+    background-color: #49444a;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 70px;
+    height: 70px;
 }
 
 .burger-menu {
     display: inline-block;
     background-color: #49444a;
-}
-
-.items-header {
-    margin: 0;
-    list-style: none;
-    padding-left: 20px;
-    display: none;
+    box-shadow: none;
+    height: 70px;
 }
 
 .burger-link {
+    height: 56px;
     color: white;
     text-decoration: none;
+    text-align: center;
+    padding: 0;
+    line-height: 56px;
 }
 
 .user {
@@ -38,20 +37,26 @@
     cursor: pointer;
     color: white;
     background-color: #49444a;
-    padding: 21px;
+    padding: 20px;
+    height: 70px;
 }
 
 .title::before {
-    content: '▶ ';
+    content: '▶';
     font-size: 20px;
     width: 22px;
     height: 22px;
     display: inline-block;
     color: white;
+    margin-right: 12px;
 }
 
-.menu-header .title::before {
-    content: '▼ ';
+.menu-header {
+    height: 70px;
+}
+
+.open .title::before {
+    content: '▼';
 }
 
 .menu-header.open ul {
@@ -59,21 +64,26 @@
 }
 
 .items-header {
+    margin: 0;
+    list-style: none;
+    display: none;
     padding: 0;
     position: absolute;
     background-color: #49444a;
-    margin-top: 10px;
     width: 200px;
-    padding-bottom: 10px;
-    & li {
-        padding-left: 20px;
-    }
+    height: 56px;
+}
+
+.items-header li {
+    width: 50%;
 }
 
 .users-data {
     display: flex;
+    height: 70px;
 }
 
 .open {
     position: relative;
+    height: 70px;
 }
