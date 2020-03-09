@@ -3,6 +3,7 @@ import './styles.scss';
 import Test from './test';
 import CategoryIngridients from '../component-CategoryIngridients/CategoryIngridients';
 import Dishes from '../category-list/category-list';
+import GoodsCollection from '../goodsCollection/goodsCollection';
 
 class menuAdmin {
   constructor() {
@@ -59,7 +60,7 @@ class menuAdmin {
     const id = Number(e.target.dataset.id);
     switch (id) {
       case 1:
-        test.testMethod(wrapper);
+        new GoodsCollection().start(wrapper);
         break;
       case 2:
         test.testMethod(wrapper);
