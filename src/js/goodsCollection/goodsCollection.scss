@@ -34,27 +34,20 @@
   text-align: center;
 }
 
-.goodsListItem,
 .title {
   display: flex;
   flex-direction: row;
 }
-.goodsListItem p,
+
 .title p {
   width: 80px;
   vertical-align: middle;
-}
-
-.goods-list li {
-  text-align: center;
 }
 
 .goods-list li:hover {
   background-color: #c7c7c7;
 }
 
-.goodsListItem p.name,
-.goodsListItem p.category,
 .title p#name,
 .title p#category {
   min-width: 30%;
