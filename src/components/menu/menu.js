@@ -1,6 +1,6 @@
 import '@/styles/materialize/materialize.scss';
 import './styles.scss';
-import Test from './test.js';
+import Test from './test';
 
 class menuAdmin {
   constructor() {
@@ -53,27 +53,27 @@ class menuAdmin {
     });
     clickItem.classList.add('active');
     const test = new Test();
-
-    this.testWrap.innerHTML = '';
+    const wrapper = document.querySelector('main');
+    wrapper.innerHTML = '';
     const id = Number(e.target.dataset.id);
     switch (id) {
       case 1:
-        test.testMethod(this.testWrap);
+        test.testMethod(wrapper);
         break;
       case 2:
-        test.testMethod(this.testWrap);
+        test.testMethod(wrapper);
         break;
       case 3:
-        test.testMethod(this.testWrap);
+        test.testMethod(wrapper);
         break;
       case 4:
-        test.testMethod(this.testWrap);
+        test.testMethod(wrapper);
         break;
       case 5:
-        test.testMethod(this.testWrap);
+        test.testMethod(wrapper);
         break;
       case 6:
-        test.testMethod(this.testWrap);
+        test.testMethod(wrapper);
         break;
       default:
         break;
@@ -81,13 +81,13 @@ class menuAdmin {
   };
   backArrow = e => {
     e.preventDefault();
+    const wrapper = document.querySelector('main');
     const test = new Test();
-
     const clickBtnBack = e.currentTarget;
     if (!clickBtnBack) return;
     if (clickBtnBack === this.btnBack) {
       this.root.innerHTML = '';
-      test.testMethod(this.root);
+      // test.testMethod(wrapper);
     }
   };
   addListeners = () => {
