@@ -1,6 +1,7 @@
 import array from "./js/arrayOfList.js";
 import dishCategories from "./js/dishCategories.js";
-import "../css/style.css"
+import "@/components/component-dishCategories/css/style"
+import "@/components/category-list/category-list.scss"
 
 class ClassOfProducts {
   constructor() {
@@ -14,15 +15,15 @@ class ClassOfProducts {
 // ----Renders
 
 renderTechCard() {
-  return `<div class="content-header clearfix manage-page-header">
+  return `<div class="content-header">
     <div class="pull-left">
-        <h2 class="ib">Тех. карты <span class="quantity">13</span></h2>
+        <h2 class="content-header__title">Тех. карты <span class="content-header__quantity quantity">13</span></h2>
     </div>
     <div class="pull-right">
-        <div class="segmented-buttons ib">
+        <div class="segmented-buttons">
         </div>
         <div class="ib">
-            <a href="#"><button class="btn btn-green">Добавить</button></a>
+            <a href="#"><button class="content-header__button">Добавить</button></a>
         </div>
     </div>
 </div>`;
@@ -31,11 +32,11 @@ renderTechCard() {
 renderFilterArea() {
   return `<div class="filters-container">
     <div class="fast-search form-search ib">
-        <input type="search" value="" class="form-control" placeholder="Быстрый поиск">
+        <input type="search" value="" class="form-control search-form__input" placeholder="Быстрый поиск">
     </div>
     <div class="ib filter-buttons-container">
 
-    <select id="select1" name="select" style="font-size:medium">
+    <select id="select1" name="select" style="font-size:medium" class="search_stile">
 ${this.addDataOfSelect()}
     <option selected="selected">Все категории</option>
   </select>
@@ -147,8 +148,10 @@ renderTableLine(obj) {
               </a></span></span>
           </td>
           <td class="no-overflow actions-cell" title="" style="text-align: left; max-width: 40px;"><span><span class="table-cell-value">
-              <div><div class=""><button type="button" class="btn btn-edit-ellipsis dropdown-toggle"></button>
-              </div></div></span></span></td></tr>
+              <div><div class=""><button type="button" class="btn btn-edit-ellipsis btn-open"></button>
+              </div></div></span></span>
+              </td>
+              </tr>
 `;
 }
 
@@ -230,9 +233,10 @@ start (container) {
 }
 }
 
+export default ClassOfProducts
 
-const app = new ClassOfProducts();
-const insert = document.querySelector('.insert');
-app.start(insert)
+// const app = new ClassOfProducts();
+// const insert = document.querySelector('#root');
+// app.start(insert)
 
 
