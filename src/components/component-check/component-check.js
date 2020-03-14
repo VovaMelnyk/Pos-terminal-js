@@ -3,6 +3,8 @@ import M from 'materialize-css';
 import './component-check-style.scss';
 import PaymentModule from '../../js/payment-module';
 import Hall from '../hall/hall';
+import { postCheck, putCheck } from '../../service/checkAdd';
+
 
 class Check {
   constructor() {
@@ -152,17 +154,28 @@ class Check {
       </div>
     `;
   }
-
+  renderHallWindow() {
+    const root = document.querySelector("#root")
+    root.innerHTML=""
+    new Hall().start(root);
+  }
   addCheck() {
+    const url = "https://pos-terminal-caffe.firebaseio.com/checks.json"
     const order = {
+      status: "notPay",
       table: this.tableNumber,
       quantityPeople: this.quantityPeople,
       orderList: this.list,
       total: this.totalAmount(),
-      data: Date.now(),
+      date: Date.now(),
     };
+    if(order.id) {
+  putCheck(url, order);
+  return;
+}
+    postCheck(url, order)
+  this.renderHallWindow()
 
-    console.log(order);
   }
 
   addListenerOnAddCheck() {

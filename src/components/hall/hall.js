@@ -110,8 +110,7 @@ export default class Hall {
     if (e.target.tagName !== 'DIV') return;
     this.g = this.table.find(
       table => table.id === e.target.firstChild.textContent,
-    );
-    if (this.g.guest !== 0) {
+    ); 
       e.target.classList.add('table_bgr');
     }
   }
