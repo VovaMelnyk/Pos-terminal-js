@@ -2,6 +2,8 @@ import '@/styles/materialize/materialize';
 import M from 'materialize-css';
 import './component-check-style.scss';
 import PaymentModule from '../../js/payment-module'
+import { postCheck } from '../../service/checkAdd';
+
 
 class Check {
     constructor() {
@@ -404,6 +406,8 @@ class Check {
     }
 
     addProductItemHandleClick(productObj) {
+
+      const url = "https://pos-terminal-caffe.firebaseio.com/checks.json"
         const foodList = document.querySelector('tbody');
 
         if (this.list.includes(productObj)) {
@@ -419,6 +423,7 @@ class Check {
 
         this.result__value.textContent = `${this.totalAmount()} ₴`;
         this.total__value.textContent = `${this.totalAmount()} ₴`;
+        
     }
 
     changeCheckListItem(data) {
