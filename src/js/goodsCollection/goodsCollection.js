@@ -1,7 +1,6 @@
-// import M from 'materialize-css';
-// import '../../styles/materialize/materialize.scss';
-// import '@/styles/materialize/materialize';
-import './goodsCollection.css';
+import Add_OneClass_Good from '../one-class-good/add_class_one_good';
+const oneGood = new Add_OneClass_Good();
+import './goodsCollection.scss';
 
 class GoodsCollection {
   constructor() {
@@ -13,8 +12,8 @@ class GoodsCollection {
         price: 150,
         profit: 50,
         profitPercent: 40,
-        reduct: 'ред.',
-        del: '...',
+        reductGood: 'ред.',
+        ddeleteGoodel: '...',
       },
       {
         name: 'кекс',
@@ -23,8 +22,8 @@ class GoodsCollection {
         price: 110,
         profit: 80,
         profitPercent: 100,
-        reduct: 'ред.',
-        del: '...',
+        reductGood: 'ред.',
+        ddeleteGoodel: '...',
       },
       {
         name: 'evian',
@@ -33,8 +32,8 @@ class GoodsCollection {
         price: 100,
         profit: -20,
         profitPercent: 400,
-        reduct: 'ред.',
-        del: '...',
+        reductGood: 'ред.',
+        ddeleteGoodel: '...',
       },
       {
         name: 'cola',
@@ -43,8 +42,8 @@ class GoodsCollection {
         price: 170,
         profit: 40,
         profitPercent: 50,
-        reduct: 'ред.',
-        del: '...',
+        reductGood: 'ред.',
+        ddeleteGoodel: '...',
       },
       {
         name: 'coca-cola',
@@ -53,8 +52,8 @@ class GoodsCollection {
         price: 250,
         profit: 70,
         profitPercent: 500,
-        reduct: 'ред.',
-        del: '...',
+        reductGood: 'ред.',
+        ddeleteGoodel: '...',
       },
     ];
     this.isFiltered = false;
@@ -65,36 +64,36 @@ class GoodsCollection {
   }
 
   renderLayOut(container) {
-    container.insertAdjacentHTML(
-      'beforeend',
-      `<header class="goods-header">
-      <h2 class="goods-title">Товары <span class="goods-amount"></span></h2>
-      <button class="add"><a href="#" class="add__link">Добавить</a></button>      
-    </header>
-    <main>
-      <section class="search">
-        <input type="text" id="search-input" placeholder=" &#128269; Быстрый поиск..." />
-        <div class="categories">
-          <select class="categories-list">
-            <option value="" selected>Категория </option>
-          </select>
-        </div>
-      </section>
-      <section class="list">
-        <div class="title">
-          <p id="name">название</p>
-          <p id="category">категория</p>
-          <p id="value">себестоимость</p>
-          <p id="price">цена</p>
-          <p id="profit">прибыль</p>
-          <p id="profitPercent">наценка</p>
-          <p class="custom"></p>
-          <p class="custom"></p>
-        </div>
-        <ul class="goods-list"></ul>
-      </section>
-    </main>`,
-    );
+    const layout = `<div class="content-header">
+    <h2 class="content-header__title">Товары <span class="content-header__quantity"></span></h2>
+    <a href="#" class="add__link"><button class="content-header__button">Добавить</button> </a>     
+  </div>
+  <main>
+    <section class="search">
+    <form class="search-form">
+      <input type="text" class="search-form__input" placeholder="Быстрый поиск..."/>
+    </form>
+      <div class="categories">
+      <select class="categories-list">
+      <option selected>Категория </option>
+        </select>
+      </div>
+    </section>
+    <section class="list">
+      <div class="title">
+        <p id="name">название</p>
+        <p id="category">категория</p>
+        <p id="value">себестоимость</p>
+        <p id="price">цена</p>
+        <p id="profit">прибыль</p>
+        <p id="profitPercent">наценка</p>
+        <p class="reductGood"></p>
+        <p class="ddeleteGoodel"></p>
+      </div>
+      <ul class="goods-list"></ul>
+    </section>
+  </main>`;
+    container.insertAdjacentHTML('beforeend', layout);
   }
 
   ////////////-----------------це робить клас Сергія-------------//////////////
@@ -124,7 +123,8 @@ class GoodsCollection {
 
   ///////////////////---------------кількість товарів------------////////////////
   goodsAmount(list) {
-    document.querySelector('.goods-amount').textContent = list.length;
+    document.querySelector('.content-header__quantity').textContent =
+      list.length;
   }
 
   // ////////////////------------список товарів---------------------///////////
@@ -154,13 +154,13 @@ class GoodsCollection {
   }
 
   inputSearch() {
-    const inputField = document.querySelector('#search-input');
+    const inputField = document.querySelector('.search-form__input');
     inputField.addEventListener('input', this.inputSearchLogic);
   }
   // ////////////--------------пошук по категорії-----------------------////////////
 
   findByCategoryLogic(event) {
-    if (event.target.value !== '') {
+    if (event.target.value !== 'Категория') {
       const neededCategoryGoods = this.list.filter(
         good => good.category === event.target.value,
       );
