@@ -4,69 +4,25 @@ import './goodsCollection.scss';
 
 class GoodsCollection {
   constructor() {
-    this.list = [
-      {
-        name: 'bonaqua',
-        category: 'вода',
-        value: 100,
-        price: 150,
-        profit: 50,
-        profitPercent: 40,
-        reductGood: 'ред.',
-        deleteGood: '...',
-      },
-      {
-        name: 'кекс',
-        category: 'торт',
-        value: 90,
-        price: 110,
-        profit: 80,
-        profitPercent: 100,
-        reductGood: 'ред.',
-        deleteGood: '...',
-      },
-      {
-        name: 'evian',
-        category: 'вода',
-        value: 120,
-        price: 100,
-        profit: -20,
-        profitPercent: 400,
-        reductGood: 'ред.',
-        deleteGood: '...',
-      },
-      {
-        name: 'cola',
-        category: 'вода',
-        value: 130,
-        price: 170,
-        profit: 40,
-        profitPercent: 50,
-        reductGood: 'ред.',
-        deleteGood: '...',
-      },
-      {
-        name: 'coca-cola',
-        category: 'вода',
-        value: 180,
-        price: 250,
-        profit: 70,
-        profitPercent: 500,
-        reductGood: 'ред.',
-        deleteGood: '...',
-      },
-    ];
+    this.list = [];
+
     this.isFiltered = false;
     this.filteredList = [];
     this.inputSearchLogic = this.inputSearchLogic.bind(this);
     this.findByCategoryLogic = this.findByCategoryLogic.bind(this);
     this.sortGoodsLogic = this.sortGoodsLogic.bind(this);
+    /////////////////
+    this.modalOpenLogic = this.modalOpenLogic.bind(this);
+    this.modalCloseLogic = this.modalCloseLogic.bind(this);
+    this.addGoodLogic = this.addGoodLogic.bind(this);
+    //////////
+    this.renderLayOut = this.renderLayOut.bind(this);
   }
 
   renderLayOut(container) {
     const layout = `<div class="content-header">
     <h2 class="content-header__title">Товары <span class="content-header__quantity"></span></h2>
-    <a href="#" class="add__link"><button class="content-header__button">Добавить</button> </a>     
+    <a href="#" class="add__link"><button class="content-header__button goodsCollectionAddButton">Добавить</button> </a>     
   </div>
   <main>
     <section class="search">
@@ -79,6 +35,15 @@ class GoodsCollection {
         </select>
       </div>
     </section>
+    <section class="goodsCollection__modal goodsCollection__modal--hiden">
+    <input type="text" class="goodName" placeholder="назва" />
+    <input type="text" class="goodCategory" placeholder="категорія" />
+    <input type="text" class="goodValue" placeholder="вартість" />
+    <input type="text" class="goodPrice" placeholder="ціна" />
+    <button class="goodsCollection__modal--close">X</button>
+    <button type="submit" class="goodsCollection__addGood--submit">submit</button>
+
+  </section>
     <section class="list">
       <div class="goods-title">
         <p id="name">название</p>
@@ -88,10 +53,12 @@ class GoodsCollection {
         <p id="profit">прибыль</p>
         <p id="profitPercent">наценка</p>
         <p class="reductGood"></p>
-        <p class="ddeleteGoodel"></p>
+        <p class="deleteGood"></p>
       </div>
       <ul class="goods-list"></ul>
     </section>
+ 
+
   </main>`;
     container.insertAdjacentHTML('beforeend', layout);
   }
@@ -217,15 +184,117 @@ class GoodsCollection {
     title.addEventListener('click', this.sortGoodsLogic);
   }
 
+  //////////////////////
+
+  modalOpenLogic() {
+    const modal = document.querySelector('.goodsCollection__modal');
+    modal.classList.replace(
+      'goodsCollection__modal--hiden',
+      'goodsCollection__modal--show',
+    );
+  }
+
+  modalOpen() {
+    const addButton = document.querySelector('.goodsCollectionAddButton');
+    addButton.addEventListener('click', this.modalOpenLogic);
+  }
+
+  modalCloseLogic() {
+    const modal = document.querySelector('.goodsCollection__modal');
+    modal.classList.replace(
+      'goodsCollection__modal--show',
+      'goodsCollection__modal--hiden',
+    );
+  }
+
+  modalClose() {
+    const closeButton = document.querySelector(
+      '.goodsCollection__modal--close',
+    );
+    closeButton.addEventListener('click', this.modalCloseLogic);
+  }
+
+  ///////////////////////////////
+
+  clearFields() {
+    const nameField = document.querySelector('.goodName');
+    const categoryField = document.querySelector('.goodCategory');
+    const valueField = document.querySelector('.goodValue');
+    const priceField = document.querySelector('.goodPrice');
+
+    nameField.value = '';
+    categoryField.value = '';
+    valueField.value = '';
+    priceField.value = '';
+  }
+
+  addGoodLogic() {
+    const nameField = document.querySelector('.goodName');
+    const categoryField = document.querySelector('.goodCategory');
+    const valueField = document.querySelector('.goodValue');
+    const priceField = document.querySelector('.goodPrice');
+
+    const newGood = {};
+
+    newGood.name = nameField.value;
+
+    newGood.category = categoryField.value;
+
+    newGood.value = valueField.value;
+
+    newGood.price = priceField.value;
+
+    const url = 'https://pos-terminal-caffe.firebaseio.com/';
+    const folder = 'goods';
+
+    fetch(url + folder + '.json', {
+      method: 'POST',
+      body: JSON.stringify(newGood),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(resolve => resolve.json())
+      .then(data => console.log(data))
+      .catch(err => console.error(err));
+
+    this.clearFields();
+  }
+
+  addGood() {
+    const button = document.querySelector('.goodsCollection__addGood--submit');
+    button.addEventListener('click', this.addGoodLogic);
+  }
+
+  thisListCreator() {
+    const url = 'https://pos-terminal-caffe.firebaseio.com/goods.json';
+    fetch(url)
+      .then(resolve => resolve.json())
+      .then(data => Object.values(data))
+      .then(arr => {
+        this.list = arr;
+        this.goodsAmount(arr);
+        this.categoriesListCreator(arr);
+        this.renderGoodsList(arr);
+        this.inputSearch();
+        this.findByCategory();
+        this.sortGoods();
+      });
+  }
+
+  /////////////////////////
+
   ////////////////////////----------------старт---------------------////////////////////
   start(container) {
     this.renderLayOut(container);
-    this.goodsAmount(this.list);
-    this.categoriesListCreator();
-    this.renderGoodsList(this.list);
-    this.inputSearch();
-    this.findByCategory();
-    this.sortGoods();
+
+    //////////////
+    this.modalOpen();
+    this.modalClose();
+    this.addGood();
+
+    //////////
+    this.thisListCreator();
   }
 }
 

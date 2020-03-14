@@ -53,3 +53,14 @@
   min-width: 30%;
   text-align: left;
 }
+.goodsCollection__modal {
+  padding: 20px;
+}
+
+.goodsCollection__modal--hiden {
+  display: none;
+}
+
+.goodsCollection__modal--show {
+  display: block;
+}
