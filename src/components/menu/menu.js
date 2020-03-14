@@ -4,6 +4,7 @@ import Test from './test';
 import CategoryIngridients from '../component-CategoryIngridients/CategoryIngridients';
 import Dishes from '../category-list/category-list';
 import GoodsCollection from '../goodsCollection/goodsCollection';
+import ClassOfProducts from '../component-dishCategories/dishListClass';
 
 class menuAdmin {
   constructor() {
@@ -63,7 +64,7 @@ class menuAdmin {
         new GoodsCollection().start(wrapper);
         break;
       case 2:
-        test.testMethod(wrapper);
+        new ClassOfProducts().start(wrapper);
         break;
       case 3:
         test.testMethod(wrapper);
