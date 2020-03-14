@@ -2,7 +2,7 @@ export default [
   {
     id: 'id-01',
     name: 'bread',
-    amount: 1,
+    // amount: 1,
   },
   {
     id: 'id-02',

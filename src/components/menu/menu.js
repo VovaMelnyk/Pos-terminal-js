@@ -78,7 +78,7 @@ class menuAdmin {
         ]).createPage();
         break;
       case 6:
-        new CategoryIngridients().render(wrapper);
+        new CategoryIngridients(wrapper).init();
         break;
       default:
         break;

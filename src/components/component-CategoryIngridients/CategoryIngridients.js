@@ -1,10 +1,11 @@
 'use strict';
-import data from './testData';
 import '@/styles/materialize/materialize';
 import '@/styles/fonts/material-design-icons/material-icons.css';
 import './CategoryIngridients.scss';
 import testData from './testData';
 import IngredientsList from './IngredientsList';
+import NewCategoryIngridients from '../newCategoryIngredient/newCategoryIngredient';
+import createOneIngrClass from '../createOneIngrClass/createOneIngrClass';
 const ID_DOM_EL = {
   name: 'js__category-name',
   amount: 'js__category-amount',
@@ -15,6 +16,7 @@ const ID_DOM_EL = {
   list: { empty: 'js__list-empty' },
   listener: {
     categoryAmount: 'js__category-amount',
+    categoryAdd: 'js__category-add',
     finder: 'js__listener-finder',
     table: 'js__listener-table',
     allList: 'js__listener-deleteCategory',
@@ -23,10 +25,6 @@ const ID_DOM_EL = {
 class CategoryIngredients {
   constructor(renderThisDomElement) {
     this.dom = renderThisDomElement;
-    this.routes = {
-      add: '/add',
-      edit: '/edit',
-    };
     this.refs = {};
     this.data = [];
     this.newData = [];
@@ -49,8 +47,8 @@ class CategoryIngredients {
             </h4>
           </div>
         </div>
-        <div class="col s3 m2 l1 yesh__header-btn">
-            <a href="${this.routes.add}" class="yesh__btn-add">Добавить</a>
+        <div class="col s3 m2 l1 yesh__header-btn" id="${ID_DOM_EL.listener.add}">
+            <span class="yesh__btn-add">Добавить</span>
         </div>
     </section>
       `;
@@ -100,6 +98,28 @@ class CategoryIngredients {
   getDataByFetch = () => {
     this.data = testData;
     this.newData = this.data;
+    const getData = () => {
+      fetch(
+        'https://pos-terminal-caffe.firebaseio.com/categoryIngredient.json',
+        {
+          method: 'GET',
+        },
+      )
+        .then(res => res.json())
+        .then(data => {
+          const test = Object.keys(data);
+          console.log(test);
+        })
+        .catch(error => console.log(error));
+      // .then(data => {
+      //   Object.keys(data).reduce((acc, item) => {
+      //     acc += `${addLi(data[item].text, item)}`;
+      //     return acc;
+      //   }, '');
+      // })
+      // .catch(error => console.log(error));
+    };
+    getData();
   };
 
   //---// функции поиска //---//
@@ -199,12 +219,27 @@ class CategoryIngredients {
   deleteCategory = e => {
     const { id } = e.target;
     if (id === ID_DOM_EL.list) return;
-    if (e.target.id === 'js__category-delete') {
+    if (id === 'js__category-delete') {
       this.postFetchDeleteIngredient(e.target.parentElement.id);
       this.update();
     }
+    if (id === 'js__category-edit') {
+      this.dom.innerHTML = '';
+      new createOneIngrClass(this.dom).init();
+    }
+  };
+  addNewCategoryIngridients = e => {
+    this.dom.innerHTML = '';
+    new NewCategoryIngridients().start();
+    // console.log(e.target);
+    // console.dir(this.dom);
   };
   addListaner = () => {
+    // add
+    this.refs.categoryAdd.addEventListener(
+      'click',
+      this.addNewCategoryIngridients,
+    );
     // Слушатели поиска
     this.refs.finder.addEventListener('input', this.onChangeFinder);
     this.refs.finder.addEventListener('click', this.onClickFinder);
@@ -216,6 +251,9 @@ class CategoryIngredients {
   addRefs = () => {
     this.refs.categoryAmount = document.querySelector(
       `#${ID_DOM_EL.listener.categoryAmount}`,
+    );
+    this.refs.categoryAdd = document.querySelector(
+      `#${ID_DOM_EL.listener.add}`,
     );
     this.refs.finder = document.querySelector(`#${ID_DOM_EL.listener.finder}`);
     this.refs.table = document.querySelector(`#${ID_DOM_EL.listener.table}`);
@@ -229,7 +267,7 @@ class CategoryIngredients {
     }
     this.newData = this.filterByFinder();
     this.summerySortData();
-    const ingredientsList = new IngredientsList(this.newData, this.routes);
+    const ingredientsList = new IngredientsList(this.newData);
     this.refs.allList.innerHTML = ingredientsList.init();
   };
   render = () => {
@@ -251,5 +289,5 @@ class CategoryIngredients {
 }
 
 export default CategoryIngredients;
-const root = document.querySelector('#root');
-new CategoryIngredients(root).init();
+// const root = document.querySelector('#root');
+// new CategoryIngredients(root).init();
