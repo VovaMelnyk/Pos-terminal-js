@@ -2,6 +2,7 @@ import array from './js/arrayOfList.js';
 import dishCategories from './js/dishCategories.js';
 import '@/components/component-dishCategories/css/style';
 import '@/components/category-list/category-list.scss';
+// import Dishes from "/path dishes"
 
 class ClassOfProducts {
   constructor() {
@@ -223,6 +224,8 @@ ${this.addDataOfSelect()}
     this.listenCategoryFilter();
     this.searchListener();
     this.sortFunction();
+    const addBtn = document.querySelector('.content-header__button');
+    addBtn.addEventListener('click', () => console.log('BUTTON ADD dishes'));
   }
 }
 
