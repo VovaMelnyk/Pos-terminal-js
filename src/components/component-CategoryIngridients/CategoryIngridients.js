@@ -1,10 +1,9 @@
 'use strict';
-import data from './testData';
 import '@/styles/materialize/materialize';
 import '@/styles/fonts/material-design-icons/material-icons.css';
 import './CategoryIngridients.scss';
-import testData from './testData';
 import IngredientsList from './IngredientsList';
+import NewCategoryIngridients from '../newCategoryIngredient/newCategoryIngredient';
 const ID_DOM_EL = {
   name: 'js__category-name',
   amount: 'js__category-amount',
@@ -15,6 +14,7 @@ const ID_DOM_EL = {
   list: { empty: 'js__list-empty' },
   listener: {
     categoryAmount: 'js__category-amount',
+    categoryAdd: 'js__category-add',
     finder: 'js__listener-finder',
     table: 'js__listener-table',
     allList: 'js__listener-deleteCategory',
@@ -23,10 +23,6 @@ const ID_DOM_EL = {
 class CategoryIngredients {
   constructor(renderThisDomElement) {
     this.dom = renderThisDomElement;
-    this.routes = {
-      add: '/add',
-      edit: '/edit',
-    };
     this.refs = {};
     this.data = [];
     this.newData = [];
@@ -49,8 +45,8 @@ class CategoryIngredients {
             </h4>
           </div>
         </div>
-        <div class="col s3 m2 l1 yesh__header-btn">
-            <a href="${this.routes.add}" class="yesh__btn-add">Добавить</a>
+        <div class="col s3 m2 l1 yesh__header-btn" id="${ID_DOM_EL.listener.categoryAdd}">
+            <span class="yesh__btn-add">Добавить</span>
         </div>
     </section>
       `;
@@ -98,10 +94,26 @@ class CategoryIngredients {
   //-----// other function //-----//
   // get fetch
   getDataByFetch = () => {
-    this.data = testData;
-    this.newData = this.data;
+    return fetch(
+      'https://pos-terminal-caffe.firebaseio.com/categoryIngredient.json',
+      {
+        method: 'GET',
+      },
+    )
+      .then(res => res.json())
+      .then(data => {
+        return Object.keys(data).map(key => ({
+          ...data[key],
+          id: key,
+        }));
+      })
+      .catch(error => console.log(error));
   };
 
+  updateData = data => {
+    this.data = data;
+    this.newData = this.data;
+  };
   //---// функции поиска //---//
   // Фильтрация this.data по this.filter
   filterByFinder() {
@@ -191,31 +203,58 @@ class CategoryIngredients {
   };
   //---// function remove categories ingredients
   postFetchDeleteIngredient = id => {
-    const filterById = data => {
-      return data.filter(category => category.id !== id);
-    };
-    this.data = filterById(this.data);
+    return fetch(
+      `https://pos-terminal-caffe.firebaseio.com/categoryIngredient/${id}.json`,
+      {
+        method: 'DELETE',
+      },
+    ).then(res => res.json());
   };
-  deleteCategory = e => {
+  //deleteCategory
+  clickOnCategory = e => {
     const { id } = e.target;
     if (id === ID_DOM_EL.list) return;
-    if (e.target.id === 'js__category-delete') {
-      this.postFetchDeleteIngredient(e.target.parentElement.id);
-      this.update();
+    if (id === 'js__category-delete') {
+      this.postFetchDeleteIngredient(e.target.parentElement.id).then(() => {
+        this.getDataByFetch()
+          .then(data => {
+            this.updateData(data);
+            return;
+          })
+          .then(() => {
+            this.update();
+          });
+      });
+    }
+    if (id === 'js__category-edit') {
+      // this.dom.innerHTML = '';
+      alert('Страница редактирования не нейдена');
     }
   };
+  addNewCategoryIngridients = () => {
+    this.dom.innerHTML = '';
+    new NewCategoryIngridients().start();
+  };
   addListaner = () => {
+    // add
+    this.refs.categoryAdd.addEventListener(
+      'click',
+      this.addNewCategoryIngridients,
+    );
     // Слушатели поиска
     this.refs.finder.addEventListener('input', this.onChangeFinder);
     this.refs.finder.addEventListener('click', this.onClickFinder);
     // Слушатель сортировки
     this.refs.table.addEventListener('click', e => this.clickSortData(e));
     // Слушатель удаления
-    this.refs.allList.addEventListener('click', e => this.deleteCategory(e));
+    this.refs.allList.addEventListener('click', this.clickOnCategory);
   };
   addRefs = () => {
     this.refs.categoryAmount = document.querySelector(
       `#${ID_DOM_EL.listener.categoryAmount}`,
+    );
+    this.refs.categoryAdd = document.querySelector(
+      `#${ID_DOM_EL.listener.categoryAdd}`,
     );
     this.refs.finder = document.querySelector(`#${ID_DOM_EL.listener.finder}`);
     this.refs.table = document.querySelector(`#${ID_DOM_EL.listener.table}`);
@@ -229,24 +268,28 @@ class CategoryIngredients {
     }
     this.newData = this.filterByFinder();
     this.summerySortData();
-    const ingredientsList = new IngredientsList(this.newData, this.routes);
+    const ingredientsList = new IngredientsList(this.newData);
     this.refs.allList.innerHTML = ingredientsList.init();
   };
   render = () => {
-    this.getDataByFetch();
     return `
-    <section class="yesh-container yesh-p0">
-      ${this.elementHeader()}
-      ${this.elementFinder()}
-      ${this.elementListHead()}
-    </section>
-      `;
+      <section class="yesh-container yesh-p0">
+        ${this.elementHeader()}
+        ${this.elementFinder()}
+        ${this.elementListHead()}
+      </section>
+    `;
   };
+
   init = () => {
-    this.dom.innerHTML = this.render();
-    this.addRefs();
-    this.update();
-    this.addListaner();
+    this.getDataByFetch()
+      .then(data => this.updateData(data))
+      .then(() => {
+        this.dom.innerHTML = this.render();
+        this.addRefs();
+        this.update();
+        this.addListaner();
+      });
   };
 }
 

@@ -8,7 +8,7 @@ const root = document.querySelector('#root');
 
 class NewCategoryIngredient {
   constructor() {
-    this.categoryIngredient = [];
+    this.categoryIngredient = '';
     this.addNewCategoryIngredient = this.addNewCategoryIngredient.bind(this);
   }
 
@@ -62,7 +62,6 @@ class NewCategoryIngredient {
 <h2 class="header">Новая категория ингредиентов</h2>
 </div>
 <div class="card horizontal">
-
 <div class="card__p">
   <p class="ingredient__name">Название</p>
 </div>
@@ -96,12 +95,12 @@ class NewCategoryIngredient {
     e.preventDefault();
     if (inputValue.classList.contains('valid')) {
       if (inputValue.value.length) {
-        this.categoryIngredient.push(inputValue.value);
+        this.categoryIngredient = inputValue.value;
       }
       if (inputValue !== null) {
         inputValue.value = '';
       }
-      console.log(this.categoryIngredient);
+      this.addToDb(this.categoryIngredient);
     }
   };
 
@@ -125,7 +124,7 @@ class NewCategoryIngredient {
     inputValue.addEventListener('input', this.validationInput);
     btnSave.addEventListener('submit', e => {
       e.preventDefault();
-      console.dir(inputValue);
+      // console.dir(inputValue);
       if (inputValue !== null) {
         inputValue.value = '';
       }
@@ -134,7 +133,7 @@ class NewCategoryIngredient {
     const btnBack = document.querySelector('#new-category-link-back');
     const main = document.querySelector('main');
     btnBack.addEventListener('click', () =>
-      new CategoryIngridients().render(main),
+      new CategoryIngridients(main).init(),
     );
   };
 
@@ -142,6 +141,22 @@ class NewCategoryIngredient {
     this.addToScreen('beforeend');
     this.addListeners();
   };
+
+  addToDb(categoryIngredient) {
+    const url =
+      'https://pos-terminal-caffe.firebaseio.com/categoryIngredient.json';
+    const value = { name: categoryIngredient };
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(value),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    fetch(url, options)
+      .then(res => res.json())
+      .catch(error => console.log(error));
+  }
 }
 
 export default NewCategoryIngredient;
