@@ -1,4 +1,4 @@
-'use strict';
+git 'use strict';
 import M from 'materialize-css'; // add materialize js logic
 import '@/styles/materialize/materialize';
 import '@/styles/login-form';
