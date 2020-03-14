@@ -51,7 +51,7 @@ class NewCategoryIngredient {
   //   };
 
   addToScreen = position => {
-    const main = root;
+    const main = document.querySelector('main');
     main.innerHTML = '';
     const element = `
     <div class="col s12 m7">
