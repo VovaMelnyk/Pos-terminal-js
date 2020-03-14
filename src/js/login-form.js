@@ -1,5 +1,5 @@
 'use strict';
-import Form from '@/js/register_form';
+import Form from '@/components/register-form/register_form';
 import M from 'materialize-css'; // add materialize js logic
 import '@/styles/materialize/materialize';
 import '@/styles/login-form';

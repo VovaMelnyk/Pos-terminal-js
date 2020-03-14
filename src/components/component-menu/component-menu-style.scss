@@ -1,4 +1,4 @@
-.menu {
+.component-menu {
   img {
     display: block;
     max-width: 100%;
@@ -18,8 +18,8 @@
     background-color: rgb(255, 174, 68);
   }
 
-  .categories-list,
-  .product-list {
+  .component-menu__categories-list,
+  .component-menu__product-list {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
