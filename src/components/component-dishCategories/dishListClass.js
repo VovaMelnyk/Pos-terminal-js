@@ -1,5 +1,6 @@
 import array from './js/arrayOfList.js';
-import dishCategories from './js/dishCategories.js';
+// import dishCategories from './js/fetchDishCategories';
+import dishCategories from './js/dishCategories';
 import '@/components/component-dishCategories/css/style';
 import '@/components/category-list/category-list.scss';
 
@@ -10,6 +11,7 @@ class ClassOfProducts {
     this.selectCategoryFilter = this.selectCategoryFilter.bind(this);
     this.startToFilter = this.startToFilter.bind(this);
     this.searchProductFast = this.searchProductFast.bind(this);
+    console.log(this.dishCategories);
   }
 
   // ----Renders
@@ -25,7 +27,6 @@ class ClassOfProducts {
         <div class="ib">
             <a href="#"><button class="content-header__button">Добавить</button></a>
         </div>
-    </div>
 </div>`;
   }
 
@@ -34,14 +35,13 @@ class ClassOfProducts {
     <div class="fast-search form-search ib">
         <input type="search" value="" class="form-control search-form__input" placeholder="Быстрый поиск">
     </div>
-    <div class="ib filter-buttons-container">
 
-    <select id="select1" name="select" style="font-size:medium" class="search_stile">
+
+    <select id="select1" name="select" class="select_style">
 ${this.addDataOfSelect()}
     <option selected="selected">Все категории</option>
   </select>
-        </div>
-    </div>
+        
 </div>`;
   }
 
@@ -52,6 +52,13 @@ ${this.addDataOfSelect()}
   addDataOfSelect() {
     return this.dishCategories.map(el => this.addOptionOfSelect(el)).join('');
   }
+
+
+  
+  // addDataOfSelect() {
+  //   return this.dishCategories()
+  //   .then(data => { addOptionOfSelect(data); console.log(data)})
+  // }
 
   renderTableHead() {
     return ` <table id="table-of-dishes" class="table simple-little-table">
@@ -88,8 +95,9 @@ ${this.addDataOfSelect()}
 
   insertPartsOfHTML(container) {
     // const container = document.querySelector(".module");
-    this.addToScreen(container, 'afterbegin', this.renderTechCard());
+
     this.addToScreen(container, 'afterbegin', this.renderFilterArea());
+    this.addToScreen(container, 'afterbegin', this.renderTechCard());
     this.addToScreen(container, 'beforeend', this.renderTableHead());
   }
 
