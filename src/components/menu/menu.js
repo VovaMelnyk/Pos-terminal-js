@@ -55,7 +55,7 @@ class menuAdmin {
     });
     clickItem.classList.add('admin-page-active');
     const test = new Test();
-    const wrapper = document.querySelector('main');
+    const wrapper = document.querySelector('.wrapper-admin-page__main');
     wrapper.innerHTML = '';
     const id = Number(e.target.dataset.id);
     switch (id) {
@@ -78,7 +78,7 @@ class menuAdmin {
         ]).createPage();
         break;
       case 6:
-        new CategoryIngridients().render(wrapper);
+        new CategoryIngridients(wrapper).init();
         break;
       default:
         break;

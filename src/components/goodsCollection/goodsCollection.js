@@ -1,7 +1,7 @@
 import Add_OneClass_Good from '../one-class-good/add_class_one_good';
 const oneGood = new Add_OneClass_Good();
 import './goodsCollection.scss';
-
+import newProduct from '../add-new-product/newProduct';
 class GoodsCollection {
   constructor() {
     this.list = [
@@ -68,7 +68,7 @@ class GoodsCollection {
     <h2 class="content-header__title">Товары <span class="content-header__quantity"></span></h2>
     <a href="#" class="add__link"><button class="content-header__button">Добавить</button> </a>     
   </div>
-  <main>
+  <div>
     <section class="search">
     <form class="search-form">
       <input type="text" class="search-form__input" placeholder="Быстрый поиск..."/>
@@ -92,7 +92,7 @@ class GoodsCollection {
       </div>
       <ul class="goods-list"></ul>
     </section>
-  </main>`;
+  </div>`;
     container.insertAdjacentHTML('beforeend', layout);
   }
 
@@ -228,7 +228,12 @@ class GoodsCollection {
     const title = document.querySelector('.title-goods-collection');
     title.addEventListener('click', this.sortGoodsLogic);
   }
+  addButton() {
+    const addBtn = document.querySelector('.content-header__button');
+    const main = document.querySelector('.wrapper-admin-page__main');
 
+    addBtn.addEventListener('click', () => new newProduct().start(main));
+  }
   ////////////////////////----------------старт---------------------////////////////////
   start(container) {
     this.renderLayOut(container);
@@ -238,6 +243,7 @@ class GoodsCollection {
     this.inputSearch();
     this.findByCategory();
     this.sortGoods();
+    this.addButton();
   }
 }
 
