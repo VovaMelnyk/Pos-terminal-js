@@ -1,4 +1,5 @@
 'use strict';
+import data from './testData';
 import '@/styles/materialize/materialize';
 import '@/styles/fonts/material-design-icons/material-icons.css';
 import './CategoryIngridients.scss';
@@ -250,5 +251,5 @@ class CategoryIngredients {
 }
 
 export default CategoryIngredients;
-const root = document.querySelector('#root');
-new CategoryIngredients(root).init();
+// const root = document.querySelector('#root');
+// new CategoryIngredients(root).init();

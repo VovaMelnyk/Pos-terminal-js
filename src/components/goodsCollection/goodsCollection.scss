@@ -1,7 +1,9 @@
 @import '../../components/category-list/category-list.scss';
+
 * {
   padding: 0;
 }
+
 .search {
   padding: 20px;
   display: flex;
@@ -24,22 +26,19 @@
   color: #696969;
 }
 
-.list {
+.list-goods-collection {
   padding: 20px;
 }
 
-.title {
+.title-goods-collection {
   color: #696969;
   font-size: 15px;
   text-align: center;
-}
-
-.title {
   display: flex;
   flex-direction: row;
 }
 
-.title p {
+.title-goods-collection p {
   width: 80px;
   vertical-align: middle;
 }
@@ -48,8 +47,8 @@
   background-color: #c7c7c7;
 }
 
-.title p#name,
-.title p#category {
+.title-goods-collection p#name,
+.title-goods-collection p#category {
   min-width: 30%;
   text-align: left;
 }

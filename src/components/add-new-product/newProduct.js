@@ -1,10 +1,11 @@
-
-let arrProd = []
+import GoodsCollection from '../goodsCollection/goodsCollection';
+let arrProd = [];
 
 class newProduct {
-    renderNewWindow = () => {
-        let window = document.querySelector('body')
-        window.insertAdjacentHTML('afterbegin', `
+  renderNewWindow = container => {
+    container.insertAdjacentHTML(
+      'afterbegin',
+      `
         <div class="page-product-form">
         <div class="content-header">
             <div class="pull-left" style="display: inline-block; margin-right: 10px;">
@@ -174,46 +175,76 @@ class newProduct {
             </div>
         </form>
     </div>
-        `)
-    }
-    createNewObject = () => {
-        let categoryList = document.querySelector('#item-category');
-        let category = document.querySelector('#item-category').value;
-        let color = document.querySelector('.color-picker')
-        return {
-            title: document.querySelector('#title').value,
-            category: categoryList.querySelector(`[value="${category}"]`).text,
-            primeCost: document.querySelector('#primeCost').value,
-            extraCost: document.querySelector('#extraCost').value,
-            totalCost: document.querySelector('#totalCost').value,
-            photoLink: document.querySelector('#photoLink').value,
-            color: color.querySelector('[checked]').value
-        }
-    }
-    pullNewProduct = (obj) => {
-        arrProd.push(obj)
-    }
-    closeWindow = () => {
-        document.querySelector('.page-product-form').remove()
-    }
+        `,
+    );
+  };
+
+  createNewObject = () => {
+    let categoryList = document.querySelector('#item-category');
+    let category = document.querySelector('#item-category').value;
+    let color = document.querySelector('.color-picker');
+    return {
+      title: document.querySelector('#title').value,
+      category: categoryList.querySelector(`[value="${category}"]`).text,
+      primeCost: document.querySelector('#primeCost').value,
+      extraCost: document.querySelector('#extraCost').value,
+      totalCost: document.querySelector('#totalCost').value,
+      photoLink: document.querySelector('#photoLink').value,
+      color: color.querySelector('[checked]').value,
+    };
+  };
+  pullNewProduct = obj => {
+    arrProd.push(obj);
+  };
+  closeWindow = () => {
+    document.querySelector('.page-product-form').remove();
+  };
+  start = container => {
+    container.innerHTML = '';
+    this.renderNewWindow(container);
+    let str = document.querySelector('#subm');
+    str.addEventListener('click', function(e) {
+      e.preventDefault(),
+        this.pullNewProduct(this.createNewObject()),
+        this.closeWindow();
+    });
+
+    let calcPrime = document.querySelector('#primeCost');
+    let calcExtra = document.querySelector('#extraCost');
+    let calcTotal = document.querySelector('#totalCost');
+    calcPrime.addEventListener('input', function() {
+      let newCost = (Number(this.value) * Number(calcExtra.value)) / 100;
+      calcTotal.value = Number(this.value) + newCost;
+    });
+    calcExtra.addEventListener('input', function() {
+      let newCost = (Number(this.value) / 100) * Number(calcPrime.value);
+      calcTotal.value = Number(calcPrime.value) + newCost;
+    });
+    const btnBack = document.querySelector('.pull-left');
+    btnBack.addEventListener('click', () => {
+      container.innerHTML = '';
+      new GoodsCollection().start(container);
+    });
+  };
 }
-const product = new newProduct()
-product.renderNewWindow()
-let str = document.querySelector('#subm')
-str.addEventListener('click', function (e) {
-    e.preventDefault(),
-    product.pullNewProduct(product.createNewObject()),
-    product.closeWindow()})
+// const product = new newProduct();
+// product.renderNewWindow();
+// let str = document.querySelector('#subm');
+// str.addEventListener('click', function(e) {
+//   e.preventDefault(),
+//     product.pullNewProduct(product.createNewObject()),
+//     product.closeWindow();
+// });
 
-
-let calcPrime = document.querySelector('#primeCost')
-let calcExtra = document.querySelector('#extraCost')
-let calcTotal = document.querySelector('#totalCost')
-calcPrime.addEventListener('input', function () {
-    let newCost = Number(this.value) * Number(calcExtra.value) / 100;
-    calcTotal.value = Number(this.value) + newCost;
-});
-calcExtra.addEventListener('input', function () {
-    let newCost = Number(this.value) / 100 * Number(calcPrime.value);
-    calcTotal.value = Number(calcPrime.value) + newCost;
-});
+// let calcPrime = document.querySelector('#primeCost');
+// let calcExtra = document.querySelector('#extraCost');
+// let calcTotal = document.querySelector('#totalCost');
+// calcPrime.addEventListener('input', function() {
+//   let newCost = (Number(this.value) * Number(calcExtra.value)) / 100;
+//   calcTotal.value = Number(this.value) + newCost;
+// });
+// calcExtra.addEventListener('input', function() {
+//   let newCost = (Number(this.value) / 100) * Number(calcPrime.value);
+//   calcTotal.value = Number(calcPrime.value) + newCost;
+// });
+export default newProduct;

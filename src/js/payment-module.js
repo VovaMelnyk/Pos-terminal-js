@@ -1,6 +1,7 @@
+import "../styles/payment-module.css"
 class PaymentModule {
-    constructor() {
-
+    constructor(sum) {
+        this.sum = sum
 
     }
 
@@ -48,7 +49,7 @@ class PaymentModule {
                 <form class="checkout__section">
                     <div class="checkout-wrapper">
                         <h2 class="checkout__title">
-                            К оплате: <span id="checkout__sum"> 800 </span>₴</h2>
+                            К оплате: <span id="checkout__sum"> ${this.sum} </span>₴</h2>
                              <div class="checkout__field">   
                                 <div class="checkout__field-pay_cash">
                                     <span class="checkout__field-label">Наличными</span>

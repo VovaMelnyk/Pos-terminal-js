@@ -4,13 +4,13 @@ import './component-order-style.scss';
 
 class Order {
   constructor() {
-    this.init = this.init.bind(this)
+    this.init = this.init.bind(this);
   }
 
-  init(container) {
+  init(container, guestQuantity) {
     this.addToScreen(container, 'beforeend', this.renderOrder());
 
-    this.initializationCheckAndMenuComponents();
+    this.initializationCheckAndMenuComponents(guestQuantity);
   }
 
   addToScreen(container, position, element) {
@@ -22,23 +22,22 @@ class Order {
       <div class="order"></div>`;
   }
 
-  initializationCheckAndMenuComponents() {
+  initializationCheckAndMenuComponents(guestQuantity) {
     const order = document.querySelector('.order');
 
-    initCheck(order);
+    initCheck(order, guestQuantity);
     initMenu(order);
   }
 }
 
 export default Order;
 
-
 /**
  * Code for review Order component in index.js file.
  */
-  //  import { initOrder } from '@/js/controller';
-  //  const root = document.querySelector('#root');
-  //  initOrder(root);
- /**
+//  import { initOrder } from '@/js/controller';
+//  const root = document.querySelector('#root');
+//  initOrder(root);
+/**
  * Code for review Order component in index.js file.
  */

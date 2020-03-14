@@ -1,27 +1,28 @@
 import './category-list.scss';
+import addDish from '../add-category/add-category';
 
 class Dishes {
   constructor(arr) {
     this.dishesList = arr;
     this.arr = [];
   }
-  createContentHeader() {
-    const root = document.querySelector('#root');
+  createContentHeader = () => {
+    const root = document.querySelector('main');
     root.innerHTML =
-      '<div class="content-header"><h2 class="content-header__title">Категории <span class="content-header__quantity" data-action="quantity">0</span></h2><a href=""><button class="content-header__button" data-action="add">Добавить</button></a></div>';
-  }
-  createFastSearch() {
-    const root = document.querySelector('#root');
+      '<div class="content-header"><h2 class="content-header__title">Категории <span class="content-header__quantity" data-action="quantity">0</span></h2><button class="content-header__button" data-action="add">Добавить</button></div>';
+  };
+  createFastSearch = () => {
+    const root = document.querySelector('main');
     root.innerHTML +=
       ' <div class="search"><form class="search-form"><button class="search-form__btn" type="submit"></button><input type="search" class="search-form__input" name="fast-search" placeholder="Быстрый поиск" autofocus></form></div>';
-  }
-  createList() {
-    const root = document.querySelector('#root');
+  };
+  createList = () => {
+    const root = document.querySelector('main');
     root.innerHTML +=
       '   <section class="categories"><div class="categories__titles"><h3 class="categories__title">Категория</h3></div><ul class="categories__list"></ul></section>';
-  }
+  };
 
-  createDishesItems() {
+  createDishesItems = () => {
     const list = document.querySelector('.categories__list');
     const quantity = document.querySelector('span[data-action="quantity"]');
 
@@ -89,8 +90,8 @@ class Dishes {
         }
       }
     });
-  }
-  fastSearch() {
+  };
+  fastSearch = () => {
     const searchForm = document.querySelector('.search-form');
     searchForm.addEventListener('submit', e => e.preventDefault());
     const searchInput = document.querySelector('input[name="fast-search"]');
@@ -112,15 +113,17 @@ class Dishes {
       });
     };
     searchInput.addEventListener('input', searchDish);
-  }
+  };
 
-  createPage() {
+  createPage = () => {
     this.createContentHeader();
     this.createFastSearch();
     this.createList();
     this.createDishesItems();
     this.fastSearch();
-  }
+    const btnAdd = document.querySelector('.content-header__button');
+    btnAdd.addEventListener('click', new addDish().createPage);
+  };
 }
 
 export default Dishes;
