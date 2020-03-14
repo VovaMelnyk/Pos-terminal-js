@@ -1,73 +1,82 @@
 import '@/styles/materialize/materialize';
 import M from 'materialize-css';
 import './component-check-style.scss';
-import PaymentModule from '../../js/payment-module'
-import { postCheck } from '../../service/checkAdd';
-
+import PaymentModule from '../../js/payment-module';
+import Hall from '../hall/hall';
 
 class Check {
-    constructor() {
-        this.list = [];
-        this.result__value = null;
-        this.total__value = null;
+  constructor() {
+    this.list = [];
+    this.result__value = null;
+    this.total__value = null;
 
-        this.textInput = null;
-        this.textComment = null;
+    this.textInput = null;
+    this.textComment = null;
 
-        this.init = this.init.bind(this);
-        this.addCommentToScreenHandleClick = this.addCommentToScreenHandleClick.bind(
-            this,
-        );
-        this.clearFieldHandleClick = this.clearFieldHandleClick.bind(this);
-        this.dropdownHandlerClick = this.dropdownHandlerClick.bind(this);
-        this.removeCheckHandleClick = this.removeCheckHandleClick.bind(this);
-        this.incrementAndDecrementHandleClick = this.incrementAndDecrementHandleClick.bind(
-            this,
-        );
+    this.tableNumber = null;
+    this.quantityPeople = null;
 
-        this.addProductItemHandleClick = this.addProductItemHandleClick.bind(this);
-    }
+    this.init = this.init.bind(this);
+    this.addCommentToScreenHandleClick = this.addCommentToScreenHandleClick.bind(
+      this,
+    );
+    this.clearFieldHandleClick = this.clearFieldHandleClick.bind(this);
+    this.dropdownHandlerClick = this.dropdownHandlerClick.bind(this);
+    this.removeCheckHandleClick = this.removeCheckHandleClick.bind(this);
+    this.incrementAndDecrementHandleClick = this.incrementAndDecrementHandleClick.bind(
+      this,
+    );
+    this.addCheck = this.addCheck.bind(this);
 
-    init(container, guestQuantity) {
-        this.addToScreen(container, 'beforeend', this.renderCheck(guestQuantity));
+    this.addProductItemHandleClick = this.addProductItemHandleClick.bind(this);
+  }
 
-        this.initDropdown();
-        this.addListenerOnListItems();
+  init(container, guestQuantity, tableNumber) {
+    this.addToScreen(
+      container,
+      'beforeend',
+      this.renderCheck(guestQuantity, tableNumber),
+    );
 
-        this.initCommentModal();
-        this.addListenerOnDropdown();
+    this.initDropdown();
+    this.addListenerOnListItems();
 
-        this.addListenerCommentDone();
-        this.addListenerCommentClose();
+    this.initCommentModal();
+    this.addListenerOnDropdown();
 
-        this.addListenerOnPayment();
+    this.addListenerCommentDone();
+    this.addListenerCommentClose();
 
-        this.setDomElements();
+    this.addListenerOnPayment();
 
-        // this.addListenerOnAddedItem();
-    }
+    this.setDomElements();
+    this.tableNumber = tableNumber;
+    this.quantityPeople = guestQuantity;
+    this.addListenerOnAddCheck();
+    // this.addListenerOnAddedItem();
+  }
 
-    setDomElements() {
-        this.result__value = document.querySelector('.result__value');
-        this.total__value = document.querySelector('.total__value');
+  setDomElements() {
+    this.result__value = document.querySelector('.result__value');
+    this.total__value = document.querySelector('.total__value');
 
-        this.textInput = document.querySelector('textarea[data-action="comment"]');
-        this.textComment = document.querySelector('.comment__text');
-    }
+    this.textInput = document.querySelector('textarea[data-action="comment"]');
+    this.textComment = document.querySelector('.comment__text');
+  }
 
-    renderCheck(guestQuantity) {
-        return `
+  renderCheck(guestQuantity, tableNumber) {
+    return `
       <div class="check">
         ${this.renderList()}
         ${this.renderComments()}
-        ${this.renderSummary(guestQuantity)}
+        ${this.renderSummary(guestQuantity, tableNumber)}
         ${this.renderCheckButtons()}
         ${this.renderCommentModal()}
       </div>`;
-    }
+  }
 
-    renderList() {
-        return `
+  renderList() {
+    return `
       <div class="food-list">
         <table>
           <thead>
@@ -84,10 +93,10 @@ class Check {
           )}</tbody>
         </table>
       </div>`;
-    }
+  }
 
-    renderListItem({ id, title, quantity, price }) {
-        return `<tr class="food-list__item" data-id="${id}">
+  renderListItem({ id, title, quantity, price }) {
+    return `<tr class="food-list__item" data-id="${id}">
               <td class="item-title">${title}</td>
               <td class="item-quantity">
                 <div class="counter">
@@ -102,24 +111,27 @@ class Check {
                 price,
               )}</td>
             </tr>`;
-    }
+  }
 
-    renderComments() {
-        return `
+  renderComments() {
+    return `
       <div class="comment none">
         <span class="comment__span bold">Комментарий:</span>
         <p class="comment__text"></p>
       </div>`;
-    }
+  }
 
-    renderSummary(guestQuantity) {
-        return `
+  renderSummary(guestQuantity, tableNumber) {
+    return `
       <div class="summary">
         <div class="btn-wrapper">
           <button class="btn summary-btn" data-action="add">Email, SMS</button>
         </div>
         <div class="guests-amount">
           <p class="guests-amount__value">Количество гостей:  <span class="bold" data-action="guests">${guestQuantity}</span></p>
+        </div>
+        <div class="table-number">
+          <p class="table-number__value">Номер стола:  <span class="bold" data-action="guests">${tableNumber}</span></p>
         </div>
         <div class="total-wrapper">
           <div class="calculate">
@@ -139,10 +151,28 @@ class Check {
         </div>
       </div>
     `;
-    }
+  }
 
-    renderCheckButtons() {
-        return `
+  addCheck() {
+    const order = {
+      table: this.tableNumber,
+      quantityPeople: this.quantityPeople,
+      orderList: this.list,
+      total: this.totalAmount(),
+      data: Date.now(),
+    };
+
+    console.log(order);
+  }
+
+  addListenerOnAddCheck() {
+    const addBtn = document.querySelector('button[data-action="add"]');
+
+    addBtn.addEventListener('click', this.addCheck);
+  }
+
+  renderCheckButtons() {
+    return `
       <div class="check-buttons">
         <button class="dropdown-trigger btn more" data-target='dropdown1'>
           <i class="material-icons">more_horiz</i>
@@ -150,19 +180,19 @@ class Check {
         ${this.renderDropdownMenu()}
         <button class="btn pay" data-action="payment">Оплатить</button>
       </div>`;
-    }
+  }
 
-    renderDropdownMenu() {
-        return `
+  renderDropdownMenu() {
+    return `
       <ul id='dropdown1' class='dropdown-content'>
         <li><a class="waves-effect waves-light modal-trigger" href="#modal1">Комментарий к чеку...</a></li>
         <li><a href="#!">Очистить заказ</a></li>
       </ul>
     `;
-    }
+  }
 
-    renderCommentModal() {
-        return `
+  renderCommentModal() {
+    return `
       <div id="modal1" class="modal">
         <div class="modal-content">
           <div class="row">
@@ -182,258 +212,254 @@ class Check {
         </div>
       </div>
     `;
+  }
+
+  initDropdown() {
+    const elems = document.querySelectorAll('.dropdown-trigger');
+    const options = {
+      constrainWidth: false,
+    };
+    M.Dropdown.init(elems, options);
+  }
+
+  initCommentModal() {
+    const elems = document.querySelectorAll('.modal');
+    const options = {
+      dismissible: false,
+    };
+    M.Modal.init(elems, options);
+  }
+
+  addToScreen(container, position, element) {
+    container.insertAdjacentHTML(position, element);
+  }
+
+  countingAmount(quantity, price) {
+    const total = (quantity * price).toFixed(2);
+
+    return total;
+  }
+
+  totalAmount() {
+    return this.list
+      .reduce(
+        (acc, el) => Number(this.countingAmount(el.quantity, el.price)) + acc,
+        0,
+      )
+      .toFixed(2);
+  }
+
+  addListenerOnListItems() {
+    const list = document.querySelector('.food-list');
+
+    list.addEventListener('click', this.incrementAndDecrementHandleClick);
+  }
+
+  incrementAndDecrementHandleClick(e) {
+    if (e.target.tagName !== 'BUTTON') {
+      return;
     }
 
-    initDropdown() {
-        const elems = document.querySelectorAll('.dropdown-trigger');
-        const options = {
-            constrainWidth: false,
-        };
-        M.Dropdown.init(elems, options);
+    const btnDataset = e.target.dataset.action;
+    const parentElem = e.target.parentNode;
+
+    const productItem = parentElem.closest('tr');
+    const quantityValue = parentElem.children[1];
+
+    const total = productItem.querySelector('.item-total');
+    const price = productItem.querySelector('.item-price');
+
+    const itemId = productItem.dataset.id;
+
+    this.increment(
+      btnDataset,
+      quantityValue,
+      total,
+      price,
+      this.total__value,
+      this.result__value,
+      itemId,
+    );
+
+    this.decrement(
+      btnDataset,
+      quantityValue,
+      total,
+      price,
+      this.total__value,
+      this.result__value,
+      itemId,
+    );
+
+    if (quantityValue.textContent < 1) {
+      this.removeItem(productItem);
+      this.removeItemOnId(itemId);
+    }
+  }
+
+  removeItemOnId(id) {
+    this.list = this.list.filter(item => item.id !== Number(id));
+
+    return this.list;
+  }
+
+  findItemOnId(id) {
+    const item = this.list.find(item => item.id === Number(id));
+
+    return item;
+  }
+
+  increment(btnDataset, quantity, total, price, amount, result, id) {
+    if (btnDataset === 'increment') {
+      quantity.textContent++;
+
+      const itemQuantity = this.findItemOnId(id);
+
+      itemQuantity.quantity = Number(quantity.textContent);
+
+      total.textContent = this.countingAmount(
+        quantity.textContent,
+        price.textContent,
+      );
+      result.textContent = `${this.totalAmount()} ₴`;
+      amount.textContent = `${this.totalAmount()} ₴`;
+    }
+  }
+
+  decrement(btnDataset, quantity, total, price, amount, result, id) {
+    if (btnDataset === 'decrement') {
+      quantity.textContent--;
+
+      const itemQuantity = this.findItemOnId(id);
+      itemQuantity.quantity = Number(quantity.textContent);
+
+      total.textContent = this.countingAmount(
+        quantity.textContent,
+        price.textContent,
+      );
+
+      result.textContent = `${this.totalAmount()} ₴`;
+      amount.textContent = `${this.totalAmount()} ₴`;
+    }
+  }
+
+  addListenerCommentDone() {
+    const btnDone = document.querySelector('button[data-action="done"]');
+
+    btnDone.addEventListener('click', this.addCommentToScreenHandleClick);
+  }
+
+  addListenerCommentClose() {
+    const btnClose = document.querySelector('button[data-action="close"]');
+
+    btnClose.addEventListener('click', this.clearFieldHandleClick);
+  }
+
+  addCommentToScreenHandleClick() {
+    const comment = document.querySelector('.comment');
+
+    if (this.textInput.value.trim() === '') {
+      this.textComment.textContent = '';
+      comment.classList.add('none');
+      return;
     }
 
-    initCommentModal() {
-        const elems = document.querySelectorAll('.modal');
-        const options = {
-            dismissible: false,
-        };
-        M.Modal.init(elems, options);
+    this.textComment.textContent = this.textInput.value;
+    comment.classList.remove('none');
+  }
+
+  clearFieldHandleClick() {
+    if (this.textComment.textContent) {
+      return;
     }
 
-    addToScreen(container, position, element) {
-        container.insertAdjacentHTML(position, element);
+    this.textInput.value = '';
+  }
+
+  clearOrder() {
+    const listItems = document.querySelector('tbody');
+    const textInput = document.querySelector('textarea');
+    const comment = document.querySelector('.comment');
+
+    listItems.innerHTML = '';
+
+    this.list.splice(0, this.list.length);
+
+    this.result__value.textContent = `0.00 ₴`;
+    this.total__value.textContent = `0.00 ₴`;
+
+    comment.classList.add('none');
+    textInput.value = '';
+  }
+
+  removeItem(item) {
+    item.remove();
+  }
+
+  addListenerOnDropdown() {
+    const dropdownList = document.querySelector('#dropdown1');
+    dropdownList.addEventListener('click', this.dropdownHandlerClick);
+  }
+
+  dropdownHandlerClick(e) {
+    e.preventDefault();
+
+    if (e.target.tagName !== 'A') {
+      return;
     }
 
-    countingAmount(quantity, price) {
-        const total = (quantity * price).toFixed(2);
+    if (e.target.text === 'Очистить заказ') {
+      this.clearOrder();
+    }
+  }
 
-        return total;
+  addListenerOnPayment() {
+    const paymentBtn = document.querySelector('button[data-action="payment"]');
+
+    paymentBtn.addEventListener('click', this.removeCheckHandleClick);
+  }
+
+  removeCheckHandleClick() {
+    const order = document.querySelector('.order');
+    const root = document.querySelector('#root');
+
+    order.remove();
+
+    //--------------------RENDER COMPONENT PAYMENT FOR TEST------------------------------------
+    this.renderPayment(root);
+  }
+
+  //--------------------ADD COMPONENT PAYMENT FOR TEST------------------------------------
+  renderPayment(root) {
+    new PaymentModule(this.totalAmount()).start(root);
+  }
+
+  addProductItemHandleClick(productObj) {
+    const foodList = document.querySelector('tbody');
+
+    if (this.list.includes(productObj)) {
+      productObj.quantity++;
+
+      this.changeCheckListItem(productObj);
+    } else {
+      productObj.quantity = 1;
+      this.list.push(productObj);
+
+      this.addToScreen(foodList, 'beforeend', this.renderListItem(productObj));
     }
 
-    totalAmount() {
-        return this.list
-            .reduce(
-                (acc, el) => Number(this.countingAmount(el.quantity, el.price)) + acc,
-                0,
-            )
-            .toFixed(2);
-    }
+    this.result__value.textContent = `${this.totalAmount()} ₴`;
+    this.total__value.textContent = `${this.totalAmount()} ₴`;
+  }
 
-    addListenerOnListItems() {
-        const list = document.querySelector('.food-list');
+  changeCheckListItem(data) {
+    const item = document.querySelector(`tr[data-id="${data.id}"]`);
+    const itemQuantity = item.children[1].querySelector('span');
+    const itemAmount = item.children[item.children.length - 1];
 
-        list.addEventListener('click', this.incrementAndDecrementHandleClick);
-    }
-
-    incrementAndDecrementHandleClick(e) {
-        if (e.target.tagName !== 'BUTTON') {
-            return;
-        }
-
-        const btnDataset = e.target.dataset.action;
-        const parentElem = e.target.parentNode;
-
-        const productItem = parentElem.closest('tr');
-        const quantityValue = parentElem.children[1];
-
-        const total = productItem.querySelector('.item-total');
-        const price = productItem.querySelector('.item-price');
-
-        const itemId = productItem.dataset.id;
-
-        this.increment(
-            btnDataset,
-            quantityValue,
-            total,
-            price,
-            this.total__value,
-            this.result__value,
-            itemId,
-        );
-
-        this.decrement(
-            btnDataset,
-            quantityValue,
-            total,
-            price,
-            this.total__value,
-            this.result__value,
-            itemId,
-        );
-
-        if (quantityValue.textContent < 1) {
-            this.removeItem(productItem);
-            this.removeItemOnId(itemId);
-        }
-    }
-
-    removeItemOnId(id) {
-        this.list = this.list.filter(item => item.id !== Number(id));
-
-        return this.list;
-    }
-
-    findItemOnId(id) {
-        const item = this.list.find(item => item.id === Number(id));
-
-        return item;
-    }
-
-    increment(btnDataset, quantity, total, price, amount, result, id) {
-        if (btnDataset === 'increment') {
-            quantity.textContent++;
-
-            const itemQuantity = this.findItemOnId(id);
-
-            itemQuantity.quantity = Number(quantity.textContent);
-
-            total.textContent = this.countingAmount(
-                quantity.textContent,
-                price.textContent,
-            );
-            result.textContent = `${this.totalAmount()} ₴`;
-            amount.textContent = `${this.totalAmount()} ₴`;
-        }
-    }
-
-    decrement(btnDataset, quantity, total, price, amount, result, id) {
-        if (btnDataset === 'decrement') {
-            quantity.textContent--;
-
-            const itemQuantity = this.findItemOnId(id);
-            itemQuantity.quantity = Number(quantity.textContent);
-
-            total.textContent = this.countingAmount(
-                quantity.textContent,
-                price.textContent,
-            );
-
-            result.textContent = `${this.totalAmount()} ₴`;
-            amount.textContent = `${this.totalAmount()} ₴`;
-        }
-    }
-
-    addListenerCommentDone() {
-        const btnDone = document.querySelector('button[data-action="done"]');
-
-        btnDone.addEventListener('click', this.addCommentToScreenHandleClick);
-    }
-
-    addListenerCommentClose() {
-        const btnClose = document.querySelector('button[data-action="close"]');
-
-        btnClose.addEventListener('click', this.clearFieldHandleClick);
-    }
-
-    addCommentToScreenHandleClick() {
-        const comment = document.querySelector('.comment');
-
-        if (this.textInput.value.trim() === '') {
-            this.textComment.textContent = '';
-            comment.classList.add('none');
-            return;
-        }
-
-        this.textComment.textContent = this.textInput.value;
-        comment.classList.remove('none');
-    }
-
-    clearFieldHandleClick() {
-        if (this.textComment.textContent) {
-            return;
-        }
-
-        this.textInput.value = '';
-    }
-
-    clearOrder() {
-        const listItems = document.querySelector('tbody');
-        const textInput = document.querySelector('textarea');
-        const comment = document.querySelector('.comment');
-
-        listItems.innerHTML = '';
-
-        this.list.splice(0, this.list.length);
-
-        this.result__value.textContent = `0.00 ₴`;
-        this.total__value.textContent = `0.00 ₴`;
-
-        comment.classList.add('none');
-        textInput.value = '';
-    }
-
-    removeItem(item) {
-        item.remove();
-    }
-
-    addListenerOnDropdown() {
-        const dropdownList = document.querySelector('#dropdown1');
-        dropdownList.addEventListener('click', this.dropdownHandlerClick);
-    }
-
-    dropdownHandlerClick(e) {
-        e.preventDefault();
-
-        if (e.target.tagName !== 'A') {
-            return;
-        }
-
-        if (e.target.text === 'Очистить заказ') {
-            this.clearOrder();
-        }
-    }
-
-    addListenerOnPayment() {
-        const paymentBtn = document.querySelector('button[data-action="payment"]');
-
-        paymentBtn.addEventListener('click', this.removeCheckHandleClick);
-    }
-
-    removeCheckHandleClick() {
-        const order = document.querySelector('.order');
-        const root = document.querySelector('#root');
-
-        order.remove();
-
-        //--------------------RENDER COMPONENT PAYMENT FOR TEST------------------------------------
-        this.renderPayment(root);
-    }
-
-    //--------------------ADD COMPONENT PAYMENT FOR TEST------------------------------------
-    renderPayment(root) {
-        new PaymentModule(this.totalAmount()).start(root)
-
-    }
-
-    addProductItemHandleClick(productObj) {
-
-      const url = "https://pos-terminal-caffe.firebaseio.com/checks.json"
-        const foodList = document.querySelector('tbody');
-
-        if (this.list.includes(productObj)) {
-            productObj.quantity++;
-
-            this.changeCheckListItem(productObj);
-        } else {
-            productObj.quantity = 1;
-            this.list.push(productObj);
-
-            this.addToScreen(foodList, 'beforeend', this.renderListItem(productObj));
-        }
-
-        this.result__value.textContent = `${this.totalAmount()} ₴`;
-        this.total__value.textContent = `${this.totalAmount()} ₴`;
-        
-    }
-
-    changeCheckListItem(data) {
-        const item = document.querySelector(`tr[data-id="${data.id}"]`);
-        const itemQuantity = item.children[1].querySelector('span');
-        const itemAmount = item.children[item.children.length - 1];
-
-        itemQuantity.textContent = data.quantity;
-        itemAmount.textContent = this.countingAmount(data.quantity, data.price);
-    }
+    itemQuantity.textContent = data.quantity;
+    itemAmount.textContent = this.countingAmount(data.quantity, data.price);
+  }
 }
 
 export default Check;

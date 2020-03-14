@@ -96,10 +96,13 @@ export default class Hall {
   listTextContent(e) {
     e.preventDefault();
     if (e.target.tagName !== 'LI') return;
-    let allGuest = e.target.textContent;
+    let allGuest = Number(e.target.textContent);
+    this.g.guest = allGuest;
+    let tableNumber = this.table.find(item => item.guest === allGuest).id;
+
     const root = document.querySelector('#root');
     root.innerHTML = '';
-    initOrder(root, allGuest);
+    initOrder(root, allGuest, tableNumber);
   }
 
   objKey(e) {

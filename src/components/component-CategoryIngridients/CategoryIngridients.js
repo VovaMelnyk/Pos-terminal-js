@@ -251,5 +251,5 @@ class CategoryIngredients {
 }
 
 export default CategoryIngredients;
-const root = document.querySelector('#root');
-new CategoryIngredients(root).init();
+// const root = document.querySelector('#root');
+// new CategoryIngredients(root).init();
