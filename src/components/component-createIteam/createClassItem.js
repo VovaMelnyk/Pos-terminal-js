@@ -60,6 +60,3 @@ export default CreateItem;
 const root = document.querySelector('#root');
 
 const test = new CreateItem();
-console.log(test);
-
-test.start(root);
