@@ -1,3 +1,3 @@
-// import Header from './components/header/header';
-import './components/component-CategoryIngridients/CategoryIngridients'
-// const headerPart = new Header();
+import Header from './components/header/header';
+
+const headerPart = new Header();

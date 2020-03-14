@@ -1,5 +1,5 @@
-import M from 'materialize-css';
-import '@/styles/materialize/materialize.scss';
+// import M from 'materialize-css';
+// import '@/styles/materialize/materialize.scss';
 import '@/styles/base';
 import './styleGood.css';
 
@@ -8,7 +8,9 @@ import source from '../../assets/img/water.jpg';
 class Add_OneClass_Good {
   constructor() {
     this.good = {
-      name: `<img src="${source}">` + `<span class="img_span">bonaqua</span>`,
+      name:
+        `<img class="categories__img" src="${source}">` +
+        `<span class="img_span">bonaqua</span>`,
       category: 'вода',
       value: 100,
       price: 50,
@@ -24,8 +26,6 @@ class Add_OneClass_Good {
   }
 
   addOneClass() {
-    // const goodVars = {};
-    // this.good.push();
     const addModal = document.querySelector('p.reductGood');
     const modUl = document.querySelector('ul');
 
@@ -68,22 +68,14 @@ class Add_OneClass_Good {
   </div>`,
     );
     addModal.addEventListener('click', this.modalShow);
-    // addModal.removeEventListener('click', this.modalShow);
   }
   modalShow() {
     const modalWindow = document.querySelector('#modal1');
     modalWindow.classList.add('show');
-    // console.log('modul:' + modUl);
     const agreeBtn = document.querySelector('#agree_btn');
     agreeBtn.addEventListener('click', e => {
       modalWindow.classList.remove('show');
     });
-    // console.log(agreeBtn);
-    // modalWindow.classList.add('show');
-    // console.log(modUl);
-    // if (modUl.contains('div')) {
-    //   this.addModal.removeEventListener('click', this.modalShow);
-    // }
   }
 
   deleteOneClass() {
@@ -93,15 +85,15 @@ class Add_OneClass_Good {
     });
   }
 
-  getProfit() {
+  get getProfit() {
     this.good.profit = this.good.price - this.good.value;
     return this.good.profit;
   }
   getProfitPercent() {
-    console.log(this.good);
+    // console.log(this.good);
     this.good.profitPercent = (this.good.profit / this.good.value) * 100 + '%';
-    console.log(this.good.profit);
-    console.log(this.good.profitPercent);
+    // console.log(this.good.profit);
+    // console.log(this.good.profitPercent);
     return this.good.profitPercent;
   }
   redColorForProfit() {
@@ -118,36 +110,25 @@ class Add_OneClass_Good {
   renderGoodsListItem(good) {
     const goodsListItem = document.createElement('li');
     goodsListItem.classList.add('goodsListItem');
-    // goodsListItem.classList.add('highlight');
     for (const prop in good) {
-      // console.log(good);
       goodsListItem.insertAdjacentHTML(
         'beforeend',
         `<p class="${prop}">${good[prop]}</p>`,
       );
     }
-    console.log(goodsListItem);
-    // const listGoods = document.createElement('ul');
-    // listGoods.insertAdjacentHTML('beforeend', goodsListItem);
     return goodsListItem;
   }
 
   renderGoodsList(goods) {}
 
   start(container) {
-    // this.addToScreen(container, 'beforeend', this.renderGoodsListItem());
-    this.getProfit();
+    this.getProfit;
     this.getProfitPercent();
     const cont = this.renderGoodsListItem(this.good);
     container.append(cont);
     this.redColorForProfit();
     this.addOneClass();
     this.deleteOneClass();
-    // console.log(this.redColorForProfit);
-    document.addEventListener('DOMContentLoaded', function() {
-      var elems = document.querySelectorAll('.modal');
-      var instances = M.Modal.init(elems);
-    });
   }
 }
 

@@ -1,0 +1,14 @@
+.collection-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.material-icons {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.collection-item__text {
+    font-size: 20px;
+}
