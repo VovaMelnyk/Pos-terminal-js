@@ -1,18 +1,40 @@
 'use strict'
 
-// import './techMap.css'
+import './techMap.scss'
 
-class ComponentMap{
+export default class ComponentMap{
     constructor(){
-        this.product = {}
+        this.product = {
+            name:0,
+            category:0,
+            photo:0,
+            ingredients:[
+                {
+                    name: 0,
+                    brutto: 0,
+                    netto: 0,
+                    cost: 0
+                }
+            ],
+            
+            exit:0,
+            costProductAll:0,
+        }
+
+        // {
+        //     name: 0,
+        //     brutto: 0,
+        //     netto: 0,
+        //     cost: 0
+        // }
         this.name = name
 
         this.ingredient = 0
+
+        this.nameInput = document.querySelector('#item-name')
         
 
     }
-
-    // const root = document.querySelector('#root');    
 
     renderMap(){
         return`<div class="tech-map">
@@ -39,9 +61,6 @@ class ComponentMap{
             <div class="name-grup">
                 <label for="item-name" class="label">Категорія</label>
                 <select class="control" name="menu_category_id" id="item-category" selected="selected">
-                <option>Категорія</option>
-                <option>Категорія2</option>
-                
                 </select>
             </div>
 
@@ -86,11 +105,12 @@ class ComponentMap{
                     <span class="">₴</span>
                 </div>
                 
-            </div>
-            <button type="submit" class="btn-submit">Зберегти</button>
-            </div>
+            
         </form>
-        </div>`
+        </div></div>
+        <button class="btn-submit">Зберегти</button>
+        </div>
+        `
     }
 
     addToScreen(container, position, element) {
@@ -101,14 +121,21 @@ class ComponentMap{
         this.product.name = document.querySelector('#item-name').value;
         this.product.category = document.querySelector('#item-category').value;
         this.product.foto = document.querySelector('#photo').value
+
+
+        document.querySelectorAll('.select_ingredients')
+        .forEach(el => this.product.ingredients.push({name:el.value}));
+        document.querySelectorAll('.size_b')
+        .forEach(el => this.product.ingredients.push[{brutto:el.value}]);
+        
+
+        console.dir(this.product );
     }
 
     ingredientMarkup(){
         return `<div class="table-input">
-        <select name="" >
-        <option></option>
-        <option>Сир</option>
-        <option>Мясо</option>
+        <select name="" class="select_ingredients">
+        
         </select>
         <input type="text" id="brut" class="size size_b" placeholder="0">
         <div class="netto">
@@ -120,6 +147,55 @@ class ComponentMap{
             <a href="#" id="delete-ingredient">×</a>
         </div>
     </div>`
+    }
+
+    renderCategory(){
+        
+        const selectCategory = document.querySelector('#item-category');
+        fetch('https://pos-terminal-caffe.firebaseio.com/category.json',
+        {
+            body: JSON.stringify(),
+        headers: {
+            'Content-Type': 'application/json'}
+        }
+        )
+        .then(res => res.json())
+        .then(data => {
+            for (let key in data){
+                selectCategory.insertAdjacentHTML('beforeend', `<option>${data[key].name}</option>`)
+            }
+            
+        })
+    }
+
+    renderIngredientSelect(){
+        
+        // console.log(elem);
+        fetch('https://pos-terminal-caffe.firebaseio.com/categoryIngredient.json',
+        {
+            body: JSON.stringify(),
+        headers: {
+            'Content-Type': 'application/json'}
+        }
+        )
+        .then(res => res.json())
+        .then(data => {
+            for (let key in data){
+                
+                let elem = data[key].name;
+            const selectIngredients = document.querySelectorAll('.select_ingredients')
+            .forEach(el => {
+                if(el.innerHTML){
+                el.insertAdjacentHTML('beforeend', `<option>${elem}</option>`)}
+                // let ins = el.innerHTML
+            // console.dir(el);
+            // console.log(elem);
+        
+        });
+               
+            }
+            
+        })
     }
 
     addComposition(){
@@ -150,10 +226,7 @@ class ComponentMap{
         add.addEventListener('click', this.addComposition.bind(this))
         add.addEventListener('click', this.brutoProductInput.bind(this))
         add.addEventListener('click', this.deleteIngredient.bind(this))
-        // add.addEventListener('click', this.costProduct.bind(this))
-        
-        // this.costProduct()
-
+        add.addEventListener('click', this.renderIngredientSelect.bind(this))
     }
 
     brutoProductInput(e){
@@ -170,11 +243,12 @@ class ComponentMap{
         const netto =  e.target.nextElementSibling.querySelector('input')
         netto.value = brutto.value
         // let result = 0
-        this.costProduct()
+        this.exitProduct()
+        
         
     }
 
-    costProduct(){
+    exitProduct(){
         const netto = document.querySelectorAll('.size_n')
         let sum = 0
         netto.forEach((el)=>{
@@ -191,9 +265,36 @@ class ComponentMap{
         
     }
 
+    saveProduct(){
+        const btnSave = document.querySelector('.btn-submit')
+        btnSave.addEventListener('click', this.savePost.bind(this))
+    }
+
+    savePost(){
+        this.addProduct();
+        console.log(this.product);
+        
+        const prod = document.querySelector('#item-name').value;
+console.log(prod);
+        fetch('https://pos-terminal-caffe.firebaseio.com/newMap.json',{
+            method: 'POST',
+            body: JSON.stringify(this.product),
+            headers: {
+                'Content-Type': 'application/json',
+                
+            }
+    })
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(err => console.log(err))
+
+}
+
     addListener(){
         this.addIngredients();
-        // this.costProduct()
+        
+        this.saveProduct()
+        
        
 
     }
@@ -201,7 +302,8 @@ class ComponentMap{
       start(container) {
         this.addToScreen(container, 'beforeend', this.renderMap());
         this.addListener()
-        
+     this.renderCategory()
+    
     }
 
 
