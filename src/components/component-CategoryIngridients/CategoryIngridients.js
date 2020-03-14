@@ -2,10 +2,8 @@
 import '@/styles/materialize/materialize';
 import '@/styles/fonts/material-design-icons/material-icons.css';
 import './CategoryIngridients.scss';
-import testData from './testData';
 import IngredientsList from './IngredientsList';
 import NewCategoryIngridients from '../newCategoryIngredient/newCategoryIngredient';
-import createOneIngrClass from '../createOneIngrClass/createOneIngrClass';
 const ID_DOM_EL = {
   name: 'js__category-name',
   amount: 'js__category-amount',
@@ -47,7 +45,7 @@ class CategoryIngredients {
             </h4>
           </div>
         </div>
-        <div class="col s3 m2 l1 yesh__header-btn" id="${ID_DOM_EL.listener.add}">
+        <div class="col s3 m2 l1 yesh__header-btn" id="${ID_DOM_EL.listener.categoryAdd}">
             <span class="yesh__btn-add">Добавить</span>
         </div>
     </section>
@@ -96,32 +94,26 @@ class CategoryIngredients {
   //-----// other function //-----//
   // get fetch
   getDataByFetch = () => {
-    this.data = testData;
-    this.newData = this.data;
-    const getData = () => {
-      fetch(
-        'https://pos-terminal-caffe.firebaseio.com/categoryIngredient.json',
-        {
-          method: 'GET',
-        },
-      )
-        .then(res => res.json())
-        .then(data => {
-          const test = Object.keys(data);
-          console.log(test);
-        })
-        .catch(error => console.log(error));
-      // .then(data => {
-      //   Object.keys(data).reduce((acc, item) => {
-      //     acc += `${addLi(data[item].text, item)}`;
-      //     return acc;
-      //   }, '');
-      // })
-      // .catch(error => console.log(error));
-    };
-    getData();
+    return fetch(
+      'https://pos-terminal-caffe.firebaseio.com/categoryIngredient.json',
+      {
+        method: 'GET',
+      },
+    )
+      .then(res => res.json())
+      .then(data => {
+        return Object.keys(data).map(key => ({
+          ...data[key],
+          id: key,
+        }));
+      })
+      .catch(error => console.log(error));
   };
 
+  updateData = data => {
+    this.data = data;
+    this.newData = this.data;
+  };
   //---// функции поиска //---//
   // Фильтрация this.data по this.filter
   filterByFinder() {
@@ -211,28 +203,37 @@ class CategoryIngredients {
   };
   //---// function remove categories ingredients
   postFetchDeleteIngredient = id => {
-    const filterById = data => {
-      return data.filter(category => category.id !== id);
-    };
-    this.data = filterById(this.data);
+    return fetch(
+      `https://pos-terminal-caffe.firebaseio.com/categoryIngredient/${id}.json`,
+      {
+        method: 'DELETE',
+      },
+    ).then(res => res.json());
   };
-  deleteCategory = e => {
+  //deleteCategory
+  clickOnCategory = e => {
     const { id } = e.target;
     if (id === ID_DOM_EL.list) return;
     if (id === 'js__category-delete') {
-      this.postFetchDeleteIngredient(e.target.parentElement.id);
-      this.update();
+      this.postFetchDeleteIngredient(e.target.parentElement.id).then(() => {
+        this.getDataByFetch()
+          .then(data => {
+            this.updateData(data);
+            return;
+          })
+          .then(() => {
+            this.update();
+          });
+      });
     }
     if (id === 'js__category-edit') {
-      this.dom.innerHTML = '';
-      new createOneIngrClass(this.dom).init();
+      // this.dom.innerHTML = '';
+      alert('Страница редактирования не нейдена');
     }
   };
-  addNewCategoryIngridients = e => {
+  addNewCategoryIngridients = () => {
     this.dom.innerHTML = '';
     new NewCategoryIngridients().start();
-    // console.log(e.target);
-    // console.dir(this.dom);
   };
   addListaner = () => {
     // add
@@ -246,14 +247,14 @@ class CategoryIngredients {
     // Слушатель сортировки
     this.refs.table.addEventListener('click', e => this.clickSortData(e));
     // Слушатель удаления
-    this.refs.allList.addEventListener('click', e => this.deleteCategory(e));
+    this.refs.allList.addEventListener('click', this.clickOnCategory);
   };
   addRefs = () => {
     this.refs.categoryAmount = document.querySelector(
       `#${ID_DOM_EL.listener.categoryAmount}`,
     );
     this.refs.categoryAdd = document.querySelector(
-      `#${ID_DOM_EL.listener.add}`,
+      `#${ID_DOM_EL.listener.categoryAdd}`,
     );
     this.refs.finder = document.querySelector(`#${ID_DOM_EL.listener.finder}`);
     this.refs.table = document.querySelector(`#${ID_DOM_EL.listener.table}`);
@@ -271,23 +272,27 @@ class CategoryIngredients {
     this.refs.allList.innerHTML = ingredientsList.init();
   };
   render = () => {
-    this.getDataByFetch();
     return `
-    <section class="yesh-container yesh-p0">
-      ${this.elementHeader()}
-      ${this.elementFinder()}
-      ${this.elementListHead()}
-    </section>
-      `;
+      <section class="yesh-container yesh-p0">
+        ${this.elementHeader()}
+        ${this.elementFinder()}
+        ${this.elementListHead()}
+      </section>
+    `;
   };
+
   init = () => {
-    this.dom.innerHTML = this.render();
-    this.addRefs();
-    this.update();
-    this.addListaner();
+    this.getDataByFetch()
+      .then(data => this.updateData(data))
+      .then(() => {
+        this.dom.innerHTML = this.render();
+        this.addRefs();
+        this.update();
+        this.addListaner();
+      });
   };
 }
 
 export default CategoryIngredients;
-// const root = document.querySelector('#root');
-// new CategoryIngredients(root).init();
+const root = document.querySelector('#root');
+new CategoryIngredients(root).init();
