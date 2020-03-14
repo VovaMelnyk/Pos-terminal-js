@@ -7,10 +7,10 @@ class Order {
     this.init = this.init.bind(this);
   }
 
-  init(container, guestQuantity) {
+  init(container, guestQuantity, tableNumber) {
     this.addToScreen(container, 'beforeend', this.renderOrder());
 
-    this.initializationCheckAndMenuComponents(guestQuantity);
+    this.initializationCheckAndMenuComponents(guestQuantity, tableNumber);
   }
 
   addToScreen(container, position, element) {
@@ -22,10 +22,10 @@ class Order {
       <div class="order"></div>`;
   }
 
-  initializationCheckAndMenuComponents(guestQuantity) {
+  initializationCheckAndMenuComponents(guestQuantity, tableNumber) {
     const order = document.querySelector('.order');
 
-    initCheck(order, guestQuantity);
+    initCheck(order, guestQuantity, tableNumber);
     initMenu(order);
   }
 }
