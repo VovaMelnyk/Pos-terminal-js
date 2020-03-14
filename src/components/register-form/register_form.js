@@ -2,7 +2,7 @@ import LoginForm from '@/js/login-form';
 import Hall from '@/components/hall/hall';
 import '@/styles/materialize/materialize';
 import './register_form.scss';
-import M from 'materialize-css';
+// import M from 'materialize-css';
 const errors = {
   EMAIL_EXISTS: 'Sorry this email already exist',
 };
