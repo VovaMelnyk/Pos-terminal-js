@@ -84,7 +84,7 @@ class Menu {
   }
 
   setDomElements() {
-    this.menu = document.querySelector('.menu');
+    this.menu = document.querySelector('.component-menu');
   }
 
   addToScreen(container, position, element) {
@@ -93,7 +93,7 @@ class Menu {
 
   renderMenu() {
     return `
-      <div class="menu">
+      <div class="component-menu">
         ${this.renderPrevToCategoryButton()}
         ${this.renderCategoriesList()}
       </div>`;
@@ -108,7 +108,7 @@ class Menu {
 
   renderCategoriesList() {
     return `
-      <ul class="categories-list">
+      <ul class="component-menu__categories-list">
         ${this.categoriesList.reduce(
           (acc, el) => this.renderCategoriesItems(el) + acc,
           '',
@@ -118,7 +118,7 @@ class Menu {
 
   renderCategoriesItems({ title, id, image }) {
     return `
-      <li class="categories-list__item" data-categories-id="${id}">
+      <li class="component-menu__categories-list__item" data-categories-id="${id}">
         <div class="card">
           <div class="card-image">
             <img src=${image} width="300" height="100">
@@ -132,14 +132,14 @@ class Menu {
 
   renderProductList(products) {
     return `
-      <ul class="product-list">
+      <ul class="component-menu__product-list">
         ${products.reduce((acc, el) => this.renderProductItems(el) + acc, '')}
       </ul>`;
   }
 
   renderProductItems({ title, id, img, price }) {
     return `
-      <li class="product-list__item" data-product-id="${id}">
+      <li class="component-menu__product-list__item" data-product-id="${id}">
         <div class="card">
           <div class="card-image">
             <img src=${img} width="300" height="100">
@@ -153,7 +153,9 @@ class Menu {
   }
 
   addListenerOnCategoriesListItems() {
-    const categoryList = document.querySelector('.categories-list');
+    const categoryList = document.querySelector(
+      '.component-menu__categories-list',
+    );
 
     categoryList.addEventListener('click', this.categoryItemHandleClick);
   }
@@ -163,7 +165,9 @@ class Menu {
       return;
     }
 
-    const categoryItem = e.target.closest('.categories-list__item');
+    const categoryItem = e.target.closest(
+      '.component-menu__categories-list__item',
+    );
     this.categoryItemId = categoryItem.dataset.categoriesId;
 
     const productList = this.findObjectById(
@@ -182,7 +186,7 @@ class Menu {
   }
 
   addListenerOnProductsListItems() {
-    const productList = document.querySelector('.product-list');
+    const productList = document.querySelector('.component-menu__product-list');
 
     productList.addEventListener('click', this.productItemHandleClick);
   }
@@ -192,7 +196,7 @@ class Menu {
       return;
     }
 
-    const productItem = e.target.closest('.product-list__item');
+    const productItem = e.target.closest('.component-menu__product-list__item');
     this.productItemId = productItem.dataset.productId;
 
     const productList = this.findObjectById(
@@ -223,8 +227,10 @@ class Menu {
   }
 
   backToCategoryItemHandleClick() {
-    const productList = document.querySelector('.product-list');
-    const categoryList = document.querySelector('.categories-list');
+    const productList = document.querySelector('.component-menu__product-list');
+    const categoryList = document.querySelector(
+      '.component-menu__categories-list',
+    );
 
     if (productList) {
       productList.remove();

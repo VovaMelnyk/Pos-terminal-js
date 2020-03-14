@@ -2,20 +2,20 @@ import LoginForm from '@/js/login-form';
 import Hall from '@/components/hall/hall';
 import '@/styles/materialize/materialize';
 import './register_form.scss';
-import M from 'materialize-css';
+// import M from 'materialize-css';
 const errors = {
-  EMAIL_EXISTS: "Sorry this email already exist"
-}
-
-
+  EMAIL_EXISTS: 'Sorry this email already exist',
+};
 
 class Form {
   constructor(name, email, password) {
-    this.users = [{
-      name: name,
-      email: email,
-      password: password,
-    }, ];
+    this.users = [
+      {
+        name: name,
+        email: email,
+        password: password,
+      },
+    ];
     this.activeBtn = this.activeBtn.bind(this);
     this.saveForm = this.saveForm.bind(this);
     this.changeForm = this.changeForm.bind(this);
@@ -79,18 +79,17 @@ class Form {
     return new LoginForm();
   }
   renderHallWindow(root) {
-    root.innerHTML=""
+    root.innerHTML = '';
     new Hall().start(root);
   }
 
-    renderError({error}){
-      const root = document.querySelector('#root');
-    const p = document.createElement("p");
-    p.classList.add("error")
-    p.textContent = errors[error.message];  
+  renderError({ error }) {
+    const root = document.querySelector('#root');
+    const p = document.createElement('p');
+    p.classList.add('error');
+    p.textContent = errors[error.message];
     root.append(p);
-
-}
+  }
 
   addToScreen(container, position, element) {
     container.insertAdjacentHTML(position, element);
@@ -164,28 +163,26 @@ class Form {
 
   handleSubmit(e) {
     e.preventDefault();
-    const error = document.querySelector(".error")
-    if(error){
-        error.remove()
+    const error = document.querySelector('.error');
+    if (error) {
+      error.remove();
     }
-    const API_KEY = "AIzaSyAGvk2E4uRyoCWFdQk6TPKLuV_bcuNk29I";
-    const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`
+    const API_KEY = 'AIzaSyAGvk2E4uRyoCWFdQk6TPKLuV_bcuNk29I';
+    const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`;
     const root = document.querySelector('#root');
-  
-    const {
-      elements
-    } = e.currentTarget;
+
+    const { elements } = e.currentTarget;
     const nameInput = elements.name;
     const emailInput = elements.email;
     const passwordInput = elements.password[0];
     const user = {
       [nameInput.name]: nameInput.value,
       [emailInput.name]: emailInput.value,
-      [passwordInput.name]: passwordInput.value,      
-      returnSecureToken: true
+      [passwordInput.name]: passwordInput.value,
+      returnSecureToken: true,
     };
 
-    this.authentication(url, user, root)
+    this.authentication(url, user, root);
   }
   saveForm(el) {
     el.addEventListener('submit', this.handleSubmit);
@@ -195,32 +192,29 @@ class Form {
     const registerForm = document.querySelector('.register-menu');
     const registerBtn = document.querySelector('.register-menu__btn');
     registerBtn.disabled = true;
-    
+
     const options = {
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify(user),
       headers: {
-        "Content-Type": "application/json"
-      }
-    }
+        'Content-Type': 'application/json',
+      },
+    };
 
     fetch(url, options)
       .then(res => res.json())
       .then(data => {
-        if(data.error){
-          this.renderError(data)
-           return
-       }    
-        localStorage.setItem("token", data.idToken);
+        if (data.error) {
+          this.renderError(data);
+          return;
+        }
+        localStorage.setItem('token', data.idToken);
         registerForm.remove();
         this.renderHallWindow(root);
       })
       .catch(err => console.log(err))
-      .finally(()=>(registerBtn.disabled = false));
+      .finally(() => (registerBtn.disabled = false));
   }
-
-
-
 }
 //===For control
 // import Form from "@/js/register_form";
