@@ -4,6 +4,7 @@ import Test from './test';
 import CategoryIngridients from '../component-CategoryIngridients/CategoryIngridients';
 import Dishes from '../category-list/category-list';
 import GoodsCollection from '../goodsCollection/goodsCollection';
+import ClassOfProducts from '../component-dishCategories/dishListClass';
 
 class menuAdmin {
   constructor() {
@@ -55,7 +56,7 @@ class menuAdmin {
     });
     clickItem.classList.add('admin-page-active');
     const test = new Test();
-    const wrapper = document.querySelector('main');
+    const wrapper = document.querySelector('.wrapper-admin-page__main');
     wrapper.innerHTML = '';
     const id = Number(e.target.dataset.id);
     switch (id) {
@@ -63,7 +64,7 @@ class menuAdmin {
         new GoodsCollection().start(wrapper);
         break;
       case 2:
-        test.testMethod(wrapper);
+        new ClassOfProducts().start(wrapper);
         break;
       case 3:
         test.testMethod(wrapper);
@@ -78,7 +79,7 @@ class menuAdmin {
         ]).createPage();
         break;
       case 6:
-        new CategoryIngridients().render(wrapper);
+        new CategoryIngridients(wrapper).init();
         break;
       default:
         break;
