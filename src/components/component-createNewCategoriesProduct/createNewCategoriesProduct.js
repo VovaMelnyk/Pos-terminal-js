@@ -15,8 +15,7 @@ export default class createNewCategoriesProduct {
     }
 
     renderItem() {
-        return `<div class="nav-wrapper nav-wrapper__container">
-        <a href="#!" class="brand-logo nav-wrapper__arrow"><i class="material-icons">keyboard_arrow_left</i></a>
+        return `<div class="nav-wrapper nav-wrapper__container">        
         <p class="title">Новая Категория</p>
     </div>
        <form action="#">
@@ -43,11 +42,22 @@ export default class createNewCategoriesProduct {
     }
 
     addObj = () => {
+        let title = document.querySelector('.categories-product-input__title')
+            .value;
+        let img = document.querySelector('.categories-product-input__img').value;
         const obj = {
-            name: document.querySelector('.categories-product-input__title').value,
-            imag: document.querySelector('.categories-product-input__img').value,
+            name: title,
+            imag: img,
         };
-        request('categoriGoods.json', 'POST', obj);
-        console.log(obj);
+
+        if (title !== '' && img !== '') {
+            const btnForm = document.querySelector('.categories-product-btn');
+            btnForm.classList.add('disabled');
+            request('categoriGoods.json', 'POST', obj).then(() => {
+                document.querySelector('.categories-product-input__title').value = '';
+                document.querySelector('.categories-product-input__img').value = '';
+                btnForm.classList.remove('disabled');
+            });
+        }
     };
 }
