@@ -16,20 +16,20 @@ export default class createNewCategoriesProduct {
 
     renderItem() {
         return `<div class="nav-wrapper nav-wrapper__container">        
-        <p class="title">Новая Категория</p>
+        <p class="title">Нова Категорія</p>
     </div>
        <form action="#">
     <div class="collection">
         <div class="collection__input-name">
-        <p class="input_title">Название</p>
+        <p class="input_title">Назва</p>
         <input class="categories-product-input categories-product-input__title" type="text" />
     </div>        
     <div class="collection__input-img">
-      <p class="input_title">Фотография</p>
+      <p class="input_title">Картинка</p>
       <input class="categories-product-input categories-product-input__img" type="text" />    
     </div>
     </div>
-        <a class="waves-effect waves-light btn categories-product-btn">button</a>
+        <a class="waves-effect waves-light btn categories-product-btn">Добавити</a>
     </form>`;
     }
 
