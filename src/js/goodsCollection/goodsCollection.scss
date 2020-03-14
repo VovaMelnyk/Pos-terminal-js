@@ -11,7 +11,6 @@
 }
 
 .categories-list {
-  display: block;
   width: auto;
   height: 30px;
   border: 1px solid #219fec;
@@ -39,6 +38,10 @@
 .goods-title p {
   width: 80px;
   vertical-align: middle;
+}
+
+.goods-list {
+  display: block;
 }
 
 .goods-list li:hover {

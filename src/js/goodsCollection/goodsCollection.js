@@ -13,7 +13,7 @@ class GoodsCollection {
         profit: 50,
         profitPercent: 40,
         reductGood: 'ред.',
-        ddeleteGoodel: '...',
+        deleteGood: '...',
       },
       {
         name: 'кекс',
@@ -23,7 +23,7 @@ class GoodsCollection {
         profit: 80,
         profitPercent: 100,
         reductGood: 'ред.',
-        ddeleteGoodel: '...',
+        deleteGood: '...',
       },
       {
         name: 'evian',
@@ -33,7 +33,7 @@ class GoodsCollection {
         profit: -20,
         profitPercent: 400,
         reductGood: 'ред.',
-        ddeleteGoodel: '...',
+        deleteGood: '...',
       },
       {
         name: 'cola',
@@ -43,7 +43,7 @@ class GoodsCollection {
         profit: 40,
         profitPercent: 50,
         reductGood: 'ред.',
-        ddeleteGoodel: '...',
+        deleteGood: '...',
       },
       {
         name: 'coca-cola',
@@ -53,7 +53,7 @@ class GoodsCollection {
         profit: 70,
         profitPercent: 500,
         reductGood: 'ред.',
-        ddeleteGoodel: '...',
+        deleteGood: '...',
       },
     ];
     this.isFiltered = false;
@@ -96,18 +96,6 @@ class GoodsCollection {
     container.insertAdjacentHTML('beforeend', layout);
   }
 
-  ////////////-----------------це робить клас Сергія-------------//////////////
-  renderGoodsListItem(good) {
-    const goodsListItem = document.createElement('li');
-    goodsListItem.classList.add('goodsListItem');
-    for (const prop in good) {
-      goodsListItem.insertAdjacentHTML(
-        'beforeend',
-        `<p class="${prop}">${good[prop]}</p>`,
-      );
-    }
-    return goodsListItem;
-  }
   /////////////---------------список категорій------------------///////////////////////
   categoriesListCreator() {
     const categoryList = this.list.map(el => el.category);
@@ -130,7 +118,7 @@ class GoodsCollection {
   // ////////////////------------список товарів---------------------///////////
   renderGoodsList(list) {
     const markup = list.reduce(
-      (str, el) => str + this.renderGoodsListItem(el).outerHTML,
+      (str, el) => str + oneGood.renderGoodsListItem(el).outerHTML,
       '',
     );
     const goodsList = document.querySelector('.goods-list');
@@ -225,7 +213,7 @@ class GoodsCollection {
   }
 
   sortGoods() {
-    const title = document.querySelector('.title');
+    const title = document.querySelector('.goods-title');
     title.addEventListener('click', this.sortGoodsLogic);
   }
 
