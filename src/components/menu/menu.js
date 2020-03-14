@@ -4,6 +4,9 @@ import Test from './test';
 import CategoryIngridients from '../component-CategoryIngridients/CategoryIngridients';
 import Dishes from '../category-list/category-list';
 import GoodsCollection from '../goodsCollection/goodsCollection';
+import ClassOfProducts from '../component-dishCategories/dishListClass';
+import Hall from '../hall/hall';
+import createNewCategoriesProduct from '../component-createNewCategoriesProduct/createNewCategoriesProduct';
 
 class menuAdmin {
   constructor() {
@@ -14,6 +17,7 @@ class menuAdmin {
       { name: 'Інгрідієнти', icon: 'widgets', id: 4 },
       { name: 'Категорії страв', icon: 'grid_on', id: 5 },
       { name: 'Категорії інгрідієнтів', icon: 'gradient', id: 6 },
+      { name: 'Доб. Категорію товарів', icon: 'work', id: 7 },
     ];
     this.testWrap = null;
     this.listMenu = null;
@@ -55,7 +59,7 @@ class menuAdmin {
     });
     clickItem.classList.add('admin-page-active');
     const test = new Test();
-    const wrapper = document.querySelector('main');
+    const wrapper = document.querySelector('.wrapper-admin-page__main');
     wrapper.innerHTML = '';
     const id = Number(e.target.dataset.id);
     switch (id) {
@@ -63,7 +67,7 @@ class menuAdmin {
         new GoodsCollection().start(wrapper);
         break;
       case 2:
-        test.testMethod(wrapper);
+        new ClassOfProducts().start(wrapper);
         break;
       case 3:
         test.testMethod(wrapper);
@@ -78,7 +82,10 @@ class menuAdmin {
         ]).createPage();
         break;
       case 6:
-        new CategoryIngridients().render(wrapper);
+        new CategoryIngridients(wrapper).init();
+        break;
+      case 7:
+        new createNewCategoriesProduct().start(wrapper);
         break;
       default:
         break;
@@ -86,13 +93,11 @@ class menuAdmin {
   };
   backArrow = e => {
     e.preventDefault();
-    const wrapper = document.querySelector('main');
-    const test = new Test();
     const clickBtnBack = e.currentTarget;
     if (!clickBtnBack) return;
     if (clickBtnBack === this.btnBack) {
       this.root.innerHTML = '';
-      // test.testMethod(wrapper);
+      new Hall().start(this.root);
     }
   };
   addListeners = () => {

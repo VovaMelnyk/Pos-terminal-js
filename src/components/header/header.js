@@ -2,6 +2,7 @@
 
 import './header.scss';
 import { startAdminPage } from '../../js/controller';
+import LoginForm from '../../js/login-form';
 // import admin from "../component-admin-page"
 class Header {
   constructor() {
@@ -17,7 +18,7 @@ class Header {
         </nav>
         <div class="users-data">
         <a href="#" class="user login-name">Template</a>
-        <input type="button" class="user logout" onClick="location.href='action=logout'" value="Logout">
+        <div class="user logout">Logout</div>
         </div>
         </div>`;
 
@@ -48,6 +49,15 @@ class Header {
       menuElem.classList.toggle('open');
     });
     adminBtn.addEventListener('click', this.adminWindowClick);
+
+    const btnCloser = document.querySelector('.logout');
+    const root = document.querySelector('#root');
+    const header = document.querySelector('.header');
+    btnCloser.addEventListener('click', () => {
+      root.innerHTML = '';
+      header.remove();
+      new LoginForm();
+    });
   }
 }
 export default Header;
