@@ -31,7 +31,7 @@ export default class Hall {
 
   renderHall() {
     return this.table.length
-      ? `<div class="container">${this.table.reduceRight(
+      ? `<div class="hall">${this.table.reduceRight(
           (acc, el) => this.renderTable(el) + acc,
           '',
         )}       
@@ -123,7 +123,7 @@ export default class Hall {
   }
 
   addLisners() {
-    const container = document.querySelector('.container');
+    const container = document.querySelector('.hall');
     container.addEventListener('click', this.isnElement);
     container.addEventListener('click', this.listTextContent);
     container.addEventListener('click', this.objKey);

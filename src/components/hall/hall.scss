@@ -16,10 +16,6 @@
 .hall {
   height: 100vh;
   background-image: url(../../assets/img/body-bg.jpg);
-}
-
-.container {
-  background-image: url(../../assets/img/body-bg.jpg);
   height: 100vh;
   width: 100%;
   margin: 0;
@@ -30,6 +26,11 @@
   grid-gap: 5%;
   justify-content: center;
   align-content: center;
+}
+
+.container {
+  background-image: url(../../assets/img/body-bg.jpg);
+  
 }
 
 .table_item {

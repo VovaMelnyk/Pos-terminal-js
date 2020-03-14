@@ -1,0 +1,231 @@
+.tech-map{
+    display: grid;
+    margin-left: 10px;
+    
+    /* grid-template-columns: 150px auto; */
+}
+
+.ib {
+    display: inline;
+    padding-left: 15px;
+}
+
+.btn-back{
+    text-decoration: none;
+}
+
+.tech-header{
+    /* display: grid; */
+    border-bottom: 1px solid #e7dbdb;
+    height: 46px;
+    margin-bottom: 15px;
+    
+
+}
+
+.form-map{
+    display: grid;
+    /* width: 700px; */
+    /* grid-template-columns: 1fr; */
+}
+
+.label{
+    font-size: 20px;
+    padding-right: 50px;
+    width: 100px;
+}
+
+.name-grup{
+    display: grid;
+    grid-template-columns: 150px auto;
+    height: 35px;
+    padding-bottom: 15px;
+    width: 700px;
+}
+
+.ingredients{
+    margin-top: 25px;
+    width: 90%;
+}
+
+.item{
+    margin: 0;
+    color: black; 
+    font-weight: 700; 
+    font-size: 18px;
+}
+
+.item-p{
+    margin: 0;
+    color: gray; 
+    font-size: 12px
+}
+
+.ingredients-table{
+    /* text-align: center; */
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    /* width: 100%; */
+    /* /* grid-template-columns: minmax(4); * */
+    /* height: 100px; */
+    /* align-content: space-between; */
+    margin-top: 20px;
+    max-width: 770px;
+}
+
+.tab{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 0;
+    column-gap: 15px;
+
+
+}
+
+.table-input{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 15px;
+    height: 30px;
+    /* display: none; */
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.grid{
+    display: grid
+}
+
+.ingredients-item{
+    margin: 0;
+}
+
+#product{
+    width: 100%;
+    
+}
+
+.size{
+    max-width: 90px;
+    height: 30px;
+}
+
+.price{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    align-items: center;
+
+}
+#delete-ingredient{
+    size: 20px;
+    padding-left: 30px;
+    font-size: 30px;
+    text-decoration: none;
+    color: rgb(128, 124, 124);
+}
+
+#price-item{
+    display: grid;
+    font-size: 20px;
+    justify-items: right;
+}
+
+.add-ingredient{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+    /* max-width: 1000px; */
+}
+
+.add{
+    text-decoration: none;
+    max-width: 180px;
+}
+
+.product-total{
+    display: grid;
+    justify-items: center;
+}
+
+.total-price {
+    height: 80px;
+}
+
+.total-price_item{
+    /* width: 105px;
+    height: 42px; */
+    font-size: 24px;
+    /* text-align: center; */
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+.total-price-item{
+    max-width: 550px;
+}
+
+.total-price-input{
+    display: grid;
+    grid-template-columns: 90px 40px 80px 20px 40px 80px 20px;
+    align-items: center;
+    max-width: 550px;
+    height: 42px;
+
+}
+
+.total-price-input_item{
+    width: 67px;
+    height: 37px;
+
+}
+
+.total_text{
+    text-align: right;
+    width: 90px;
+}
+
+.total_mathematic{
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    /* width: 20px; */
+    color: #d2d2d2;
+}
+
+.btn-submit{
+    font-size: 16px;
+    padding: 12px 21px 15px 21px;
+    height: 46px;
+    background: #10B02D;
+    border-radius: 5px;
+    color: wheat;
+    margin-top: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
