@@ -1,0 +1,94 @@
+label {
+    display: inline-block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.color-picker label {
+    position: relative;
+    margin-right: 6px;
+    outline: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: block;
+    float: left;
+    border: 1px solid #fff;
+}
+
+.red {
+    background: red;
+}
+.white {
+    background: white;
+}
+.orange {
+    background: orange;
+}
+.yellow {
+    background: yellow;
+}
+.green {
+    background: red;
+}
+.blue {
+    background: blue;
+}
+.navy-blue {
+    background: navy;
+}
+.purple {
+    background: red;
+}
+.black {
+    background: black;
+}
+.mint-blue {
+    background: #3bb990;
+}
+.lime-green {
+    background: #47d41b;
+}
+.pink {
+    background: #ff8b9d;
+}
+
+input[type="radio"] {
+    position: absolute;
+    display: block;
+    margin: 0;
+    width: 20px;
+    height: 20px;
+    left: -1px;
+    top: -1px;
+    opacity: 0;
+    border: 2px solid #3E8ACC;
+    border-radius: 50%;
+    box-shadow: 0 0 2px 0 #3E8ACC;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+    transition: box-shadow 0.25s ease-out, opacity 0.25s ease-out;
+}
+
+input[type="radio"]:checked {
+    opacity: 1;
+}
+
+input[type="radio"]:before {
+    content: "";
+    position: absolute;
+    display: block;
+    opacity: 0;
+    width: 18px;
+    height: 18px;
+    border: 2px solid white;
+    border-radius: 50%;
+    left: -2px;
+    top: -2px;
+    transition: border 0.25s ease-out, opacity 0.25s ease-out;
+  }
+  
+  input[type="radio"]:checked:before {
+      opacity: 1;
+  }
