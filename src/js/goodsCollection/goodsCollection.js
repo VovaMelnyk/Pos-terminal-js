@@ -4,63 +4,19 @@ import './goodsCollection.scss';
 
 class GoodsCollection {
   constructor() {
-    this.list = [
-      {
-        name: 'bonaqua',
-        category: 'вода',
-        value: 100,
-        price: 150,
-        profit: 50,
-        profitPercent: 40,
-        reductGood: 'ред.',
-        ddeleteGoodel: '...',
-      },
-      {
-        name: 'кекс',
-        category: 'торт',
-        value: 90,
-        price: 110,
-        profit: 80,
-        profitPercent: 100,
-        reductGood: 'ред.',
-        ddeleteGoodel: '...',
-      },
-      {
-        name: 'evian',
-        category: 'вода',
-        value: 120,
-        price: 100,
-        profit: -20,
-        profitPercent: 400,
-        reductGood: 'ред.',
-        ddeleteGoodel: '...',
-      },
-      {
-        name: 'cola',
-        category: 'вода',
-        value: 130,
-        price: 170,
-        profit: 40,
-        profitPercent: 50,
-        reductGood: 'ред.',
-        ddeleteGoodel: '...',
-      },
-      {
-        name: 'coca-cola',
-        category: 'вода',
-        value: 180,
-        price: 250,
-        profit: 70,
-        profitPercent: 500,
-        reductGood: 'ред.',
-        ddeleteGoodel: '...',
-      },
-    ];
+    this.list = [];
+
     this.isFiltered = false;
     this.filteredList = [];
     this.inputSearchLogic = this.inputSearchLogic.bind(this);
     this.findByCategoryLogic = this.findByCategoryLogic.bind(this);
     this.sortGoodsLogic = this.sortGoodsLogic.bind(this);
+    /////////////////
+    this.modalOpenLogic = this.modalOpenLogic.bind(this);
+    this.modalCloseLogic = this.modalCloseLogic.bind(this);
+    this.addGoodLogic = this.addGoodLogic.bind(this);
+    //////////
+    this.renderLayOut = this.renderLayOut.bind(this);
   }
 
   renderLayOut(container) {
@@ -69,18 +25,26 @@ class GoodsCollection {
     <a href="#" class="add__link"><button class="content-header__button goodsCollectionAddButton">Добавить</button> </a>     
   </div>
   <main>
-    <section class="goodsCollection__search">
-    <form class="search-form goodsCollection__search-form">
+    <section class="search">
+    <form class="search-form">
       <input type="text" class="search-form__input" placeholder="Быстрый поиск..."/>
     </form>
       <div class="categories">
-      <select class="goodsCollection__categories-list">
+      <select class="categories-list">
       <option selected>Категория </option>
         </select>
       </div>
     </section>
-    <section class="goodsCollection__list">
-      <div class="goodsCollection__title">
+    <section class="goodsCollection__modal goodsCollection__modal--hiden">
+    <input type="text" class="goodName" placeholder="назва" />
+    <input type="text" class="goodCategory" placeholder="категорія" />
+    <input type="text" class="goodValue" placeholder="вартість" />
+    <input type="text" class="goodPrice" placeholder="ціна" />
+    <button class="goodsCollection__modal--close">X</button>
+    <button type="submit" class="goodsCollection__addGood--submit">submit</button>
+  </section>
+    <section class="list">
+      <div class="goods-title">
         <p id="name">название</p>
         <p id="category">категория</p>
         <p id="value">себестоимость</p>
@@ -88,26 +52,15 @@ class GoodsCollection {
         <p id="profit">прибыль</p>
         <p id="profitPercent">наценка</p>
         <p class="reductGood"></p>
-        <p class="ddeleteGoodel"></p>
+        <p class="deleteGood"></p>
       </div>
-      <ul class="goodsCollection__goods-list"></ul>
+      <ul class="goods-list"></ul>
     </section>
+ 
   </main>`;
     container.insertAdjacentHTML('beforeend', layout);
   }
 
-  ////////////-----------------це робить клас Сергія-------------//////////////
-  renderGoodsListItem(good) {
-    const goodsListItem = document.createElement('li');
-    goodsListItem.classList.add('goodsListItem');
-    for (const prop in good) {
-      goodsListItem.insertAdjacentHTML(
-        'beforeend',
-        `<p class="${prop}">${good[prop]}</p>`,
-      );
-    }
-    return goodsListItem;
-  }
   /////////////---------------список категорій------------------///////////////////////
   categoriesListCreator() {
     const categoryList = this.list.map(el => el.category);
@@ -130,7 +83,7 @@ class GoodsCollection {
   // ////////////////------------список товарів---------------------///////////
   renderGoodsList(list) {
     const markup = list.reduce(
-      (str, el) => str + this.renderGoodsListItem(el).outerHTML,
+      (str, el) => str + oneGood.renderGoodsListItem(el).outerHTML,
       '',
     );
     const goodsList = document.querySelector('.goods-list');
@@ -225,19 +178,121 @@ class GoodsCollection {
   }
 
   sortGoods() {
-    const title = document.querySelector('.title');
+    const title = document.querySelector('.goods-title');
     title.addEventListener('click', this.sortGoodsLogic);
   }
+
+  //////////////////////
+
+  modalOpenLogic() {
+    const modal = document.querySelector('.goodsCollection__modal');
+    modal.classList.replace(
+      'goodsCollection__modal--hiden',
+      'goodsCollection__modal--show',
+    );
+  }
+
+  modalOpen() {
+    const addButton = document.querySelector('.goodsCollectionAddButton');
+    addButton.addEventListener('click', this.modalOpenLogic);
+  }
+
+  modalCloseLogic() {
+    const modal = document.querySelector('.goodsCollection__modal');
+    modal.classList.replace(
+      'goodsCollection__modal--show',
+      'goodsCollection__modal--hiden',
+    );
+  }
+
+  modalClose() {
+    const closeButton = document.querySelector(
+      '.goodsCollection__modal--close',
+    );
+    closeButton.addEventListener('click', this.modalCloseLogic);
+  }
+
+  ///////////////////////////////
+
+  clearFields() {
+    const nameField = document.querySelector('.goodName');
+    const categoryField = document.querySelector('.goodCategory');
+    const valueField = document.querySelector('.goodValue');
+    const priceField = document.querySelector('.goodPrice');
+
+    nameField.value = '';
+    categoryField.value = '';
+    valueField.value = '';
+    priceField.value = '';
+  }
+
+  addGoodLogic() {
+    const nameField = document.querySelector('.goodName');
+    const categoryField = document.querySelector('.goodCategory');
+    const valueField = document.querySelector('.goodValue');
+    const priceField = document.querySelector('.goodPrice');
+
+    const newGood = {};
+
+    newGood.name = nameField.value;
+
+    newGood.category = categoryField.value;
+
+    newGood.value = valueField.value;
+
+    newGood.price = priceField.value;
+
+    const url = 'https://pos-terminal-caffe.firebaseio.com/';
+    const folder = 'goods';
+
+    fetch(url + folder + '.json', {
+      method: 'POST',
+      body: JSON.stringify(newGood),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(resolve => resolve.json())
+      .then(data => console.log(data))
+      .catch(err => console.error(err));
+
+    this.clearFields();
+  }
+
+  addGood() {
+    const button = document.querySelector('.goodsCollection__addGood--submit');
+    button.addEventListener('click', this.addGoodLogic);
+  }
+
+  thisListCreator() {
+    const url = 'https://pos-terminal-caffe.firebaseio.com/goods.json';
+    fetch(url)
+      .then(resolve => resolve.json())
+      .then(data => Object.values(data))
+      .then(arr => {
+        this.list = arr;
+        this.goodsAmount(arr);
+        this.categoriesListCreator(arr);
+        this.renderGoodsList(arr);
+        this.inputSearch();
+        this.findByCategory();
+        this.sortGoods();
+      });
+  }
+
+  /////////////////////////
 
   ////////////////////////----------------старт---------------------////////////////////
   start(container) {
     this.renderLayOut(container);
-    this.goodsAmount(this.list);
-    this.categoriesListCreator();
-    this.renderGoodsList(this.list);
-    this.inputSearch();
-    this.findByCategory();
-    this.sortGoods();
+
+    //////////////
+    this.modalOpen();
+    this.modalClose();
+    this.addGood();
+
+    //////////
+    this.thisListCreator();
   }
 }
 
