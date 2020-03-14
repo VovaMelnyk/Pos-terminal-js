@@ -5,6 +5,7 @@ import CategoryIngridients from '../component-CategoryIngridients/CategoryIngrid
 import Dishes from '../category-list/category-list';
 import GoodsCollection from '../goodsCollection/goodsCollection';
 import ClassOfProducts from '../component-dishCategories/dishListClass';
+import Hall from '../hall/hall';
 
 class menuAdmin {
   constructor() {
@@ -87,13 +88,11 @@ class menuAdmin {
   };
   backArrow = e => {
     e.preventDefault();
-    const wrapper = document.querySelector('main');
-    const test = new Test();
     const clickBtnBack = e.currentTarget;
     if (!clickBtnBack) return;
     if (clickBtnBack === this.btnBack) {
       this.root.innerHTML = '';
-      // test.testMethod(wrapper);
+      new Hall().start(this.root);
     }
   };
   addListeners = () => {
