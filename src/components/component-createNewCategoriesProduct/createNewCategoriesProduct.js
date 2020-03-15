@@ -36,9 +36,6 @@ export default class createNewCategoriesProduct {
     listener() {
         const btnForm = document.querySelector('.categories-product-btn');
         btnForm.addEventListener('click', this.addObj);
-
-        const btnBack = document.querySelector('.nav-wrapper__arrow');
-        btnBack.addEventListener('click');
     }
 
     addObj = () => {
