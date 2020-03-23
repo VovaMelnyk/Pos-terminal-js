@@ -1,0 +1,41 @@
+.nav-wrapper__container {
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    font-size: 30px;
+    margin: 0;
+}
+
+.nav-wrapper__arrow i {
+    font-size: 40px;
+}
+
+.collection__input-name,
+.collection__input-img {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.input_title {
+    width: 140px;
+    height: auto;
+    font-size: 20px;
+    padding-right: 15px;
+}
+
+.categories-product-btn {
+    margin-left: 130px;
+    width: 140px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.categories-product-input {
+    width: 10%;
+    height: auto;
+}

@@ -1,5 +1,5 @@
 import Hall from '../components/hall/hall';
-
+import Header from '../components/header/header';
 const API_KEY = 'AIzaSyAGvk2E4uRyoCWFdQk6TPKLuV_bcuNk29I';
 
 const ERRORS = {
@@ -28,7 +28,10 @@ export const authentication = (url, user) => {
       const root = document.querySelector('#root');
       root.innerHTML = '';
       new Hall().start(root);
+      new Header();
+
       localStorage.setItem('token', data.idToken);
     })
-    .catch(err => console.error(err));
+    .catch(err => console.warn(err));
 };
+
